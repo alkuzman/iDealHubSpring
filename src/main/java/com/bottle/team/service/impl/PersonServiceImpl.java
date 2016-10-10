@@ -4,10 +4,14 @@ import com.bottle.team.model.Person;
 import com.bottle.team.repository.PersonRepository;
 import com.bottle.team.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Created by PC on 09/10/2016.
  */
+@Service
 public class PersonServiceImpl implements PersonService {
 
     @Autowired
@@ -20,6 +24,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person save(Person person) {
+        if (person.getId() == null)
+            person.setCreationDate(new Date());
+        person.setLastModified(new Date());
         return personRepository.save(person);
     }
 

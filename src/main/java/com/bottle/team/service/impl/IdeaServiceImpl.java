@@ -6,6 +6,8 @@ import com.bottle.team.service.IdeaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by PC on 09/10/2016.
  */
@@ -24,6 +26,9 @@ public class IdeaServiceImpl implements IdeaService {
 
     @Override
     public Idea save(Idea idea) {
+        if (idea.getId() == null)
+            idea.setCreationDate(new Date());
+        idea.setLastModified(new Date());
         return ideaRepository.save(idea);
     }
 

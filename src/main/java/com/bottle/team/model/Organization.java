@@ -11,4 +11,12 @@ import java.util.List;
 public class Organization extends Agent {
     @Relationship(type = "MEMBER")
     List<Member> members;
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
+    }
 }
