@@ -36,4 +36,12 @@ public class Idea extends BaseEntity {
     public void setSolution(String solution) {
         this.solution = solution;
     }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
 }

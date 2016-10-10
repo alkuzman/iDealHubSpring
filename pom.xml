@@ -92,7 +92,7 @@
                     <archive>
                         <manifest>
                             <!-- Jar file entry point -->
-                            <mainClass>com.cver.team.CVerApplication</mainClass>
+                            <mainClass>com.bottle.team.IdealApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
