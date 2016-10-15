@@ -17,6 +17,6 @@ public class Member extends BaseRelationship {
     Organization organization;
     @EndNode
     Person person;
-    @Property
+    @Property (name = "role")
     MemberRole role;
 }

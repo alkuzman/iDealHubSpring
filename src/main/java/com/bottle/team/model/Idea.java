@@ -1,15 +1,18 @@
 package com.bottle.team.model;
 
+import com.bottle.team.model.interfaces.NamedEntity;
+import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * Created by PC on 09/10/2016.
  */
 
-public class Idea extends BaseEntity {
+public class Idea extends BaseEntity implements NamedEntity {
+    @Property(name = "title")
     String title;
-    String problem;
-    String solution;
+    @Relationship(type = "PROBLEM")
+    Problem problem;
     @Relationship(type = "OWNER")
     Person owner;
 
@@ -21,20 +24,12 @@ public class Idea extends BaseEntity {
         this.title = title;
     }
 
-    public String getProblem() {
+    public Problem getProblem() {
         return problem;
     }
 
-    public void setProblem(String problem) {
+    public void setProblem(Problem problem) {
         this.problem = problem;
-    }
-
-    public String getSolution() {
-        return solution;
-    }
-
-    public void setSolution(String solution) {
-        this.solution = solution;
     }
 
     public Person getOwner() {
@@ -43,5 +38,10 @@ public class Idea extends BaseEntity {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public String constructName() {
+        return title;
     }
 }

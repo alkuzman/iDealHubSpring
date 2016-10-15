@@ -1,5 +1,6 @@
 package com.bottle.team.model;
 
+import com.bottle.team.model.interfaces.NamedEntity;
 import com.bottle.team.model.relationship.Member;
 import org.neo4j.ogm.annotation.Relationship;
 
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * Created by PC on 09/10/2016.
  */
-public class Organization extends Agent {
+public class Organization extends Agent implements NamedEntity {
     @Relationship(type = "MEMBER")
     List<Member> members;
 
@@ -18,5 +19,10 @@ public class Organization extends Agent {
 
     public void setMembers(List<Member> members) {
         this.members = members;
+    }
+
+    @Override
+    public String constructName() {
+        return name;
     }
 }

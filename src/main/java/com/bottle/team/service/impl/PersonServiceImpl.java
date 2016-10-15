@@ -24,9 +24,6 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person save(Person person) {
-        if (person.getId() == null)
-            person.setCreationDate(new Date());
-        person.setLastModified(new Date());
         return personRepository.save(person);
     }
 

@@ -1,20 +1,15 @@
 package com.bottle.team.model;
 
+import org.neo4j.ogm.annotation.Property;
+
 /**
  * Created by PC on 09/10/2016.
  */
 public class Agent extends BaseEntity {
-    String name;
+    @Property(name = "email")
     String email;
+    @Property(name = "telephone")
     String telephone;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getEmail() {
         return email;

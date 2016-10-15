@@ -1,11 +1,18 @@
 package com.bottle.team.model;
 
+import com.bottle.team.model.interfaces.NamedEntity;
+import com.bottle.team.model.interfaces.Questioner;
+import org.neo4j.ogm.annotation.Property;
+
 /**
  * Created by PC on 09/10/2016.
  */
-public class Person extends Agent {
+public class Person extends Agent implements Questioner, NamedEntity {
+    @Property(name = "firstName")
     String firstName;
+    @Property(name = "lastName")
     String lastName;
+    @Property(name = "password")
     String password;
 
     public String getFirstName() {
@@ -30,5 +37,10 @@ public class Person extends Agent {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String constructName() {
+        return String.format("%s %s", firstName, lastName);
     }
 }
