@@ -1,8 +1,6 @@
 package com.bottle.team.web;
 
-import com.bottle.team.model.Problem;
-import com.bottle.team.model.Solution;
-import com.bottle.team.service.ProblemService;
+import com.bottle.team.model.ideas.Solution;
 import com.bottle.team.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.bottle.team.repository;
 
-import com.bottle.team.model.Idea;
+import com.bottle.team.model.ideas.Idea;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 /**

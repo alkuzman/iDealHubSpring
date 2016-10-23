@@ -1,19 +1,24 @@
-package com.bottle.team.model;
+package com.bottle.team.model.authentication;
 
+import com.bottle.team.model.enumaration.Provider;
+import com.bottle.team.model.enumaration.Role;
 import com.bottle.team.model.interfaces.NamedEntity;
-import com.bottle.team.model.interfaces.Questioner;
 import org.neo4j.ogm.annotation.Property;
 
 /**
  * Created by PC on 09/10/2016.
  */
-public class Person extends Agent implements Questioner, NamedEntity {
+public class User extends Agent implements Person, NamedEntity {
     @Property(name = "firstName")
-    String firstName;
+    private String firstName;
     @Property(name = "lastName")
-    String lastName;
+    private String lastName;
     @Property(name = "password")
-    String password;
+    private String password;
+    @Property(name = "role")
+    private Role role;
+    @Property(name = "provider")
+    private Provider provider;
 
     public String getFirstName() {
         return firstName;
@@ -42,5 +47,21 @@ public class Person extends Agent implements Questioner, NamedEntity {
     @Override
     public String constructName() {
         return String.format("%s %s", firstName, lastName);
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 }

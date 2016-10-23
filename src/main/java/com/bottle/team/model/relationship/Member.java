@@ -1,7 +1,7 @@
 package com.bottle.team.model.relationship;
 
-import com.bottle.team.model.Organization;
-import com.bottle.team.model.Person;
+import com.bottle.team.model.authentication.Organization;
+import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.enumaration.MemberRole;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.Property;
@@ -16,7 +16,7 @@ public class Member extends BaseRelationship {
     @StartNode
     Organization organization;
     @EndNode
-    Person person;
+    User user;
     @Property (name = "role")
     MemberRole role;
 }

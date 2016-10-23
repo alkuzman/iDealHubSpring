@@ -1,20 +1,22 @@
-package com.bottle.team.model;
+package com.bottle.team.model.ideas;
 
+import com.bottle.team.model.BaseEntityImpl;
+import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.interfaces.NamedEntity;
+import com.bottle.team.model.sharing.Sharable;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * Created by PC on 09/10/2016.
  */
-
-public class Idea extends BaseEntity implements NamedEntity {
+public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
     @Property(name = "title")
-    String title;
+    private String title;
     @Relationship(type = "PROBLEM")
-    Problem problem;
+    private Problem problem;
     @Relationship(type = "OWNER")
-    Person owner;
+    private User owner;
 
     public String getTitle() {
         return title;
@@ -32,16 +34,25 @@ public class Idea extends BaseEntity implements NamedEntity {
         this.problem = problem;
     }
 
-    public Person getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Person owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
     @Override
     public String constructName() {
         return title;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Idea{" +
+                "title='" + title + '\'' +
+                ", problem=" + problem +
+                ", owner=" + owner +
+                '}';
     }
 }

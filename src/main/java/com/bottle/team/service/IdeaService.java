@@ -1,6 +1,6 @@
 package com.bottle.team.service;
 
-import com.bottle.team.model.Idea;
+import com.bottle.team.model.ideas.Idea;
 
 /**
  * Created by PC on 09/10/2016.

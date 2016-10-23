@@ -1,7 +1,6 @@
 package com.bottle.team.service.impl;
 
-import com.bottle.team.model.Problem;
-import com.bottle.team.model.Solution;
+import com.bottle.team.model.ideas.Solution;
 import com.bottle.team.repository.SolutionRepository;
 import com.bottle.team.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;

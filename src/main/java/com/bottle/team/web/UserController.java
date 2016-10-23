@@ -1,8 +1,7 @@
 package com.bottle.team.web;
 
-import com.bottle.team.model.Idea;
-import com.bottle.team.model.Person;
-import com.bottle.team.service.PersonService;
+import com.bottle.team.model.authentication.User;
+import com.bottle.team.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,23 +10,23 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController()
 @RequestMapping(value = "/people")
-public class PersonController {
+public class UserController {
     @Autowired
-    PersonService personService;
+    UserService personService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Person> findAll() {
+    public Iterable<User> findAll() {
         return personService.findAll();
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
-    public Person findById(@PathVariable Long id) {
+    public User findById(@PathVariable Long id) {
         return personService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Person save(@RequestBody Person person) {
-        return personService.save(person);
+    public User save(@RequestBody User user) {
+        return personService.save(user);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

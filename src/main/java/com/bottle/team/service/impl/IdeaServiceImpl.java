@@ -1,6 +1,6 @@
 package com.bottle.team.service.impl;
 
-import com.bottle.team.model.Idea;
+import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.repository.IdeaRepository;
 import com.bottle.team.service.IdeaService;
 import org.springframework.beans.factory.annotation.Autowired;

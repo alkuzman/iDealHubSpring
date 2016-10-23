@@ -1,7 +1,6 @@
 package com.bottle.team.web;
 
-import com.bottle.team.model.Idea;
-import com.bottle.team.model.Organization;
+import com.bottle.team.model.authentication.Organization;
 import com.bottle.team.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

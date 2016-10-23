@@ -1,8 +1,6 @@
 package com.bottle.team.service.impl;
 
-import com.bottle.team.model.Person;
-import com.bottle.team.model.Problem;
-import com.bottle.team.model.interfaces.Questioner;
+import com.bottle.team.model.ideas.Problem;
 import com.bottle.team.repository.ProblemRepository;
 import com.bottle.team.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;

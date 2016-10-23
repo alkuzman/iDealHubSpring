@@ -1,6 +1,6 @@
 package com.bottle.team.config;
 
-import com.bottle.team.model.BaseEntity;
+import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.interfaces.NamedEntity;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
@@ -37,12 +37,12 @@ public class Neo4jConfig extends Neo4jConfiguration {
                 @Override
                 public void onApplicationEvent(BeforeSaveEvent beforeSaveEvent) {
                     NamedEntity namedEntity = (NamedEntity) beforeSaveEvent.getEntity();
-                    BaseEntity baseEntity = (BaseEntity) beforeSaveEvent.getEntity();
-                    if (baseEntity.getId() == null) {
-                        baseEntity.setName(namedEntity.constructName());
-                        baseEntity.setCreationDate(new Date());
+                    BaseEntityImpl baseEntityImpl = (BaseEntityImpl) beforeSaveEvent.getEntity();
+                    if (baseEntityImpl.getId() == null) {
+                        baseEntityImpl.setName(namedEntity.constructName());
+                        baseEntityImpl.setCreationDate(new Date());
                     }
-                    baseEntity.setLastModified(new Date());
+                    baseEntityImpl.setLastModified(new Date());
                 }
             };
         }

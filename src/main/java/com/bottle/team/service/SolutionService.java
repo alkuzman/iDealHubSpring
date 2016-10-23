@@ -1,7 +1,6 @@
 package com.bottle.team.service;
 
-import com.bottle.team.model.Problem;
-import com.bottle.team.model.Solution;
+import com.bottle.team.model.ideas.Solution;
 
 /**
  * Created by Viki on 10/15/2016.

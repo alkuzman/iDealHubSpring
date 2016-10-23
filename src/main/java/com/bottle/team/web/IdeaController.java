@@ -1,6 +1,6 @@
 package com.bottle.team.web;
 
-import com.bottle.team.model.Idea;
+import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.service.IdeaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +26,7 @@ public class IdeaController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Idea save(@RequestBody Idea idea) {
+        System.out.println(idea);
         return ideaService.save(idea);
     }
 

@@ -1,5 +1,6 @@
 package com.bottle.team.model;
 
+import com.bottle.team.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -12,21 +13,18 @@ import java.util.Date;
 /**
  * Created by PC on 09/10/2016.
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type")
 @NodeEntity
-public class BaseEntity {
+public class BaseEntityImpl implements BaseEntity {
     @GraphId
-    Long id;
+    private Long id;
     @Property(name = "name")
-    String name;
+    private String name;
     @CreatedDate
     @Property(name = "creationDate")
-    Date creationDate;
+    private Date creationDate;
     @LastModifiedDate
     @Property(name = "lastModified")
-    Date lastModified;
+    private Date lastModified;
 
     public Long getId() {
         return id;
@@ -58,5 +56,15 @@ public class BaseEntity {
 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseEntityImpl{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creationDate=" + creationDate +
+                ", lastModified=" + lastModified +
+                '}';
     }
 }
