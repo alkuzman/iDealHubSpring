@@ -1,7 +1,6 @@
 package com.bottle.team.model;
 
 import com.bottle.team.model.interfaces.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
@@ -11,10 +10,13 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.util.Date;
 
 /**
- * Created by PC on 09/10/2016.
+ * Created by AKuzmanoski on 09/10/2016.
+ * @author AKuzmanoski
+ * @since 09/10/2016
+ * @version 1.0
  */
 @NodeEntity
-public class BaseEntityImpl implements BaseEntity {
+public abstract class BaseEntityImpl implements BaseEntity {
     @GraphId
     private Long id;
     @Property(name = "name")
