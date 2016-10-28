@@ -13,6 +13,8 @@ import org.neo4j.ogm.annotation.Relationship;
 public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
     @Property(name = "title")
     private String title;
+    @Property(name = "snackPeak")
+    private String snackPeak;
     @Relationship(type = "PROBLEM")
     private Problem problem;
     @Relationship(type = "OWNER")
@@ -54,5 +56,13 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
                 ", problem=" + problem +
                 ", owner=" + owner +
                 '}';
+    }
+
+    public String getSnackPeak() {
+        return snackPeak;
+    }
+
+    public void setSnackPeak(String snackPeak) {
+        this.snackPeak = snackPeak;
     }
 }
