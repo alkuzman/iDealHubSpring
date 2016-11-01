@@ -2,6 +2,7 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.authentication.User;
 import com.bottle.team.service.UserService;
+import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +33,14 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id) {
         personService.delete(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "email")
+    public User getUserByEmail(@RequestParam String email) {
+        User user = personService.findByEmail(email);
+        if (user == null) {
+            throw new ResourceNotFoundException();
+        }
+        return user;
     }
 }
