@@ -11,6 +11,10 @@ public class Agent extends BaseEntityImpl {
     private String email;
     @Property(name = "telephone")
     private String telephone;
+    @Property(name = "profilePicture")
+    private String profilePicture;
+    @Property(name = "coverPicture")
+    private String coverPicture;
 
     public String getEmail() {
         return email;
@@ -26,5 +30,21 @@ public class Agent extends BaseEntityImpl {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getCoverPicture() {
+        return coverPicture;
+    }
+
+    public void setCoverPicture(String coverPicture) {
+        this.coverPicture = coverPicture;
     }
 }

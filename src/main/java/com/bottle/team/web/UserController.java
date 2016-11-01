@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by PC on 10/10/2016.
  */
 @RestController()
-@RequestMapping(value = "/people")
+@RequestMapping(value = "/users")
 public class UserController {
     @Autowired
     UserService personService;
@@ -33,5 +33,4 @@ public class UserController {
     public void delete(@PathVariable Long id) {
         personService.delete(id);
     }
-
 }
