@@ -53,10 +53,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email);
-        try {
-            return user.cloneWithoutPassword();
-        } catch (CloneNotSupportedException e) {
-            
+        if (user != null) {
+            try {
+                return user.cloneWithoutPassword();
+            } catch (CloneNotSupportedException e) {
+
+            }
         }
         return null;
     }
