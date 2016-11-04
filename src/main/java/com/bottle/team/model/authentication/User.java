@@ -8,7 +8,7 @@ import org.neo4j.ogm.annotation.Property;
 /**
  * Created by PC on 09/10/2016.
  */
-public class User extends Agent implements Person, NamedEntity {
+public class User extends Agent implements Person, NamedEntity, Cloneable {
     @Property(name = "firstName")
     private String firstName;
     @Property(name = "lastName")
@@ -63,5 +63,28 @@ public class User extends Agent implements Person, NamedEntity {
 
     public void setProvider(Provider provider) {
         this.provider = provider;
+    }
+
+
+    @Override
+    public String toString() {
+        return getEmail() + " " + getPassword() + " " + getRole();
+    }
+
+    @Override
+    public User clone() throws CloneNotSupportedException {
+        User user = (User)super.clone();
+        user.setFirstName(getFirstName());
+        user.setLastName(getLastName());
+        user.setRole(getRole());
+        user.setProvider(getProvider());
+        user.setPassword(getPassword());
+        return user;
+    }
+
+    public User cloneWithoutPassword() throws CloneNotSupportedException {
+        User user = this.clone();
+        user.setPassword("");
+        return user;
     }
 }

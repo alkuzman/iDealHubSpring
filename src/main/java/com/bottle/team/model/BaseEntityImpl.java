@@ -16,7 +16,7 @@ import java.util.Date;
  * @version 1.0
  */
 @NodeEntity
-public abstract class BaseEntityImpl implements BaseEntity {
+public abstract class BaseEntityImpl implements BaseEntity, Cloneable {
     @GraphId
     private Long id;
     @Property(name = "name")
@@ -68,5 +68,15 @@ public abstract class BaseEntityImpl implements BaseEntity {
                 ", creationDate=" + creationDate +
                 ", lastModified=" + lastModified +
                 '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        BaseEntityImpl baseEntity = (BaseEntityImpl)super.clone();
+        baseEntity.setName(getName());
+        baseEntity.setCreationDate(getCreationDate());
+        baseEntity.setLastModified(getLastModified());
+        baseEntity.setId(getId());
+        return baseEntity;
     }
 }

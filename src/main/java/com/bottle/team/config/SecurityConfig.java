@@ -52,9 +52,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     OAuth2ClientContext oauth2ClientContext;
 
     @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean
@@ -93,7 +96,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
         httpSecurity.addFilterAfter(oauth2AuthenticationFilter(), SessionManagementFilter.class);
-        String thiswillberemoved = "tesst";
 
 
     }

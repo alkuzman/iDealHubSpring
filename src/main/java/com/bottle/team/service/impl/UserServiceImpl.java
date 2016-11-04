@@ -1,6 +1,8 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.model.authentication.User;
+import com.bottle.team.model.enumaration.Provider;
+import com.bottle.team.model.enumaration.Role;
 import com.bottle.team.repository.UserRepository;
 import com.bottle.team.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User save(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
+        user.setProvider(Provider.LOCAL);
         return userRepository.save(user);
     }
 
@@ -48,16 +53,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email);
-        user.setPassword("");
-        return user;
+        try {
+            return user.cloneWithoutPassword();
+        } catch (CloneNotSupportedException e) {
+            
+        }
+        return null;
     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = findByEmail(s);
+        System.out.println("TUKA");
+        User user = userRepository.findByEmail(s);
 
-        if(user == null)
+        if (user == null)
             throw new UsernameNotFoundException("User was not found");
+
+        System.out.println(user);
 
         SimpleGrantedAuthority role = new SimpleGrantedAuthority(user.getRole().toString());
         List<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();

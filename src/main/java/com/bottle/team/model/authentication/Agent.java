@@ -6,7 +6,7 @@ import org.neo4j.ogm.annotation.Property;
 /**
  * Created by PC on 09/10/2016.
  */
-public class Agent extends BaseEntityImpl {
+public class Agent extends BaseEntityImpl implements Cloneable {
     @Property(name = "email")
     private String email;
     @Property(name = "telephone")
@@ -46,5 +46,15 @@ public class Agent extends BaseEntityImpl {
 
     public void setCoverPicture(String coverPicture) {
         this.coverPicture = coverPicture;
+    }
+
+    @Override
+    public Agent clone() throws CloneNotSupportedException {
+        Agent agent = (Agent)super.clone();
+        agent.setEmail(getEmail());
+        agent.setTelephone(getTelephone());
+        agent.setProfilePicture(getProfilePicture());
+        agent.setCoverPicture(getCoverPicture());
+        return agent;
     }
 }
