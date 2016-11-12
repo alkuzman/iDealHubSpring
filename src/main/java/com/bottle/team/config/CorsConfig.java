@@ -12,7 +12,7 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(StaticConstants.ANGULAR_APP_URL)
+                .allowedOrigins(StaticConstants.ANGULAR_APP_URL, StaticConstants.IP_ANGULAR_APP_URL)
                 .allowedMethods("GET","POST","PUT","OPTIONS","DELETE");
 
     }
