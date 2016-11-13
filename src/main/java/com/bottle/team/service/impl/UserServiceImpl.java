@@ -4,6 +4,7 @@ import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.enumaration.Provider;
 import com.bottle.team.model.enumaration.Role;
 import com.bottle.team.repository.UserRepository;
+import com.bottle.team.service.RegistrationMailService;
 import com.bottle.team.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    RegistrationMailService registrationMailService;
+
     @Override
     public Iterable<User> findAll() {
         return userRepository.findAll();
@@ -37,7 +41,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
         user.setProvider(Provider.LOCAL);
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        registrationMailService.sendActivationMail(user, true);
+        return  user;
     }
 
     @Override
