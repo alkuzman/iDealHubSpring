@@ -4,6 +4,7 @@ import com.bottle.team.model.authentication.User;
 import com.bottle.team.service.MailSender;
 import org.apache.commons.codec.CharEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,13 @@ public class MailSenderImpl implements MailSender {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Value("${app.mail.from}")
+    private String from;
+
 
     @Override
     public void sendEmail(User user, String subject, String content, boolean isHtml) {
         final String to = user.getEmail();
-        final String from = "contact@ideal-hub.com";
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
