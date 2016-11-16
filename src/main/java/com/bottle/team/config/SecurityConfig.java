@@ -4,6 +4,7 @@ import com.bottle.team.auth.LocalLoginFailureHandler;
 import com.bottle.team.auth.LocalLoginSuccessHandler;
 import com.bottle.team.auth.OAuth2TokenService;
 import com.bottle.team.auth.OAuthClientResource;
+import com.bottle.team.config.helper.RestAuthenticationEntryPoint;
 import com.bottle.team.filters.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
@@ -23,11 +24,9 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.filter.CompositeFilter;
 import org.springframework.web.filter.RequestContextFilter;
 
@@ -44,6 +43,9 @@ import java.util.List;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -65,8 +67,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
+        return new RestAuthenticationEntryPoint();
+    }
 
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.logout()
                 .logoutUrl("/logout");
@@ -81,21 +87,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.authorizeRequests()
                 .antMatchers("/doLogin").permitAll()
-                .antMatchers("logout").permitAll()
-                .antMatchers("/testGet").permitAll()
-                .antMatchers("/data").authenticated();
+                .antMatchers("/logout").permitAll();
 
 
+        httpSecurity.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
 
         httpSecurity.csrf()
               .csrfTokenRepository(csrfTokenRepository());
-        // httpSecurity.csrf().disable();
+        httpSecurity.csrf().disable();
 
+        //httpSecurity.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 
 
-        httpSecurity.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
-        httpSecurity.addFilterAfter(oauth2AuthenticationFilter(), SessionManagementFilter.class);
+        //httpSecurity.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+        //httpSecurity.addFilterAfter(oauth2AuthenticationFilter(), SessionManagementFilter.class);
 
 
     }
