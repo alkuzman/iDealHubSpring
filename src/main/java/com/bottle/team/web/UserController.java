@@ -4,7 +4,11 @@ import com.bottle.team.model.authentication.User;
 import com.bottle.team.service.UserService;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 /**
  * Created by PC on 10/10/2016.
@@ -16,7 +20,7 @@ public class UserController {
     UserService personService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<User> findAll() {
+    public Iterable<User> findAll(Principal principal) {
         return personService.findAll();
     }
 

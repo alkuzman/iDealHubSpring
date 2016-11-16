@@ -24,6 +24,7 @@ public class RegistrationMailServiceImpl implements RegistrationMailService {
     private SpringTemplateEngine templateEngine;
 
     @Autowired
+    @Qualifier("asyncMailSender")
     MailSender asyncMailSender;
 
     @Autowired
