@@ -1,4 +1,4 @@
-package com.bottle.team.filters.helper;
+package com.bottle.team.auth.jwt.common;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LoginRequest {
     private String username;
     private String password;
+    private Boolean rememberMe;
 
     @JsonCreator
-    public LoginRequest(@JsonProperty("username") String username, @JsonProperty("password") String password) {
+    public LoginRequest(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("rememberMe") Boolean rememberMe) {
         this.username = username;
         this.password = password;
+        this.rememberMe = rememberMe;
     }
 
     public String getUsername() {
@@ -22,5 +24,9 @@ public class LoginRequest {
 
     public String getPassword() {
         return password;
+    }
+
+    public Boolean getRememberMe() {
+        return rememberMe;
     }
 }

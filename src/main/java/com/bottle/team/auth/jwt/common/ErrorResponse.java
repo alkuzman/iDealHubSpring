@@ -1,4 +1,4 @@
-package com.bottle.team.auth.helper;
+package com.bottle.team.auth.jwt.common;
 
 import org.springframework.http.HttpStatus;
 

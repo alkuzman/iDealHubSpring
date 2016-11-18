@@ -1,16 +1,17 @@
-package com.bottle.team.auth;
+package com.bottle.team.auth.jwt.handlers;
 
-import com.bottle.team.auth.helper.ErrorCode;
-import com.bottle.team.auth.helper.ErrorResponse;
-import com.bottle.team.auth.helper.JwtExpiredTokenException;
-import com.bottle.team.filters.helper.AuthMethodNotSupportedException;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.bottle.team.auth.jwt.common.ErrorCode;
+import com.bottle.team.auth.jwt.common.ErrorResponse;
+import com.bottle.team.auth.jwt.exceptions.AuthMethodNotSupportedException;
+import com.bottle.team.auth.jwt.exceptions.JwtExpiredTokenException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import java.io.IOException;
 /**
  * Created by Viki on 11/16/2016.
  */
+@Component
 public class JwtAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     private final ObjectMapper mapper;

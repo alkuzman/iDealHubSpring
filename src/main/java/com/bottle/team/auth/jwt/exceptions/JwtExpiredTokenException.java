@@ -1,5 +1,6 @@
-package com.bottle.team.auth.helper;
+package com.bottle.team.auth.jwt.exceptions;
 
+import com.bottle.team.auth.jwt.token.JwtToken;
 import org.springframework.security.core.AuthenticationException;
 
 public class JwtExpiredTokenException extends AuthenticationException {

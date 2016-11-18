@@ -1,4 +1,4 @@
-package com.bottle.team.filters.helper;
+package com.bottle.team.auth.jwt.exceptions;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 

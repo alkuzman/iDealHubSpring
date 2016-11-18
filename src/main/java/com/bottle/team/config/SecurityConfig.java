@@ -1,20 +1,26 @@
 package com.bottle.team.config;
 
-import com.bottle.team.auth.LocalLoginFailureHandler;
-import com.bottle.team.auth.LocalLoginSuccessHandler;
-import com.bottle.team.auth.OAuth2TokenService;
-import com.bottle.team.auth.OAuthClientResource;
-import com.bottle.team.config.helper.RestAuthenticationEntryPoint;
-import com.bottle.team.filters.CsrfHeaderFilter;
+import com.bottle.team.auth.jwt.antMatchers.SkipPathRequestMatcher;
+import com.bottle.team.auth.jwt.entryPoints.RestAuthenticationEntryPoint;
+import com.bottle.team.auth.jwt.providers.JwtAuthenticationProvider;
+import com.bottle.team.auth.jwt.providers.JwtLoginProvider;
+import com.bottle.team.auth.jwt.token.extractors.TokenExtractor;
+import com.bottle.team.auth.oAuth2.OAuth2TokenService;
+import com.bottle.team.auth.oAuth2.OAuthClientResource;
+import com.bottle.team.filters.JwtLoginProcessingFilter;
+import com.bottle.team.filters.JwtTokenAuthenticationProcessingFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -23,8 +29,9 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.filter.CompositeFilter;
@@ -32,6 +39,7 @@ import org.springframework.web.filter.RequestContextFilter;
 
 import javax.servlet.Filter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -44,8 +52,11 @@ import java.util.List;
 @EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
+    public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/auth/login";
+    public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/ideas";
+    public static final String TOKEN_REFRESH_ENTRY_POINT = "/auth/token";
+
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -57,10 +68,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder);
-    }
+    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    @Autowired
+    private AuthenticationSuccessHandler successHandler;
+    @Autowired
+    private AuthenticationFailureHandler failureHandler;
+    @Autowired
+    private JwtLoginProvider jwtLoginProvider;
+    @Autowired
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
+
+    @Autowired
+    private TokenExtractor tokenExtractor;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -74,31 +100,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.logout()
-                .logoutUrl("/logout");
+        httpSecurity
+                .csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(this.restAuthenticationEntryPoint)
 
-        httpSecurity.formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .loginProcessingUrl("/doLogin")
-                .successHandler(localLoginSuccessHandler())
-                .failureHandler(localLoginFailureHandler());
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
+                .and()
+                .authorizeRequests()
+                .antMatchers(FORM_BASED_LOGIN_ENTRY_POINT).permitAll()
+                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
 
-        httpSecurity.authorizeRequests()
-                .antMatchers("/doLogin").permitAll()
-                .antMatchers("/logout").permitAll();
+                .and()
+                .authorizeRequests()
+                .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
 
-
-        httpSecurity.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
-
-        httpSecurity.csrf()
-              .csrfTokenRepository(csrfTokenRepository());
-        httpSecurity.csrf().disable();
-
-        //httpSecurity.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        httpSecurity.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
-
+                .and()
+                .addFilterBefore(buildJwtLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
 
         //httpSecurity.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
         //httpSecurity.addFilterAfter(oauth2AuthenticationFilter(), SessionManagementFilter.class);
@@ -107,13 +129,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    LocalLoginSuccessHandler localLoginSuccessHandler() {
-        return new LocalLoginSuccessHandler();
+    protected Filter buildJwtTokenAuthenticationProcessingFilter() {
+        List<String> pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
+        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        JwtTokenAuthenticationProcessingFilter filter
+                = new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
     }
 
     @Bean
-    LocalLoginFailureHandler localLoginFailureHandler() {
-        return new LocalLoginFailureHandler();
+    protected Filter buildJwtLoginProcessingFilter() {
+        JwtLoginProcessingFilter filter = new JwtLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, successHandler, failureHandler, objectMapper);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(jwtLoginProvider);
+        auth.authenticationProvider(jwtAuthenticationProvider);
     }
 
     private Filter oauth2AuthenticationFilter() throws Exception {

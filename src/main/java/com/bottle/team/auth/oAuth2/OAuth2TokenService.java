@@ -1,4 +1,4 @@
-package com.bottle.team.auth;
+package com.bottle.team.auth.oAuth2;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,8 +22,8 @@ import java.util.*;
  * Created by Dimitar on 6/25/2016.
  */
 public class OAuth2TokenService implements ResourceServerTokenServices {
-    protected final Log logger = LogFactory.getLog(this.getClass());
     private static final String[] PRINCIPAL_KEYS = new String[]{"user", "username", "userid", "user_id", "login", "name", "id"};
+    protected final Log logger = LogFactory.getLog(this.getClass());
     private final String userInfoEndpointUrl;
     private final String clientId;
     private OAuth2RestOperations restTemplate;

@@ -1,4 +1,4 @@
-package com.bottle.team.auth.helper;
+package com.bottle.team.auth.jwt.common;
 
 public enum Scopes {
     REFRESH_TOKEN;

@@ -1,15 +1,16 @@
-package com.bottle.team.auth;
+package com.bottle.team.auth.jwt.handlers;
 
-import com.bottle.team.auth.helper.JwtToken;
-import com.bottle.team.auth.helper.JwtTokenFactory;
-import com.bottle.team.auth.helper.UserContext;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.bottle.team.auth.jwt.common.UserContext;
+import com.bottle.team.auth.jwt.token.JwtToken;
+import com.bottle.team.auth.jwt.token.JwtTokenFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import java.util.Map;
 /**
  * Created by Viki on 11/16/2016.
  */
+@Component
 public class JwtAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final ObjectMapper mapper;
     private final JwtTokenFactory tokenFactory;

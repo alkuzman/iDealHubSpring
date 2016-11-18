@@ -1,4 +1,4 @@
-package com.bottle.team.auth.helper;
+package com.bottle.team.auth.jwt.token;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.Claims;

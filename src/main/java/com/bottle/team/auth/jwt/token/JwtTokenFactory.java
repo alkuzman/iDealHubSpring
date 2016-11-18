@@ -1,6 +1,8 @@
-package com.bottle.team.auth.helper;
+package com.bottle.team.auth.jwt.token;
 
-import com.bottle.team.config.JwtSettings;
+import com.bottle.team.auth.jwt.common.Scopes;
+import com.bottle.team.auth.jwt.common.UserContext;
+import com.bottle.team.auth.jwt.settings.JwtSettings;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -61,7 +63,7 @@ public class JwtTokenFactory {
                 .setIssuer(settings.getTokenIssuer())
                 .setId(UUID.randomUUID().toString())
                 .setIssuedAt(currentTime.toDate())
-                .setExpiration(currentTime.plusMinutes(settings.getRefreshTokenExpTime()).toDate())
+                .setExpiration(currentTime.plusMinutes(userContext.isRememberMe() ? settings.getRefreshTokenExpTimeRememberMe() : settings.getRefreshTokenExpTime()).toDate())
                 .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
                 .compact();
 

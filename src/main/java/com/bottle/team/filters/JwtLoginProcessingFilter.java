@@ -1,10 +1,11 @@
 package com.bottle.team.filters;
 
+import com.bottle.team.auth.jwt.common.LoginRequest;
+import com.bottle.team.auth.jwt.common.UserContext;
+import com.bottle.team.auth.jwt.exceptions.AuthMethodNotSupportedException;
 import com.bottle.team.common.WebUtil;
-import com.bottle.team.filters.helper.AuthMethodNotSupportedException;
-import com.bottle.team.filters.helper.LoginRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,7 +51,9 @@ public class JwtLoginProcessingFilter extends AbstractAuthenticationProcessingFi
             throw new AuthenticationServiceException("Username or Password not provided");
         }
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+        UserContext userContext = UserContext.create(loginRequest.getUsername(), loginRequest.getRememberMe(), null);
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userContext, loginRequest.getPassword());
 
         return this.getAuthenticationManager().authenticate(token);
     }

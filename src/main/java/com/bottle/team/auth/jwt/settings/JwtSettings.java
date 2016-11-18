@@ -1,4 +1,4 @@
-package com.bottle.team.config;
+package com.bottle.team.auth.jwt.settings;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +19,17 @@ public class JwtSettings {
 
 
     private Integer refreshTokenExpTime;
+
+
+    private Integer refreshTokenExpTimeRememberMe;
+
+    public Integer getRefreshTokenExpTimeRememberMe() {
+        return refreshTokenExpTimeRememberMe;
+    }
+
+    public void setRefreshTokenExpTimeRememberMe(Integer refreshTokenExpTimeRememberMe) {
+        this.refreshTokenExpTimeRememberMe = refreshTokenExpTimeRememberMe;
+    }
 
     public Integer getRefreshTokenExpTime() {
         return refreshTokenExpTime;

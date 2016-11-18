@@ -1,4 +1,4 @@
-package com.bottle.team.auth.helper;
+package com.bottle.team.auth.jwt.common;
 
 /**
  * Created by Viki on 11/16/2016.
