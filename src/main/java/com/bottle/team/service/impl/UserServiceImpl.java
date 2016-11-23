@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        User user = userRepository.findByEmail(email);
+    public User findByEmailWithNoPassword(String email) {
+        User user = this.findByEmail(email);
         if (user != null) {
             try {
                 return user.cloneWithoutPassword();
@@ -70,8 +70,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(s);
+        User user = this.findByEmail(s);
 
         if (user == null)
             throw new UsernameNotFoundException("User was not found");

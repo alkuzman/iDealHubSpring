@@ -7,5 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * Created by PC on 09/10/2016.
  */
 public interface UserService extends Service<User>, UserDetailsService {
+    User findByEmailWithNoPassword(String email);
+
     User findByEmail(String email);
 }

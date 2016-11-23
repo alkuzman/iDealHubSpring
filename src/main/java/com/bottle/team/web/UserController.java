@@ -4,8 +4,6 @@ import com.bottle.team.model.authentication.User;
 import com.bottle.team.service.UserService;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -41,7 +39,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, params = "email")
     public User getUserByEmail(@RequestParam String email) {
-        User user = personService.findByEmail(email);
+        User user = personService.findByEmailWithNoPassword(email);
         if (user == null) {
             throw new ResourceNotFoundException();
         }
