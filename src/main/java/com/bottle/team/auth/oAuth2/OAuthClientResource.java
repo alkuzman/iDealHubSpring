@@ -1,4 +1,4 @@
-package com.bottle.team.auth;
+package com.bottle.team.auth.oAuth2;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
