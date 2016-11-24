@@ -5,6 +5,7 @@ import com.bottle.team.repository.SolutionRepository;
 import com.bottle.team.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Created by Viki on 10/15/2016.
@@ -32,5 +33,10 @@ public class SolutionServiceImpl implements SolutionService {
     @Override
     public Solution findById(Long id) {
         return solutionRepository.findOne(id);
+    }
+
+    @Override
+    public Solution add(Solution object) {
+        return save(object);
     }
 }

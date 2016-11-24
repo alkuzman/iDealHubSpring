@@ -21,7 +21,13 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public Problem save(Problem problem) {
+
         return problemRepository.save(problem);
+    }
+
+    @Override
+    public Problem add(Problem object) {
+        return save(object);
     }
 
     @Override

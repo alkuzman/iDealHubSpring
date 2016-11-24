@@ -10,4 +10,6 @@ public interface UserService extends Service<User>, UserDetailsService {
     User findByEmailWithNoPassword(String email);
 
     User findByEmail(String email);
+
+    boolean isEmailTaken(String email);
 }

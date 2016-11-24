@@ -12,4 +12,5 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Member.class)
 })
 public interface Person extends BaseEntity {
+    User user();
 }

@@ -3,16 +3,23 @@ package com.bottle.team.model.authentication;
 import com.bottle.team.model.enumaration.Provider;
 import com.bottle.team.model.enumaration.Role;
 import com.bottle.team.model.interfaces.NamedEntity;
+import com.sun.istack.internal.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 
 /**
  * Created by PC on 09/10/2016.
  */
 public class User extends Agent implements Person, NamedEntity, Cloneable {
+    @NotEmpty
     @Property(name = "firstName")
     private String firstName;
+    @NotEmpty
     @Property(name = "lastName")
     private String lastName;
+    @Length(min = 8)
     @Property(name = "password")
     private String password;
     @Property(name = "role")
@@ -86,5 +93,10 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
         User user = this.clone();
         user.setPassword("");
         return user;
+    }
+
+    @Override
+    public User user() {
+        return this;
     }
 }

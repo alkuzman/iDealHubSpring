@@ -24,7 +24,7 @@ public class Member extends BaseEntityImpl implements Person {
         this.organization = organization;
     }
 
-    public User getUser() {
+    public User user() {
         return user;
     }
 
@@ -39,4 +39,6 @@ public class Member extends BaseEntityImpl implements Person {
     public void setRole(MemberRole role) {
         this.role = role;
     }
+
+
 }

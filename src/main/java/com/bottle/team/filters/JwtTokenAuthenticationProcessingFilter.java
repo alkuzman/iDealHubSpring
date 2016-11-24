@@ -41,7 +41,11 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
         String tokenPayload = httpServletRequest.getHeader(SecurityConfig.JWT_TOKEN_HEADER_PARAM);
         RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload));
 
-        return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
+        try {
+            return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
+        } catch (AuthenticationException ex) {
+            return null;
+        }
     }
 
     @Override

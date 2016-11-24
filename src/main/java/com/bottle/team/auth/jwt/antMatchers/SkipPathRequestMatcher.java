@@ -1,8 +1,10 @@
 package com.bottle.team.auth.jwt.antMatchers;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +17,14 @@ import java.util.stream.Collectors;
 public class SkipPathRequestMatcher implements RequestMatcher {
 
     private final OrRequestMatcher matchers;
-    private final RequestMatcher processingMatcher;
+    private final OrRequestMatcher processingMatcher;
 
-    public SkipPathRequestMatcher(List<String> pathsToSkip, String processingPath) {
+    public SkipPathRequestMatcher(List<String> pathsToSkip, List<String> processingPaths) {
         Assert.notNull(pathsToSkip);
-        List<RequestMatcher> m = pathsToSkip.stream().map(path -> new AntPathRequestMatcher(path)).collect(Collectors.toList());
-        matchers = new OrRequestMatcher(m);
-        processingMatcher = new AntPathRequestMatcher(processingPath);
+        List<RequestMatcher> s = pathsToSkip.stream().map(path -> new AntPathRequestMatcher(path)).collect(Collectors.toList());
+        List<RequestMatcher> m = processingPaths.stream().map(path -> new AntPathRequestMatcher(path, HttpMethod.POST.toString())).collect(Collectors.toList());
+        matchers = new OrRequestMatcher(s);
+        processingMatcher = new OrRequestMatcher(m);
     }
 
     @Override

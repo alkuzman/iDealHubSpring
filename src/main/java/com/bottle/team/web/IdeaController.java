@@ -1,8 +1,10 @@
 package com.bottle.team.web;
 
+import com.bottle.team.auth.jwt.common.UserContext;
 import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.service.IdeaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**

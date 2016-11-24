@@ -2,8 +2,12 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.ideas.Solution;
 import com.bottle.team.service.SolutionService;
+import com.bottle.team.validation.SolutionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Created by Viki on 10/15/2016.
@@ -13,19 +17,26 @@ import org.springframework.web.bind.annotation.*;
 public class SolutionController {
     @Autowired
     SolutionService solutionService;
+    @Autowired
+    SolutionValidator solutionValidator;
 
     @RequestMapping(method = RequestMethod.GET)
     public Iterable<Solution> findAll() {
         return solutionService.findAll();
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
+    @InitBinder("user")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(solutionValidator);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Solution findById(@PathVariable Long id) {
         return solutionService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Solution save(@RequestBody Solution solution) {
+    public Solution save(@Valid @RequestBody Solution solution) {
         return solutionService.save(solution);
     }
 

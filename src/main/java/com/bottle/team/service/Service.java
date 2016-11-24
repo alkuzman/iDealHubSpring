@@ -8,6 +8,8 @@ public interface Service<T> {
 
     T save(T object);
 
+    T add (T object);
+
     void delete(Long id);
 
     T findById(Long id);

@@ -41,4 +41,9 @@ public class IdeaServiceImpl implements IdeaService {
     public Idea findById(Long id) {
         return ideaRepository.findOne(id);
     }
+
+    @Override
+    public Idea add(Idea object) {
+        return save(object);
+    }
 }
