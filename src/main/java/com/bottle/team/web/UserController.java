@@ -49,7 +49,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, params = "email")
     public User getUserByEmail(@RequestParam String email) {
-        User user = userService.findByEmailWithNoPassword(email);
+        User user = userService.findByEmail(email);
         if (user == null) {
             throw new ResourceNotFoundException();
         }
