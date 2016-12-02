@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by PC on 09/10/2016.
@@ -45,5 +46,10 @@ public class IdeaServiceImpl implements IdeaService {
     @Override
     public Idea add(Idea object) {
         return save(object);
+    }
+
+    @Override
+    public Iterable<Idea> findByProblemId(Long id) {
+        return ideaRepository.findByProblem_Id(id);
     }
 }

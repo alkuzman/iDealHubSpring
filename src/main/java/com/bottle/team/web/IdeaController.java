@@ -21,6 +21,11 @@ public class IdeaController {
         return ideaService.findAll();
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "problemId")
+    public Iterable<Idea> ideaListByProblemId(@RequestParam Long problemId) {
+        return ideaService.findByProblemId(problemId);
+    }
+
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
     public Idea findById(@PathVariable Long id) {
         return ideaService.findById(id);
