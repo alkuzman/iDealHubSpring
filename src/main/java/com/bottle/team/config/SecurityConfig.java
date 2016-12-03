@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String IDEAS = "/ideas";
     public static final String PROBLEMS = "/problems";
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/auth/token";
+    public static final String JWT_TOKEN_HEADER_PARAM_2 = "Authorization";
 
 
     @Autowired
