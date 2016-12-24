@@ -42,7 +42,9 @@ public class JwtTokenFactory {
                 .setIssuer(settings.getTokenIssuer())
                 .setIssuedAt(currentTime.toDate())
                 .setExpiration(currentTime.plusMinutes(settings.getTokenExpirationTime()).toDate())
-                .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
+                .setHeaderParam("alg", "HS256")
+                .setHeaderParam("typ", "JWT")
+                .signWith(SignatureAlgorithm.HS256, settings.getTokenSigningKey())
                 .compact();
 
         return new AccessJwtToken(token, claims);

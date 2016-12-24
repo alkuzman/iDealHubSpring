@@ -34,7 +34,10 @@ public class UserController {
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
     public User findById(@PathVariable Long id) {
-        return userService.findById(id);
+        User user = userService.findById(id);
+        if (user == null)
+            throw new ResourceNotFoundException();
+        return user;
     }
 
     @RequestMapping(method = RequestMethod.POST)
