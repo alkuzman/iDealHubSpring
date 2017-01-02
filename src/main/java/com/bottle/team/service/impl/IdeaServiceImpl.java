@@ -52,4 +52,9 @@ public class IdeaServiceImpl implements IdeaService {
     public Iterable<Idea> findByProblemId(Long id) {
         return ideaRepository.findByProblem_Id(id);
     }
+
+    @Override
+    public Iterable<Idea> findByOwnerId(Long ownerId) {
+        return ideaRepository.findByOwner_Id(ownerId);
+    }
 }

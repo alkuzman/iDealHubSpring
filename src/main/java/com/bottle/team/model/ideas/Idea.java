@@ -6,12 +6,14 @@ import com.bottle.team.model.interfaces.NamedEntity;
 import com.bottle.team.model.sharing.Sharable;
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * Created by PC on 09/10/2016.
  */
+@NodeEntity
 public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
     @NotEmpty
     @Property(name = "title")

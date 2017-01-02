@@ -12,4 +12,6 @@ public interface IdeaService extends Service<Idea> {
     Idea findByTitle(String title);
 
     Iterable<Idea> findByProblemId(Long id);
+
+    Iterable<Idea> findByOwnerId(Long ownerId);
 }

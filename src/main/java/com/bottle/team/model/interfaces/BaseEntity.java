@@ -1,12 +1,14 @@
 package com.bottle.team.model.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.neo4j.ogm.annotation.NodeEntity;
 
 import java.util.Date;
 
 /**
  * Created by PC on 23/10/2016.
  */
+@NodeEntity
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
         property = "type")

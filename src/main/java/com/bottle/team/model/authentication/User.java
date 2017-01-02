@@ -12,6 +12,7 @@ import org.neo4j.ogm.annotation.Property;
 /**
  * Created by PC on 09/10/2016.
  */
+@NodeEntity
 public class User extends Agent implements Person, NamedEntity, Cloneable {
     @NotEmpty
     @Property(name = "firstName")

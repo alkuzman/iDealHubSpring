@@ -1,5 +1,6 @@
 package com.bottle.team.web;
 
+import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.model.ideas.Problem;
 import com.bottle.team.service.ProblemService;
 import com.bottle.team.validation.ProblemValidator;
@@ -29,6 +30,11 @@ public class ProblemController {
     @RequestMapping(method = RequestMethod.GET)
     public Iterable<Problem> findAll() {
         return problemService.findAll();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "questionerId")
+    public Iterable<Problem> ideaListByUserId(@RequestParam Long questionerId) {
+        return problemService.findByQuestionerId(questionerId);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

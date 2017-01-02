@@ -39,4 +39,9 @@ public class ProblemServiceImpl implements ProblemService {
     public Problem findById(Long id) {
         return problemRepository.findOne(id);
     }
+
+    @Override
+    public Iterable<Problem> findByQuestionerId(Long questionerId) {
+        return problemRepository.findByQuestioner_Id(questionerId);
+    }
 }

@@ -2,12 +2,14 @@ package com.bottle.team.model.authentication;
 
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.enumaration.MemberRole;
+import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * Created by Viki on 10/14/2016.
  */
+@NodeEntity
 public class Member extends BaseEntityImpl implements Person {
     @Relationship(type = "ORGANIZATION")
     private Organization organization;

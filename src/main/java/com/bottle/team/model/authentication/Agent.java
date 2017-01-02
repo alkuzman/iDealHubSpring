@@ -4,11 +4,13 @@ import com.bottle.team.model.BaseEntityImpl;
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 
 /**
  * Created by PC on 09/10/2016.
  */
+@NodeEntity
 public class Agent extends BaseEntityImpl implements Cloneable {
     @Email
     @Property(name = "email")
