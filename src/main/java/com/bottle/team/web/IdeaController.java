@@ -2,6 +2,7 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.service.IdeaService;
+import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +30,12 @@ public class IdeaController {
         return ideaService.findByOwnerId(ownerId);
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Idea findById(@PathVariable Long id) {
-        return ideaService.findById(id);
+        Idea idea = ideaService.findById(id);
+        if (idea == null)
+            throw new ResourceNotFoundException();
+        return idea;
     }
 
     @RequestMapping(method = RequestMethod.POST)

@@ -4,6 +4,7 @@ import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.model.ideas.Problem;
 import com.bottle.team.service.ProblemService;
 import com.bottle.team.validation.ProblemValidator;
+import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,10 @@ public class ProblemController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Problem findById(@PathVariable Long id) {
-        return problemService.findById(id);
+        Problem problem = problemService.findById(id);
+        if (problem == null)
+        throw new ResourceNotFoundException();
+        return problem;
     }
 
     @RequestMapping(method = RequestMethod.POST)

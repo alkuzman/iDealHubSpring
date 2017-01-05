@@ -3,6 +3,7 @@ package com.bottle.team.web;
 import com.bottle.team.model.ideas.Solution;
 import com.bottle.team.service.SolutionService;
 import com.bottle.team.validation.SolutionValidator;
+import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,10 @@ public class SolutionController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Solution findById(@PathVariable Long id) {
-        return solutionService.findById(id);
+        Solution solution = solutionService.findById(id);
+        if (solution == null)
+            throw new ResourceNotFoundException();
+        return solution;
     }
 
     @RequestMapping(method = RequestMethod.POST)

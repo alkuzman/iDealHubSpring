@@ -2,6 +2,7 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.authentication.Organization;
 import com.bottle.team.service.OrganizationService;
+import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,12 @@ public class OrganizationController {
         return organizationService.findAll();
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Organization findById(@PathVariable Long id) {
-        return organizationService.findById(id);
+        Organization organization = organizationService.findById(id);
+        if (organization == null)
+            throw new ResourceNotFoundException();
+        return organization;
     }
 
     @RequestMapping(method = RequestMethod.POST)
