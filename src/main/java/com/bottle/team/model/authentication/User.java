@@ -20,7 +20,7 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
     @NotEmpty
     @Property(name = "lastName")
     private String lastName;
-    @Length(min = 8)
+    @Length(min = 6)
     @Property(name = "password")
     private String password;
     @Property(name = "role")
