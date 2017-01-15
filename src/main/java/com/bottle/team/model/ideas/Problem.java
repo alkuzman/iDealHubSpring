@@ -1,5 +1,8 @@
 package com.bottle.team.model.ideas;
 
+import com.bottle.team.lucene.annotations.Boost;
+import com.bottle.team.lucene.annotations.Field;
+import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.Person;
 import com.bottle.team.model.interfaces.NamedEntity;
@@ -18,14 +21,20 @@ import javax.validation.constraints.NotNull;
 public class Problem extends BaseEntityImpl implements NamedEntity, Sharable {
     @NotEmpty
     @Property(name = "title")
+    @Field(store = org.apache.lucene.document.Field.Store.YES)
+    @Boost(3.0f)
     private String title;
 
     @Property(name = "text")
     @NotEmpty
+    @Field(store = org.apache.lucene.document.Field.Store.YES)
+    @Boost(1.0f)
     private String text;
 
     @Relationship(type = "QUESTIONER")
     @NotNull
+    @IndexedEmbedded()
+    @Boost(0.5f)
     private Person questioner;
 
     public String getText() {

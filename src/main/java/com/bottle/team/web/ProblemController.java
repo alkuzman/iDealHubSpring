@@ -2,7 +2,9 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.model.ideas.Problem;
+import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.service.ProblemService;
+import com.bottle.team.service.helper.ProblemFilter;
 import com.bottle.team.validation.ProblemValidator;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +31,13 @@ public class ProblemController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Problem> findAll() {
-        return problemService.findAll();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = "questionerId")
-    public Iterable<Problem> ideaListByUserId(@RequestParam Long questionerId) {
-        return problemService.findByQuestionerId(questionerId);
+    public Iterable<? extends BaseEntity> findAll(
+            @RequestParam(required = false) Long questionerId,
+            @RequestParam(required = false) Integer offset,
+            @RequestParam(required = false) Integer limit,
+            @RequestParam(required = false) String query) {
+        ProblemFilter problemFilter = new ProblemFilter(null, questionerId);
+        return problemService.findAll(query, offset, limit, problemFilter);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

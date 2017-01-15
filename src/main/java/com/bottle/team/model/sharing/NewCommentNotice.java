@@ -1,7 +1,11 @@
 package com.bottle.team.model.sharing;
 
+import com.bottle.team.lucene.annotations.Boost;
+import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.model.comments.Comment;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 
 /**
  * Created by AKuzmanoski on 23/10/2016.
@@ -12,6 +16,8 @@ import org.neo4j.ogm.annotation.NodeEntity;
  */
 @NodeEntity
 public class NewCommentNotice extends Notice {
+    @NotEmpty
+    @Property(name = "comment")
     private Comment comment;
 
     public Comment getComment() {

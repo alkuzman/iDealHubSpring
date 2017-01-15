@@ -1,5 +1,8 @@
 package com.bottle.team.model.ideas;
 
+import com.bottle.team.lucene.annotations.Boost;
+import com.bottle.team.lucene.annotations.Field;
+import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.interfaces.NamedEntity;
@@ -17,13 +20,21 @@ import org.neo4j.ogm.annotation.Relationship;
 public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
     @NotEmpty
     @Property(name = "title")
+    @Field(store = org.apache.lucene.document.Field.Store.YES)
+    @Boost(3.0f)
     private String title;
     @Property(name = "snackPeak")
+    @Field(store = org.apache.lucene.document.Field.Store.YES)
+    @Boost(1.5f)
     private String snackPeak;
     @Relationship(type = "PROBLEM")
     @NotNull
+    @IndexedEmbedded
+    @Boost(1f)
     private Problem problem;
     @Relationship(type = "OWNER")
+    @IndexedEmbedded
+    @Boost(0.5f)
     private User owner;
 
     public String getTitle() {

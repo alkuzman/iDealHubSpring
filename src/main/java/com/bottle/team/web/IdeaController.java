@@ -1,7 +1,9 @@
 package com.bottle.team.web;
 
 import com.bottle.team.model.ideas.Idea;
+import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.service.IdeaService;
+import com.bottle.team.service.helper.IdeaFilter;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +18,14 @@ public class IdeaController {
     IdeaService ideaService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Idea> findAll() {
-        return ideaService.findAll();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = "problemId")
-    public Iterable<Idea> ideaListByProblemId(@RequestParam Long problemId) {
-        return ideaService.findByProblemId(problemId);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = "ownerId")
-    public Iterable<Idea> ideaListByUserId(@RequestParam Long ownerId) {
-        return ideaService.findByOwnerId(ownerId);
+    public Iterable<? extends BaseEntity> findAll(
+            @RequestParam(required = false) Long problemId,
+            @RequestParam(required = false) Long ownerId,
+            @RequestParam(required = false) String query,
+            @RequestParam(required = false) Integer offset,
+            @RequestParam(required = false) Integer limit) {
+        IdeaFilter ideaFilter = new IdeaFilter(null, ownerId, problemId);
+        return ideaService.findAll(query, offset, limit, ideaFilter);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

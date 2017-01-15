@@ -14,7 +14,6 @@ import java.util.Properties;
 /**
  * Created by ristes on 4/13/16.
  */
-
 public class MailConfig {
 
   public static final String MAIL_PREFIX = "app.mail.";

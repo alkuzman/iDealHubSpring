@@ -1,5 +1,7 @@
 package com.bottle.team.model.sharing;
 
+import com.bottle.team.lucene.annotations.Boost;
+import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.comments.Commentable;
 import com.bottle.team.model.ideas.Contract;
@@ -14,9 +16,13 @@ import java.util.List;
 @NodeEntity
 public class Package extends BaseEntityImpl implements Commentable {
     @Relationship(type = "SHARABLE")
+    @IndexedEmbedded
+    @Boost(1f)
     private Sharable sharable;
 
     @Relationship(type = "CONTRACT")
+    @IndexedEmbedded
+    @Boost(0.5f)
     private List<Contract> contracts;
 
     public List<Contract> getContracts() {

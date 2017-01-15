@@ -1,5 +1,8 @@
 package com.bottle.team.model.authentication;
 
+import com.bottle.team.lucene.annotations.Boost;
+import com.bottle.team.lucene.annotations.Field;
+import com.bottle.team.lucene.enumerations.Analyze;
 import com.bottle.team.model.BaseEntityImpl;
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.Email;
@@ -14,6 +17,8 @@ import org.neo4j.ogm.annotation.Property;
 public class Agent extends BaseEntityImpl implements Cloneable {
     @Email
     @Property(name = "email")
+    @Field(store = org.apache.lucene.document.Field.Store.YES, analyze = Analyze.NO)
+    @Boost(5.0f)
     private String email;
     @Property(name = "telephone")
     private String telephone;

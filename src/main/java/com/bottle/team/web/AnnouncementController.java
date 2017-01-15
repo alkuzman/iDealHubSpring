@@ -1,7 +1,9 @@
 package com.bottle.team.web;
 
+import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.model.sharing.Announcement;
 import com.bottle.team.service.AnnouncementService;
+import com.bottle.team.service.helper.AnnouncementFilter;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,16 @@ public class AnnouncementController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Announcement> findAll() {
-        return announcementService.findAll();
+    public Iterable<? extends BaseEntity> findAll(
+            @RequestParam(required = false) Long sharableId,
+            @RequestParam(required = false) Long ownerId,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) Integer offset,
+            @RequestParam(required = false) Integer limit,
+            @RequestParam(required = false) String query
+    ) {
+        AnnouncementFilter announcementFilter = new AnnouncementFilter(null, ownerId, sharableId,type);
+        return announcementService.findAll(query, offset, limit, announcementFilter);
     }
 
     @RequestMapping(method = RequestMethod.POST)

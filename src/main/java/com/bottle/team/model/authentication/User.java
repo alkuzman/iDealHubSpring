@@ -1,9 +1,11 @@
 package com.bottle.team.model.authentication;
 
+import com.bottle.team.lucene.annotations.Boost;
+import com.bottle.team.lucene.annotations.Field;
+import com.bottle.team.lucene.enumerations.Analyze;
 import com.bottle.team.model.enumaration.Provider;
 import com.bottle.team.model.enumaration.Role;
 import com.bottle.team.model.interfaces.NamedEntity;
-import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -16,9 +18,13 @@ import org.neo4j.ogm.annotation.Property;
 public class User extends Agent implements Person, NamedEntity, Cloneable {
     @NotEmpty
     @Property(name = "firstName")
+    @Field(store = org.apache.lucene.document.Field.Store.YES, analyze = Analyze.NO)
+    @Boost(4.0f)
     private String firstName;
     @NotEmpty
     @Property(name = "lastName")
+    @Field(store = org.apache.lucene.document.Field.Store.YES, analyze = Analyze.NO)
+    @Boost(3.0f)
     private String lastName;
     @Length(min = 6)
     @Property(name = "password")

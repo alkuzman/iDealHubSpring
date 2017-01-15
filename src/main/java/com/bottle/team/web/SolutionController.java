@@ -1,7 +1,9 @@
 package com.bottle.team.web;
 
 import com.bottle.team.model.ideas.Solution;
+import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.service.SolutionService;
+import com.bottle.team.service.helper.SolutionFilter;
 import com.bottle.team.validation.SolutionValidator;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,29 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/solutions")
 public class SolutionController {
-    @Autowired
+    private final
     SolutionService solutionService;
-    @Autowired
+    private final
     SolutionValidator solutionValidator;
 
+    @Autowired
+    public SolutionController(SolutionService solutionService, SolutionValidator solutionValidator) {
+        this.solutionService = solutionService;
+        this.solutionValidator = solutionValidator;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Solution> findAll() {
-        return solutionService.findAll();
+    public Iterable<? extends BaseEntity> findAll(
+            @RequestParam(required = false) String query,
+            @RequestParam(required = false) Integer offset,
+            @RequestParam(required = false) Integer limit,
+            @RequestParam(required = false) Long ideaId,
+            @RequestParam(required = false) Long problemId,
+            @RequestParam(required = false) Long ideaOwnerId,
+            @RequestParam(required = false) Long problemQuestionerId
+    ) {
+        SolutionFilter solutionFilter = new SolutionFilter(null, ideaOwnerId, problemQuestionerId, ideaId, problemId);
+        return solutionService.findAll(query, offset, limit, solutionFilter);
     }
 
     @InitBinder("user")
