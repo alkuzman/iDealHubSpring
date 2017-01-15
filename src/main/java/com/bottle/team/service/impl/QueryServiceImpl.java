@@ -154,10 +154,8 @@ public class QueryServiceImpl implements QueryService {
         }
         List<BaseEntity> entities = new ArrayList<>(scoreMap.size());
         for (BaseEntity baseEntity : baseEntityRepository.findAll(ids))
-            if (baseEntity == null) {
-                System.out.println("Null");
-            } else
-            entities.add(baseEntity);
+            if (baseEntity != null)
+                entities.add(baseEntity);
         entities.sort((o1, o2) -> Float.compare(scoreMap.get(o2.getId()), scoreMap.get(o1.getId())));
         return entities;
     }
