@@ -12,7 +12,12 @@ import java.util.List;
  */
 public interface IdeaRepository extends GraphRepository<Idea> {
     // derived finder
-    Idea findByTitle(String title);
+    @Query("MATCH (n:Idea) WHERE n.title = { title } WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
+    Idea findByTitle(@Param("title") String title);
+
+    @Override
+    @Query("MATCH (n) WHERE id(n) = { id } WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
+    Idea findOne(@Param("id") Long id);
 
     /*
     @Query("MATCH (m:Movie)<-[rating:RATED]-(user) WHERE id(movie)={movie} return rating")

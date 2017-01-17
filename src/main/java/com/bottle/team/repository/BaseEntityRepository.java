@@ -1,5 +1,6 @@
 package com.bottle.team.repository;
 
+import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.interfaces.BaseEntity;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
@@ -15,4 +16,8 @@ import org.springframework.data.repository.query.Param;
 public interface BaseEntityRepository extends GraphRepository<BaseEntity> {
     @Query("MATCH (n) WHERE id(n) in { ids } WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
     Iterable<BaseEntity> findAll(@Param("ids") Iterable<Long> ids, @Param("type") String type);
+
+    @Override
+    @Query("MATCH (n) WHERE id(n) = { id } WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
+    BaseEntity findOne(@Param("id") Long id);
 }
