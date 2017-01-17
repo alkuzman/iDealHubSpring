@@ -13,8 +13,12 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
+import org.neo4j.ogm.cypher.query.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import sun.util.resources.cldr.ga.LocaleNames_ga;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -153,10 +157,12 @@ public class QueryServiceImpl implements QueryService {
             e.printStackTrace();
         }
         List<BaseEntity> entities = new ArrayList<>(scoreMap.size());
-        for (BaseEntity baseEntity : baseEntityRepository.findAll(ids))
-            if (baseEntity != null)
+        for (BaseEntity baseEntity : baseEntityRepository.findAll(ids, type.getSimpleName()))
+            if (baseEntity != null && scoreMap.containsKey(baseEntity.getId()))
                 entities.add(baseEntity);
-        entities.sort((o1, o2) -> Float.compare(scoreMap.get(o2.getId()), scoreMap.get(o1.getId())));
+        entities.sort((o1, o2) -> {
+            return Float.compare(scoreMap.get(o2.getId()), scoreMap.get(o1.getId()));
+        });
         return entities;
     }
 }
