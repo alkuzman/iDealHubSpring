@@ -14,7 +14,7 @@ import org.apache.lucene.search.TermQuery;
  * @version 1.0
  * @since 14/01/2017
  */
-public class SolutionFilter {
+public class SolutionFilter implements Filter {
     private Long id;
     private Long ideaOwnerId;
     private Long problemId;

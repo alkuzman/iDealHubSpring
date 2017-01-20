@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * Created by PC on 23/10/2016.
  */
 @NodeEntity
-public class Announcement extends BaseEntityImpl {
+public class Announcement extends BaseEntityImpl implements Searchable {
     @Relationship(type = "PACKAGE")
     @NotNull
     @IndexedEmbedded

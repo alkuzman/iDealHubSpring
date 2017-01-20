@@ -19,7 +19,7 @@ import org.apache.lucene.search.TermQuery;
  * @version 1.0
  * @since 14/01/2017
  */
-public class AnnouncementFilter {
+public class AnnouncementFilter implements Filter {
     private Long id;
     private Long ownerId;
     private String type;
