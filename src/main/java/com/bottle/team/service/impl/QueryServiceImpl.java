@@ -13,12 +13,8 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
-import org.neo4j.ogm.cypher.query.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import sun.util.resources.cldr.ga.LocaleNames_ga;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -93,15 +89,18 @@ public class QueryServiceImpl implements QueryService {
             int position = 0;
             String lastToken = "";
             for (String token : tokens) {
+                if (token.equals(""))
+                    continue;
                 tokenBuilder.add(new FuzzyQuery(new Term(field, token)), BooleanClause.Occur.SHOULD);
                 phrase.add(new Term(field, token));
                 position++;
                 lastToken = token;
             }
-            phrase.add(new Term(field, lastToken + "*"), position - 1);
-            tokenBuilder.add(phrase.build(), BooleanClause.Occur.SHOULD);
-
-            fieldBuilder.add(tokenBuilder.build(), BooleanClause.Occur.SHOULD);
+            if (position > 0) {
+                phrase.add(new Term(field, lastToken + "*"), position - 1);
+                tokenBuilder.add(phrase.build(), BooleanClause.Occur.SHOULD);
+                fieldBuilder.add(tokenBuilder.build(), BooleanClause.Occur.SHOULD);
+            }
         }
         if (query != null) {
             BooleanQuery.Builder builder = new BooleanQuery.Builder();

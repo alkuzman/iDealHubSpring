@@ -2,14 +2,12 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.service.IndexingService;
-import com.bottle.team.service.QueryService;
 import com.bottle.team.service.SearchableService;
 import com.bottle.team.service.helper.SearchableFilter;
+import com.bottle.team.web.helper.BaseEntityList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by AKuzmanoski on 13/01/2017.
@@ -33,11 +31,15 @@ public class SearchController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<? extends BaseEntity> search(
-            @RequestParam(required = true) String query,
+    public BaseEntityList search(
+            @RequestParam(required = false) String query,
             @RequestParam(required = false) Integer offset,
             @RequestParam(required = false) Integer limit) {
-        return searchableService.findAll(query, offset, limit, new SearchableFilter());
+        BaseEntityList list = new BaseEntityList();
+        for (BaseEntity entity : searchableService.findAll(query, offset, limit, new SearchableFilter())) {
+            list.add(entity);
+        }
+        return list;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
