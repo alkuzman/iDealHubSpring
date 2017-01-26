@@ -9,13 +9,13 @@ import org.neo4j.ogm.annotation.Relationship;
 @NodeEntity
 public class NewPackageNotice extends Notice {
     @Relationship(type = "PACKAGE")
-    private Package aPackage;
+    private Package pckg;
 
-    public Package getaPackage() {
-        return aPackage;
+    public Package getPckg() {
+        return pckg;
     }
 
-    public void setaPackage(Package aPackage) {
-        this.aPackage = aPackage;
+    public void setPckg(Package pckg) {
+        this.pckg = pckg;
     }
 }
