@@ -5,6 +5,7 @@ import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.repository.ProblemRepository;
 import com.bottle.team.service.ProblemService;
 import com.bottle.team.service.QueryService;
+import com.bottle.team.service.WebSocketService;
 import com.bottle.team.service.helper.IdeaFilter;
 import com.bottle.team.service.helper.ProblemFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,6 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public Problem save(Problem problem) {
-
         return problemRepository.save(problem);
     }
 

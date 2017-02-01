@@ -35,4 +35,9 @@ public class UserContext {
     public boolean isRememberMe() {
         return rememberMe;
     }
+
+    @Override
+    public String toString() {
+        return username;
+    }
 }

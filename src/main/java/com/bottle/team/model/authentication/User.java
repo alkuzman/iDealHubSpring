@@ -40,6 +40,18 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        setNewName();
+    }
+
+    private void setNewName() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (firstName != null) {
+            stringBuilder.append(firstName);
+            stringBuilder.append(" ");
+        }
+        if (lastName != null)
+        stringBuilder.append(lastName);
+        setName(stringBuilder.toString());
     }
 
     public String getLastName() {
@@ -48,6 +60,7 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        setNewName();
     }
 
     public String getPassword() {

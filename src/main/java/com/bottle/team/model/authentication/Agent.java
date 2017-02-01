@@ -4,7 +4,10 @@ import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.lucene.enumerations.Analyze;
 import com.bottle.team.model.BaseEntityImpl;
+import com.bottle.team.model.sharing.NewCommentNotice;
+import com.bottle.team.model.sharing.NewPackageNotice;
 import com.bottle.team.model.sharing.Searchable;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -15,6 +18,10 @@ import org.neo4j.ogm.annotation.Property;
  * Created by PC on 09/10/2016.
  */
 @NodeEntity
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = User.class),
+        @JsonSubTypes.Type(value = Organization.class)
+})
 public class Agent extends BaseEntityImpl implements Cloneable, Searchable {
     @Email
     @Property(name = "email")

@@ -129,7 +129,6 @@ public class QueryServiceImpl implements QueryService {
             query = typeQuery;
         }
 
-        System.out.println(query);
         Map<Long, Float> scoreMap = new HashMap<>();
         List<Long> ids = new LinkedList<>();
         try {
