@@ -22,9 +22,9 @@ import java.util.Date;
  */
 @NodeEntity
 public abstract class BaseEntityImpl implements BaseEntity, Cloneable {
-    @Id
     @GraphId
     @Field(analyze = Analyze.NO)
+    @Id
     private Long id;
     @Property(name = "name")
     private String name;

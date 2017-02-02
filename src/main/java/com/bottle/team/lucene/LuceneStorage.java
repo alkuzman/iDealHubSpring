@@ -39,7 +39,7 @@ public class LuceneStorage {
     }
 
     public void remove(Object object) {
-        System.out.println("Remove object");
+        // TODO implement remove operation
     }
 
     public void firstLevelStore(Object object) {
@@ -66,14 +66,12 @@ public class LuceneStorage {
 
     private void saveDocuments(List<Document> documents) {
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(luceneAnalyzer);
-        System.out.println(documents.size());
         try {
             IndexWriter writer = new IndexWriter(directory, indexWriterConfig);
             for (Document document : documents) {
                 //writer.addDocument(document);
                 writer.updateDocument(new Term("{{id}}", document.get("{{id}}")), document);
             }
-            System.out.println("Flush");
             writer.flush();
             writer.close();
         } catch (IOException e) {

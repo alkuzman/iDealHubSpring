@@ -5,6 +5,7 @@ import com.bottle.team.auth.jwt.token.RawAccessJwtToken;
 import com.bottle.team.auth.jwt.token.extractors.TokenExtractor;
 import com.bottle.team.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
@@ -38,18 +39,26 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
     @Override
     public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws AuthenticationException, IOException, ServletException {
         String tokenPayload = httpServletRequest.getHeader(SecurityConfig.JWT_TOKEN_HEADER_PARAM);
-        RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload));
+        if (tokenPayload != null) {
+            RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload));
 
-        return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
-
+            return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
+        } else {
+            return new JwtAuthenticationToken(null);
+        }
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        context.setAuthentication(authResult);
-        SecurityContextHolder.setContext(context);
+        JwtAuthenticationToken token = (JwtAuthenticationToken) authResult;
+        if (token.isAuthenticated()) {
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            context.setAuthentication(authResult);
+            SecurityContextHolder.setContext(context);
+        } else {
+            SecurityContextHolder.clearContext();
+        }
         chain.doFilter(request, response);
     }
 

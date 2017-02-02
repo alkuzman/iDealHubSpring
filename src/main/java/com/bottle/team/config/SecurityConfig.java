@@ -55,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
     public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/auth/login";
-    public static final String IDEAS = "/solutions";
-    public static final String PROBLEMS = "/problems";
+    public static final String IDEAS = "/ideas/**";
+    public static final String PROBLEMS = "/problems/**";
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/auth/token";
     public static final String JWT_TOKEN_HEADER_PARAM_2 = "Authorization";
 
@@ -119,11 +119,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, IDEAS).authenticated()
+                .antMatchers(IDEAS).authenticated()
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, PROBLEMS).authenticated()
+                .antMatchers(PROBLEMS).authenticated()
+
+                .and()
+                .authorizeRequests()
+                .antMatchers("/solutions/**").authenticated()
+
+                .and()
+                .authorizeRequests()
+                .antMatchers("/notices/**").authenticated()
 
                 .and()
                 .addFilterBefore(buildJwtLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -138,8 +146,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected Filter buildJwtTokenAuthenticationProcessingFilter() {
         List<String> pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
-        List<String> processingPaths = Arrays.asList(IDEAS, PROBLEMS);
-        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, processingPaths);
+        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, null);
         JwtTokenAuthenticationProcessingFilter filter
                 = new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
         filter.setAuthenticationManager(this.authenticationManager);

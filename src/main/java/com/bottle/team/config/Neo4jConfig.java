@@ -1,8 +1,7 @@
 package com.bottle.team.config;
 
 import com.bottle.team.lucene.LuceneStorage;
-import com.bottle.team.model.BaseEntityImpl;
-import com.bottle.team.model.interfaces.BaseEntity;
+import com.bottle.team.neo4j.Neo4jUtils;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import org.springframework.data.neo4j.event.AfterSaveEvent;
 import org.springframework.data.neo4j.event.BeforeSaveEvent;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import java.util.Date;
-import java.util.UUID;
 
 @Configuration
 @EnableNeo4jRepositories(basePackages = "com.bottle.team.repository")
@@ -49,12 +45,8 @@ public class Neo4jConfig extends Neo4jConfiguration {
     @Bean
     public ApplicationListener<BeforeSaveEvent> beforeSaveEventApplicationListener() {
         return beforeSaveEvent -> {
-            BaseEntityImpl baseEntityImpl = (BaseEntityImpl) beforeSaveEvent.getEntity();
-            //baseEntityImpl.setId(UUID.randomUUID().getMostSignificantBits());
-            if (baseEntityImpl.getId() == null) {
-                baseEntityImpl.setCreationDate(new Date());
-            }
-            baseEntityImpl.setLastModified(new Date());
+            Object o = beforeSaveEvent.getEntity();
+            Neo4jUtils.updateObject(o);
         };
     }
 
@@ -62,7 +54,6 @@ public class Neo4jConfig extends Neo4jConfiguration {
     ApplicationListener<AfterSaveEvent> afterSaveEventApplicationListener() {
 
         return event -> {
-            System.out.println(event.getEntity());
             luceneStorage.store(event.getEntity());
         };
     }
