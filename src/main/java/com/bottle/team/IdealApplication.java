@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableAutoConfiguration
 @EnableWebMvc
 public class IdealApplication extends WebMvcAutoConfiguration {
+
     public static void main(String args[]) {
         SpringApplication.run(IdealApplication.class);
     }

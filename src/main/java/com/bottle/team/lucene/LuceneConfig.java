@@ -1,6 +1,5 @@
 package com.bottle.team.lucene;
 
-import com.bottle.team.model.interfaces.BaseEntity;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.store.Directory;
@@ -11,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -23,7 +21,7 @@ import java.nio.file.Paths;
  */
 @Configuration
 public class LuceneConfig {
-    @Value("${app.lucene.default.directory_provider}")
+    @Value("${app.lucene.default.directoryProvider}")
     private String directory_provider;
 
     @Value("${app.lucene.default.indexBase}")
