@@ -1,5 +1,6 @@
 package com.bottle.team.web;
 
+import com.bottle.team.model.security.SecurityProfile;
 import com.bottle.team.service.CertificateService;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,23 +30,10 @@ public class CertificateController {
     @Autowired
     public CertificateService certificateService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String readCACertificate() {
-        certificateService.createKeyPairAndCertificate();
-        return "Certificate";
-    }
-
-    @RequestMapping(value = "/write", method = RequestMethod.GET)
-    public String writeCertificate() {
-        X509Certificate certificate = certificateService.createKeyPairAndCertificate();
-        certificateService.writeCertificate(certificate, "certificate1.pem", "PEM");
-        return "write";
-    }
-
-    @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String readCertificateRequest() {
-        certificateService.readCertificateSigningRequest("req.pem");
-        return "read";
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public SecurityProfile save(@RequestBody SecurityProfile profile) {
+        System.out.println(profile.getCertificatePEM());
+        return profile;
     }
 
     @RequestMapping(value = "/sign", method = RequestMethod.POST)
@@ -102,5 +90,23 @@ public class CertificateController {
         return secret.equals(secret2);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public String readCACertificate() {
+        certificateService.createKeyPairAndCertificate();
+        return "Certificate";
+    }
+
+    @RequestMapping(value = "/write", method = RequestMethod.GET)
+    public String writeCertificate() {
+        X509Certificate certificate = certificateService.createKeyPairAndCertificate();
+        certificateService.writeCertificate(certificate, "certificate1.pem", "PEM");
+        return "write";
+    }
+
+    @RequestMapping(value = "/read", method = RequestMethod.GET)
+    public String readCertificateRequest() {
+        certificateService.readCertificateSigningRequest("req.pem");
+        return "read";
+    }
 
 }

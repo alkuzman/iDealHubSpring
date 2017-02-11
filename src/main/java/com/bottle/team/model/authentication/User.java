@@ -26,6 +26,9 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
     @Field(store = org.apache.lucene.document.Field.Store.YES, analyze = Analyze.NO)
     @Boost(3.0f)
     private String lastName;
+    @NotEmpty
+    @Property(name = "country")
+    private String country;
     @Length(min = 6)
     @Property(name = "password")
     private String password;
@@ -71,6 +74,14 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
         this.password = password;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String constructName() {
         return String.format("%s %s", firstName, lastName);
@@ -106,6 +117,7 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
         user.setRole(getRole());
         user.setProvider(getProvider());
         user.setPassword(getPassword());
+        user.setCountry(getCountry());
         return user;
     }
 
