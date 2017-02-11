@@ -21,15 +21,13 @@ import java.util.Locale;
 @Service
 public class RegistrationMailServiceImpl implements RegistrationMailService {
     @Autowired
-    private SpringTemplateEngine templateEngine;
-
-    @Autowired
     @Qualifier("asyncMailSender")
     MailSender asyncMailSender;
-
     @Autowired
     @Qualifier("mailSenderImpl")
     MailSender syncMailSender;
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
     @Override
     public void sendActivationMail(User user, boolean isAsync) {
@@ -37,7 +35,7 @@ public class RegistrationMailServiceImpl implements RegistrationMailService {
         Locale locale = Locale.getDefault();
         Context context = new Context(locale);
         context.setVariable("user", user);
-        context.setVariable("baseUrl", "http://localhost:5555/auth");
+        context.setVariable("baseUrl", "http://localhost:4200/auth/verify");
         String content = templateEngine.process("mail/activationEmail", context);
 
         if (isAsync) {

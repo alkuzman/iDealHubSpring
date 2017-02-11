@@ -36,6 +36,8 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
     private Role role;
     @Property(name = "provider")
     private Provider provider;
+    @Property(name = "activationCode")
+    private String activationCode;
 
     public String getFirstName() {
         return firstName;
@@ -103,6 +105,13 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
         this.provider = provider;
     }
 
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
 
     @Override
     public String toString() {
