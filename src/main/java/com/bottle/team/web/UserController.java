@@ -58,4 +58,10 @@ public class UserController {
         }
         return user;
     }
+
+    @RequestMapping(value = "/activation", method = RequestMethod.GET, params = "code")
+    public User activate(@RequestParam String code) {
+        User user = userService.activate(code);
+        return user;
+    }
 }

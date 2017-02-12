@@ -12,4 +12,6 @@ public interface UserService extends Service<User>, UserDetailsService {
     User findByEmail(String email);
 
     boolean isEmailTaken(String email);
+
+    User activate(String code);
 }

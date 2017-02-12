@@ -11,14 +11,25 @@ import org.neo4j.ogm.annotation.Relationship;
  */
 @NodeEntity
 public class SecurityProfile extends BaseEntityImpl {
+    @Property(name = "certificationRequestPEM")
+    private String certificationRequestPEM;
+
     @Property(name = "certificatePEM")
     private String certificatePEM;
 
     @Property(name = "encryptedPrivateKey")
     private String encryptedPrivateKey;
 
-    @Relationship(type = "IDENTITIY")
+    @Relationship(type = "IDENTITY")
     private Agent agent;
+
+    public String getCertificationRequestPEM() {
+        return certificationRequestPEM;
+    }
+
+    public void setCertificationRequestPEM(String certificationRequestPEM) {
+        this.certificationRequestPEM = certificationRequestPEM;
+    }
 
     public String getCertificatePEM() {
         return certificatePEM;

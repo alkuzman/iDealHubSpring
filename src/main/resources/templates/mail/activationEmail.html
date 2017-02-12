@@ -14,8 +14,8 @@
 </p>
 
 <p>
-  <a th:href="@{|${baseUrl}?email=${user.email}&code=${user.activationCode}|}"
-     th:text="|${user.name}|">Activation Link</a>
+    <a th:href="@{|${baseUrl}?code=${user.activationCode}|}"
+       th:text="|${user.name}|">Activation Link</a>
 </p>
 
 <p>

@@ -2,6 +2,7 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.security.SecurityProfile;
 import com.bottle.team.service.CertificateService;
+import com.bottle.team.service.SecurityProfileService;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,10 +31,12 @@ public class CertificateController {
     @Autowired
     public CertificateService certificateService;
 
+    @Autowired
+    public SecurityProfileService securityProfileService;
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public SecurityProfile save(@RequestBody SecurityProfile profile) {
-        System.out.println(profile.getCertificatePEM());
-        return profile;
+        return securityProfileService.save(profile);
     }
 
     @RequestMapping(value = "/sign", method = RequestMethod.POST)

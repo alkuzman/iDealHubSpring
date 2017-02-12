@@ -101,4 +101,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean isEmailTaken(String email) {
         return findByEmail(email) != null ? true : false;
     }
+
+    @Override
+    public User activate(String code) {
+        User user = userRepository.findByActivationCode(code);
+        return user;
+    }
 }
