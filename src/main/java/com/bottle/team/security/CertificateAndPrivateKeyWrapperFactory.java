@@ -10,9 +10,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPrivateCrtKey;
 
-/**
- * Created by Viki on 2/4/2017.
- */
 @Component
 public class CertificateAndPrivateKeyWrapperFactory {
 
@@ -34,10 +31,6 @@ public class CertificateAndPrivateKeyWrapperFactory {
         }
         try {
             if (caKs != null) {
-                String pass = settings.getCaPassphrase();
-                char[] caPassPhrase = settings.getCaPassphrase().toCharArray();
-                String file = settings.getCaFile();
-                String jas = "Viki";
                 caKs.load(new FileInputStream(settings.getCaFile()),
                         settings.getCaPassphrase().toCharArray());
             }
@@ -54,9 +47,7 @@ public class CertificateAndPrivateKeyWrapperFactory {
             if (caCert == null) {
                 throw new RuntimeException("Got null cert from keystore");
             }
-
-            caCert.verify(caCert.getPublicKey());
-        } catch (IOException | InvalidKeyException | NoSuchProviderException | SignatureException |
+        } catch (IOException |
                 UnrecoverableKeyException | KeyStoreException | CertificateException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
