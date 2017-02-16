@@ -2,6 +2,7 @@ package com.bottle.team.model.security;
 
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.Agent;
+import com.bottle.team.model.enumaration.CertificateType;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
@@ -19,6 +20,9 @@ public class SecurityProfile extends BaseEntityImpl {
 
     @Property(name = "encryptedPrivateKey")
     private String encryptedPrivateKey;
+
+    @Property(name = "certificateType")
+    private CertificateType certificateType;
 
     @Relationship(type = "IDENTITY")
     private Agent agent;
@@ -45,6 +49,14 @@ public class SecurityProfile extends BaseEntityImpl {
 
     public void setEncryptedPrivateKey(String encryptedPrivateKey) {
         this.encryptedPrivateKey = encryptedPrivateKey;
+    }
+
+    public CertificateType getCertificateType() {
+        return certificateType;
+    }
+
+    public void setCertificateType(CertificateType certificateType) {
+        this.certificateType = certificateType;
     }
 
     public Agent getAgent() {
