@@ -1,5 +1,6 @@
 package com.bottle.team.service.impl;
 
+import com.bottle.team.model.enumaration.CertificateType;
 import com.bottle.team.model.security.SecurityProfile;
 import com.bottle.team.repository.SecurityProfileRepository;
 import com.bottle.team.service.SecurityProfileService;
@@ -42,5 +43,10 @@ public class SecurityProfileServiceImpl implements SecurityProfileService {
     @Override
     public SecurityProfile findById(Long id) {
         return null;
+    }
+
+    @Override
+    public SecurityProfile findByUserIdAndCertificateType(Long userId, CertificateType type) {
+        return securityProfileRepository.findByUserIdAndCertificateType(userId, type);
     }
 }
