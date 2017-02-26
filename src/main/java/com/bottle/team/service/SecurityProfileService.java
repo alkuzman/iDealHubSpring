@@ -9,6 +9,8 @@ import com.bottle.team.model.security.SecurityProfile;
 
 public interface SecurityProfileService extends Service<SecurityProfile> {
 
-    SecurityProfile findByUserIdAndCertificateType(Long userId, CertificateType type);
+    SecurityProfile findByUserEmailAndCertificateType(String email, CertificateType type);
+
+    SecurityProfile getAuthenticatedUserSecurityProfile(CertificateType type);
 
 }

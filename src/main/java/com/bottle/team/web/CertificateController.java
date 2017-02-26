@@ -32,9 +32,9 @@ public class CertificateController {
         return pemCertificate;
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public String get(@RequestParam Long userId, @RequestParam CertificateType type) {
-        SecurityProfile securityProfile = securityProfileService.findByUserIdAndCertificateType(userId, type);
+    @RequestMapping(value = "/{type}", method = RequestMethod.GET)
+    public String get(@RequestParam String email, @PathVariable CertificateType type) {
+        SecurityProfile securityProfile = securityProfileService.findByUserEmailAndCertificateType(email, type);
         return securityProfile.getCertificatePEM();
     }
 

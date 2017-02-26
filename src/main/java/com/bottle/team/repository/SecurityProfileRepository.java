@@ -11,6 +11,6 @@ import org.springframework.data.repository.query.Param;
  */
 public interface SecurityProfileRepository extends GraphRepository<SecurityProfile> {
 
-    @Query("MATCH (s:SecurityProfile)-[:IDENTITY]->(u:Agent) WHERE ID(u)= {userId} AND s.certificateType = {type} RETURN s")
-    SecurityProfile findByUserIdAndCertificateType(@Param("userId") Long userId, @Param("type") CertificateType type);
+    @Query("MATCH (s:SecurityProfile)-[:IDENTITY]->(u:Agent) WHERE u.email = {email} AND s.certificateType = {type} RETURN s")
+    SecurityProfile findByUserEmailAndCertificateType(@Param("email") String email, @Param("type") CertificateType type);
 }

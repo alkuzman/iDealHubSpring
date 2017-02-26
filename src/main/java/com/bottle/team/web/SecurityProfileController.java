@@ -1,12 +1,10 @@
 package com.bottle.team.web;
 
+import com.bottle.team.model.enumaration.CertificateType;
 import com.bottle.team.model.security.SecurityProfile;
 import com.bottle.team.service.SecurityProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Viki on 2/18/2017.
@@ -23,4 +21,8 @@ public class SecurityProfileController {
         return securityProfileService.save(profile);
     }
 
+    @RequestMapping(value = "/{type}", method = RequestMethod.GET)
+    public SecurityProfile get(@PathVariable CertificateType type) {
+        return securityProfileService.getAuthenticatedUserSecurityProfile(type);
+    }
 }

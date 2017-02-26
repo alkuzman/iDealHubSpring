@@ -1,10 +1,13 @@
 package com.bottle.team.service.impl;
 
+import com.bottle.team.auth.jwt.common.UserContext;
 import com.bottle.team.model.enumaration.CertificateType;
 import com.bottle.team.model.security.SecurityProfile;
 import com.bottle.team.repository.SecurityProfileRepository;
 import com.bottle.team.service.SecurityProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -46,7 +49,20 @@ public class SecurityProfileServiceImpl implements SecurityProfileService {
     }
 
     @Override
-    public SecurityProfile findByUserIdAndCertificateType(Long userId, CertificateType type) {
-        return securityProfileRepository.findByUserIdAndCertificateType(userId, type);
+    public SecurityProfile findByUserEmailAndCertificateType(String email, CertificateType type) {
+        return securityProfileRepository.findByUserEmailAndCertificateType(email, type);
+    }
+
+    @Override
+    public SecurityProfile getAuthenticatedUserSecurityProfile(CertificateType type) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserContext userContext = (UserContext) authentication.getPrincipal();
+        SecurityProfile authenticatedUserSecurityProfile = securityProfileRepository
+                .findByUserEmailAndCertificateType(userContext.getUsername(), type);
+        return authenticatedUserSecurityProfile;
+    }
+
+    public SecurityProfile getSecurityProfileForUsernameAndType(String username, CertificateType type) {
+        return securityProfileRepository.findByUserEmailAndCertificateType(username, type);
     }
 }
