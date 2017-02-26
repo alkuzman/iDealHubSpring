@@ -3,7 +3,6 @@ package com.bottle.team.auth.jwt.handlers;
 import com.bottle.team.auth.jwt.common.UserContext;
 import com.bottle.team.auth.jwt.token.JwtToken;
 import com.bottle.team.auth.jwt.token.JwtTokenFactory;
-import com.bottle.team.model.enumaration.CertificateType;
 import com.bottle.team.service.SecurityProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +55,11 @@ public class JwtAwareAuthenticationSuccessHandler implements AuthenticationSucce
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("token", accessToken.getToken());
         map.put("refreshToken", refreshToken.getToken());
-        map.put("securityProfileEncryption", securityProfileService
-                .findByUserEmailAndCertificateType(userContext.getUsername(), CertificateType.ENCRYPTION));
-        map.put("securityProfileSigning", securityProfileService
-                .findByUserEmailAndCertificateType(userContext.getUsername(), CertificateType.SIGNING));
+        //map.put("securityProfileEncryption", securityProfileService
+        //        .findByUserEmailAndCertificateType(userContext.getUsername(), CertificateType.ENCRYPTION));
+        //map.put("securityProfileSigning", securityProfileService
+        //        .findByUserEmailAndCertificateType(userContext.getUsername(), CertificateType.SIGNING));
+        map.put("securityProfile", securityProfileService.findByUserEmail(userContext.getUsername()));
 
         httpServletResponse.setStatus(HttpStatus.OK.value());
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);

@@ -1,6 +1,5 @@
 package com.bottle.team.web;
 
-import com.bottle.team.model.enumaration.CertificateType;
 import com.bottle.team.model.security.SecurityProfile;
 import com.bottle.team.service.CertificateService;
 import com.bottle.team.service.SecurityProfileService;
@@ -32,10 +31,18 @@ public class CertificateController {
         return pemCertificate;
     }
 
-    @RequestMapping(value = "/{type}", method = RequestMethod.GET)
-    public String get(@RequestParam String email, @PathVariable CertificateType type) {
-        SecurityProfile securityProfile = securityProfileService.findByUserEmailAndCertificateType(email, type);
+    @RequestMapping(method = RequestMethod.GET)
+    public String get(@RequestParam String email) {
+        SecurityProfile securityProfile = securityProfileService
+                .findByUserEmail(email);
         return securityProfile.getCertificatePEM();
+    }
+
+    @RequestMapping(value = "/publickey", method = RequestMethod.GET)
+    public String getPublicKey(@RequestParam String email) {
+        SecurityProfile securityProfile = securityProfileService
+                .findByUserEmail(email);
+        return securityProfile.getEncryptionPair().getPublicPem();
     }
 
 }
