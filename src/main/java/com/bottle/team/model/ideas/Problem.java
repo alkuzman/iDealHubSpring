@@ -13,6 +13,7 @@ import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by Viki on 10/14/2016.
@@ -36,6 +37,9 @@ public class Problem extends BaseEntityImpl implements NamedEntity, Sharable {
     @IndexedEmbedded()
     @Boost(0.5f)
     private Person questioner;
+
+    @Property(name = "keywords")
+    private List<String> keywords;
 
     public String getText() {
         return text;
@@ -73,5 +77,13 @@ public class Problem extends BaseEntityImpl implements NamedEntity, Sharable {
                 ", text='" + text + '\'' +
                 ", questioners=" + questioner +
                 '}';
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
     }
 }
