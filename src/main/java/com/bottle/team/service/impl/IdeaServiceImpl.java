@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by PC on 09/10/2016.
@@ -52,9 +50,6 @@ public class IdeaServiceImpl implements IdeaService {
 
     @Override
     public Idea save(Idea idea) {
-        if (idea.getId() == null)
-            idea.setCreationDate(new Date());
-        idea.setLastModified(new Date());
         return ideaRepository.save(idea);
     }
 

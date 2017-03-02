@@ -134,6 +134,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/notices/**").authenticated()
 
                 .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/securityprofiles").authenticated()
+
+                .and()
                 .addFilterBefore(buildJwtLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
 

@@ -24,6 +24,9 @@ public class SecurityProfile extends BaseEntityImpl {
     @Property(name = "certificateType")
     private CertificateType certificateType;
 
+    @Relationship(type = "ENCRYPTION_PAIR")
+    private EncryptionPair encryptionPair;
+
     @Relationship(type = "IDENTITY")
     private Agent agent;
 
@@ -57,6 +60,14 @@ public class SecurityProfile extends BaseEntityImpl {
 
     public void setCertificateType(CertificateType certificateType) {
         this.certificateType = certificateType;
+    }
+
+    public EncryptionPair getEncryptionPair() {
+        return encryptionPair;
+    }
+
+    public void setEncryptionPair(EncryptionPair encryptionPair) {
+        this.encryptionPair = encryptionPair;
     }
 
     public Agent getAgent() {
