@@ -64,6 +64,12 @@ public class NoticeServiceImpl implements NoticeService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserContext userContext = (UserContext) authentication.getPrincipal();
         String email = userContext.getUsername();
+        if (offset == null) {
+            offset = 0;
+        }
+        if (limit == null) {
+            limit = 10;
+        }
         return this.noticeRepository.getNotices(email, limit, offset);
     }
 
