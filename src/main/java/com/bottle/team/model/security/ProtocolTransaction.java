@@ -1,6 +1,7 @@
 package com.bottle.team.model.security;
 
 import com.bottle.team.model.BaseEntityImpl;
+import com.bottle.team.model.authentication.Agent;
 import com.bottle.team.model.enumaration.ProtocolTransactionMessageNumber;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
@@ -19,6 +20,9 @@ public class ProtocolTransaction extends BaseEntityImpl {
     @Property(name = "currentStep")
     private ProtocolTransactionMessageNumber currentStep;
 
+    @Relationship(type = "MEMBER")
+    private List<Agent> members;
+
     public List<ProtocolTransactionStep> getMessages() {
         return messages;
     }
@@ -33,5 +37,13 @@ public class ProtocolTransaction extends BaseEntityImpl {
 
     public void setCurrentStep(ProtocolTransactionMessageNumber currentStep) {
         this.currentStep = currentStep;
+    }
+
+    public List<Agent> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Agent> members) {
+        this.members = members;
     }
 }
