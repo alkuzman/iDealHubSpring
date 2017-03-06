@@ -1,29 +1,45 @@
 package com.bottle.team.security;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import javax.crypto.KeyGenerator;
+import java.security.*;
 
 /**
  * Created by Viki on 2/2/2017.
  */
 public class KeyGeneration {
-    KeyPairGenerator generator;
+    KeyPairGenerator pairGenerator;
+    KeyGenerator keyGenerator;
     SecureRandom sr;
 
-    public KeyGeneration(String algorithmName) {
+    public KeyGeneration() {
         sr = new SecureRandom();
+    }
+
+    public void initializePairGenerator(String algorithm, int keySize) {
         try {
-            generator = KeyPairGenerator.getInstance(algorithmName);
+            this.pairGenerator = KeyPairGenerator.getInstance(algorithm);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        generator.initialize(1024, sr);
+        this.pairGenerator.initialize(keySize, sr);
+    }
+
+    public void initializeKeyGenerator(String algorithm, int keySize) {
+        try {
+            this.keyGenerator = KeyGenerator.getInstance(algorithm);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        this.keyGenerator.init(keySize, sr);
     }
 
     public KeyPair newKeyPair() {
-        KeyPair keyPair = generator.generateKeyPair();
+        KeyPair keyPair = pairGenerator.generateKeyPair();
         return keyPair;
+    }
+
+    public Key newSymmetricKey() {
+        Key key = keyGenerator.generateKey();
+        return key;
     }
 }
