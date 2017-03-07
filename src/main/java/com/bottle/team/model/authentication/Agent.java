@@ -23,6 +23,8 @@ import org.neo4j.ogm.annotation.Property;
         @JsonSubTypes.Type(value = Organization.class)
 })
 public class Agent extends BaseEntityImpl implements Cloneable, Searchable {
+    @Property(name = "name")
+    private String name;
     @Email
     @Property(name = "email")
     @Field(store = org.apache.lucene.document.Field.Store.YES, analyze = Analyze.NO)
@@ -75,5 +77,13 @@ public class Agent extends BaseEntityImpl implements Cloneable, Searchable {
         agent.setProfilePicture(getProfilePicture());
         agent.setCoverPicture(getCoverPicture());
         return agent;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

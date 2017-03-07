@@ -38,8 +38,8 @@ public class Problem extends BaseEntityImpl implements NamedEntity, Sharable {
     @Boost(0.5f)
     private Person questioner;
 
-    @Property(name = "keywords")
-    private List<String> keywords;
+    @Relationship(type = "KEYWORD")
+    private List<Keyword> keywords;
 
     public String getText() {
         return text;
@@ -79,11 +79,11 @@ public class Problem extends BaseEntityImpl implements NamedEntity, Sharable {
                 '}';
     }
 
-    public List<String> getKeywords() {
+    public List<Keyword> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(List<String> keywords) {
+    public void setKeywords(List<Keyword> keywords) {
         this.keywords = keywords;
     }
 }

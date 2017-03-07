@@ -7,7 +7,6 @@ import com.bottle.team.service.helper.IdeaFilter;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.security.acl.PrincipalImpl;
 
 import java.security.Principal;
 
@@ -26,11 +25,7 @@ public class IdeaController {
             @RequestParam(required = false) Long ownerId,
             @RequestParam(required = false) String query,
             @RequestParam(required = false) Integer offset,
-            @RequestParam(required = false) Integer limit,
-            Principal principal) {
-        System.out.println("Principal");
-        System.out.println(principal);
-        System.out.println(principal.getName());
+            @RequestParam(required = false) Integer limit) {
         IdeaFilter ideaFilter = new IdeaFilter(null, ownerId, problemId);
         return ideaService.findAll(query, offset, limit, ideaFilter);
     }
