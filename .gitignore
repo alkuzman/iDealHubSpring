@@ -4,3 +4,5 @@ src/main/resources/development.properties
 target/
 src/main/resources/application-akuzmanoski.properties
 src/main/resources/application-dev.properties
+.idea/inspectionProfiles/
+.idea/libraries/
