@@ -13,6 +13,8 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.List;
+
 /**
  * Created by PC on 09/10/2016.
  */
@@ -36,6 +38,9 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
     @IndexedEmbedded
     @Boost(0.5f)
     private User owner;
+
+    @Relationship(type = "KEYWORD")
+    private List<Keyword> keywords;
 
     public String getTitle() {
         return title;
@@ -81,5 +86,13 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
 
     public void setSnackPeak(String snackPeak) {
         this.snackPeak = snackPeak;
+    }
+
+    public List<Keyword> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<Keyword> keywords) {
+        this.keywords = keywords;
     }
 }

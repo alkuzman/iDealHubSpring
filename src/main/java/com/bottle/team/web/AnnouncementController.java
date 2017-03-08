@@ -1,5 +1,6 @@
 package com.bottle.team.web;
 
+import com.bottle.team.model.awards.StandardAward;
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.model.sharing.Announcement;
 import com.bottle.team.service.AnnouncementService;
@@ -9,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AKuzmanoski on 04/01/2017.

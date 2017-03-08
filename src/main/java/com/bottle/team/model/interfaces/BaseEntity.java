@@ -19,10 +19,6 @@ public interface BaseEntity {
 
     void setId(Long id);
 
-    String getName();
-
-    void setName(String name);
-
     Date getCreationDate();
 
     void setCreationDate(Date creationDate);

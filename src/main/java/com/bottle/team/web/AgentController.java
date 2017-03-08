@@ -3,7 +3,7 @@ package com.bottle.team.web;
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.service.AgentService;
 import com.bottle.team.service.helper.AgentFilter;
-import com.bottle.team.web.helper.BaseEntityList;
+import com.bottle.team.web.helper.BaseEntityIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,13 +20,9 @@ public class AgentController {
     AgentService agentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public BaseEntityList findAll(@RequestParam(required = false) String query,
-                                  @RequestParam(required = false) Integer offset,
-                                  @RequestParam(required = false) Integer limit) {
-        BaseEntityList list = new BaseEntityList();
-        for (BaseEntity entity : this.agentService.findAll(query, offset, limit, new AgentFilter())) {
-            list.add(entity);
-        }
-        return list;
+    public BaseEntityIterable<? extends BaseEntity> findAll(@RequestParam(required = false) String query,
+                                                            @RequestParam(required = false) Integer offset,
+                                                            @RequestParam(required = false) Integer limit) {
+        return new BaseEntityIterable(this.agentService.findAll(query, offset, limit, new AgentFilter()));
     }
 }

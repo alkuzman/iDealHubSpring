@@ -26,8 +26,6 @@ public abstract class BaseEntityImpl implements BaseEntity, Cloneable {
     @Field(analyze = Analyze.NO)
     @Id
     private Long id;
-    @Property(name = "name")
-    private String name;
     @CreatedDate
     @Property(name = "creationDate")
     @Field(analyze = Analyze.NO)
@@ -45,14 +43,6 @@ public abstract class BaseEntityImpl implements BaseEntity, Cloneable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Date getCreationDate() {
@@ -75,7 +65,6 @@ public abstract class BaseEntityImpl implements BaseEntity, Cloneable {
     public String toString() {
         return "BaseEntityImpl{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", creationDate=" + creationDate +
                 ", lastModified=" + lastModified +
                 '}';
@@ -84,7 +73,6 @@ public abstract class BaseEntityImpl implements BaseEntity, Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         BaseEntityImpl baseEntity = (BaseEntityImpl)super.clone();
-        baseEntity.setName(getName());
         baseEntity.setCreationDate(getCreationDate());
         baseEntity.setLastModified(getLastModified());
         baseEntity.setId(getId());

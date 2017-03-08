@@ -134,16 +134,18 @@ public class QueryServiceImpl implements QueryService {
         try {
             IndexReader reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
-            int lmt;
             if (limit == null)
-                lmt = Integer.MAX_VALUE;
-            else lmt = limit;
-            if (offset != null)
-                lmt += offset;
-            TopDocs docs = searcher.search(query, lmt);
+                limit = Integer.MAX_VALUE;
+            else {
+                if (offset != null)
+                    limit += offset;
+            }
+            if (offset == null)
+                offset = 0;
+            TopDocs docs = searcher.search(query, limit);
             ScoreDoc[] hits = docs.scoreDocs;
 
-            for (int i = offset != null ? offset : 0; i < hits.length; ++i) {
+            for (int i = offset; i < hits.length; ++i) {
                 int docId = hits[i].doc;
                 Document d = searcher.doc(docId);
                 Long id = Long.parseLong(d.get("{{id}}"));
@@ -155,9 +157,15 @@ public class QueryServiceImpl implements QueryService {
             e.printStackTrace();
         }
         List<BaseEntity> entities = new ArrayList<>(scoreMap.size());
-        for (BaseEntity baseEntity : baseEntityRepository.findAll(ids, type.getSimpleName()))
-            if (baseEntity != null && scoreMap.containsKey(baseEntity.getId()))
-                entities.add(baseEntity);
+        Iterable<BaseEntity> foundEntities = baseEntityRepository.findAll(ids);
+        for (BaseEntity baseEntity : foundEntities) {
+            if (baseEntity != null) {
+                Long id = baseEntity.getId();
+                if (scoreMap.containsKey(id)) {
+                    entities.add(baseEntity);
+                }
+            }
+        }
         entities.sort((o1, o2) -> {
             return Float.compare(scoreMap.get(o2.getId()), scoreMap.get(o1.getId()));
         });

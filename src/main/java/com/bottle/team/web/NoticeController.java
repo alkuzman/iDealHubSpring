@@ -2,6 +2,7 @@ package com.bottle.team.web;
 
 import com.bottle.team.model.sharing.Notice;
 import com.bottle.team.service.NoticeService;
+import com.bottle.team.web.helper.BaseEntityIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +23,11 @@ public class NoticeController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Notice> getNotices(
+    public BaseEntityIterable<Notice> getNotices(
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) Integer offset
     ) {
-        return noticeService.getNotices(limit, offset);
+        return new BaseEntityIterable<Notice>(noticeService.getNotices(limit, offset));
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)

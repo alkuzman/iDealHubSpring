@@ -14,8 +14,8 @@ import org.springframework.data.repository.query.Param;
  * @since 14/01/2017
  */
 public interface BaseEntityRepository extends GraphRepository<BaseEntity> {
-    @Query("MATCH (n) WHERE id(n) in { ids } WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
-    Iterable<BaseEntity> findAll(@Param("ids") Iterable<Long> ids, @Param("type") String type);
+    @Query("MATCH (n:BaseEntity) WHERE id(n) in { ids } WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
+    Iterable<BaseEntity> findAll(@Param("ids") Iterable<Long> ids);
 
     @Override
     @Query("MATCH (n) WHERE id(n) = { id } WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
