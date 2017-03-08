@@ -13,12 +13,10 @@ import org.neo4j.ogm.annotation.Relationship;
  * @since 06/03/2017
  */
 public class SolutionQuality {
-    @NotEmpty
     @Relationship(type = "PROBLEM_COVERAGE")
     @IndexedEmbedded
     @Boost(1f)
     private ProblemCoverage problemCoverage;
-    @NotEmpty
     @Relationship(type = "SNACK_PEAK_QUALITY")
     @IndexedEmbedded
     @Boost(1f)

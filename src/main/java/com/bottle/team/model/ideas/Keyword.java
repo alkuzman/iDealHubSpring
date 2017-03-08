@@ -21,7 +21,6 @@ public class Keyword extends BaseEntityImpl {
     @Field(store = org.apache.lucene.document.Field.Store.YES)
     @Boost(4.0f)
     private String phrase;
-    @NotEmpty
     @Property(name = "score")
     private Double score;
 

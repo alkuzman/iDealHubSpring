@@ -1,7 +1,5 @@
 package com.bottle.team.model.awards.bedges;
 
-import com.bottle.team.lucene.annotations.Boost;
-import com.bottle.team.lucene.annotations.Field;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 
@@ -13,7 +11,7 @@ import org.neo4j.ogm.annotation.Property;
  * @since 05/03/2017
  */
 @NodeEntity
-public class SnackPeakQualityBadge extends StandardBadge<Double, SnackPeakQualityBadge> implements TextQualityBadge<Double, SnackPeakQualityBadge> {
+public class SnackPeakQualityBadge extends AbstractBadge<Double, SnackPeakQualityBadge> implements TextQualityBadge<Double, SnackPeakQualityBadge> {
     @Property(name = "minimumSnackPeakQuality")
     private Double minimumSnackPeakQuality;
     @Property(name = "maximumSnackPeakQuality")

@@ -13,7 +13,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
  */
 @NodeEntity
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = StandardBadge.class),
+        @JsonSubTypes.Type(value = AbstractBadge.class),
         @JsonSubTypes.Type(value = ProblemCoverageBadge.class),
         @JsonSubTypes.Type(value = SnackPeakQualityBadge.class)
 })

@@ -18,7 +18,6 @@ import java.util.List;
 @NodeEntity
 public class ProblemCoverage extends AbstractTextQuality {
     @Property(name = "coverage")
-    @NotEmpty
     private Double coverage;
     @Relationship(type = "COVERED_KEYWORD")
     private List<Keyword> coveredKeywords;

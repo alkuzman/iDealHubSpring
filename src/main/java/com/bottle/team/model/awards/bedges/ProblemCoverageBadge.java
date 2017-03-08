@@ -11,7 +11,7 @@ import org.neo4j.ogm.annotation.Property;
  * @since 05/03/2017
  */
 @NodeEntity
-public class ProblemCoverageBadge extends StandardBadge<Double, ProblemCoverageBadge> implements TextQualityBadge<Double, ProblemCoverageBadge> {
+public class ProblemCoverageBadge extends AbstractBadge<Double, ProblemCoverageBadge> implements TextQualityBadge<Double, ProblemCoverageBadge> {
     @Property(name = "minimumCoverage")
     private Double minimumCoverage;
     @Property(name = "maximumCoverage")

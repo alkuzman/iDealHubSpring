@@ -42,42 +42,42 @@ public class BadgeController {
         List<Badge> badges = new LinkedList<>();
 
         ProblemCoverageBadge badge1 = new ProblemCoverageBadge();
-        badge1.setMaximumCoverage(100.0);
-        badge1.setMinimumCoverage(75.0);
+        badge1.setMaximumCoverage(Double.MAX_VALUE);
+        badge1.setMinimumCoverage(0.65);
         badge1.setName("Excellent Problem Coverage");
         badge1.setDescription("This badge is for excellent problem coverage which means that coverage is between 75% and 100%");
         badges.add(badge1);
 
         ProblemCoverageBadge badge2 = new ProblemCoverageBadge();
-        badge2.setMaximumCoverage(75.0);
-        badge2.setMinimumCoverage(50.0);
+        badge2.setMaximumCoverage(0.65);
+        badge2.setMinimumCoverage(0.40);
         badge2.setName("Good Problem Coverage");
         badge2.setDescription("This badge is for good problem coverage which means that coverage is between 50% and 75%");
         badge2.setNext(badge1);
         badges.add(badge2);
 
         ProblemCoverageBadge badge3 = new ProblemCoverageBadge();
-        badge3.setMaximumCoverage(50.0);
-        badge3.setMinimumCoverage(25.0);
+        badge3.setMaximumCoverage(0.4);
+        badge3.setMinimumCoverage(0.15);
         badge3.setName("Fair Problem Coverage");
         badge3.setDescription("This badge is for fair problem coverage which means that coverage is between 25% and 50%");
         badge3.setNext(badge2);
         badges.add(badge3);
 
-        ProblemCoverageBadge badge4 = new ProblemCoverageBadge();
-        badge4.setMaximumCoverage(25.0);
-        badge4.setMinimumCoverage(0.0);
-        badge4.setName("Poor Problem Coverage");
-        badge4.setDescription("This badge is for poor problem coverage which means that coverage is between 0% and 25%");
-        badge4.setNext(badge3);
-        badges.add(badge4);
-
         SnackPeakQualityBadge badge = new SnackPeakQualityBadge();
-        badge.setName("Snack Peak Quality");
-        badge.setDescription("This badge is for the achieved snack peak quality.");
+        badge.setName("Excellent Snack Peak Quality");
+        badge.setDescription("This badge is for the achieved Excellent snack peak quality.");
         badge.setMaximumSnackPeakQuality(Double.MAX_VALUE);
-        badge.setMinimumSnackPeakQuality(0.8);
+        badge.setMinimumSnackPeakQuality(1.5);
         badges.add(badge);
+
+        SnackPeakQualityBadge badge_1 = new SnackPeakQualityBadge();
+        badge_1.setName("Good Snack Peak Quality");
+        badge_1.setDescription("This badge is for the achieved good snack peak quality.");
+        badge_1.setMaximumSnackPeakQuality(1.5);
+        badge_1.setMinimumSnackPeakQuality(0.8);
+        badge_1.setNext(badge);
+        badges.add(badge_1);
 
         return new BaseEntityIterable<>(badgeService.save(badges));
     }

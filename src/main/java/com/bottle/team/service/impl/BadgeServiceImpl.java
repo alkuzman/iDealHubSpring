@@ -2,6 +2,7 @@ package com.bottle.team.service.impl;
 
 import com.bottle.team.model.awards.bedges.Badge;
 import com.bottle.team.model.awards.bedges.ProblemCoverageBadge;
+import com.bottle.team.model.awards.bedges.SimpleBadge;
 import com.bottle.team.model.awards.bedges.SnackPeakQualityBadge;
 import com.bottle.team.model.ideas.quality.ProblemCoverage;
 import com.bottle.team.model.ideas.quality.SnackPeakQuality;
@@ -21,10 +22,20 @@ import org.springframework.stereotype.Service;
 public class BadgeServiceImpl implements BadgeService {
     final
     private BadgeRepository badgeRepository;
+    private ProblemCoverageBadge noProblemCoverageBadge;
+    private SnackPeakQualityBadge noSnackPeakQualityBadge;
+    private SimpleBadge noInnovativenessBadge;
 
     @Autowired
     public BadgeServiceImpl(BadgeRepository badgeRepository) {
         this.badgeRepository = badgeRepository;
+        this.noProblemCoverageBadge = new ProblemCoverageBadge();
+        this.noProblemCoverageBadge.setName("Poor Problem Coverage");
+        this.noProblemCoverageBadge.setDescription("");
+
+        this.noSnackPeakQualityBadge = new SnackPeakQualityBadge();
+        this.noSnackPeakQualityBadge.setName("Poor Snack Peak Quality");
+        this.noSnackPeakQualityBadge.setDescription("");
     }
 
     @Override
@@ -72,7 +83,7 @@ public class BadgeServiceImpl implements BadgeService {
             if (problemCoverageBadge.fits(problemCoverage.getCoverage()))
                 return problemCoverageBadge;
         }
-        return null;
+        return noProblemCoverageBadge;
     }
 
     @Override
@@ -83,6 +94,6 @@ public class BadgeServiceImpl implements BadgeService {
             if (snackPeakQualityBadge.fits(snackPeakQuality.getQuality()))
                 return snackPeakQualityBadge;
         }
-        return null;
+        return noSnackPeakQualityBadge;
     }
 }

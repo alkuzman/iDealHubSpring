@@ -17,7 +17,6 @@ import org.neo4j.ogm.annotation.Relationship;
 @NodeEntity
 public class SnackPeakQuality extends AbstractTextQuality {
     @Property(name = "quality")
-    @NotEmpty
     private Double quality;
 
     public Double getQuality() {

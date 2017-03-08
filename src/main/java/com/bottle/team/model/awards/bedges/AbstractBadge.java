@@ -17,7 +17,7 @@ import org.neo4j.ogm.annotation.Relationship;
  * @since 05/03/2017
  */
 @NodeEntity
-public abstract class StandardBadge<F, T extends Badge> extends BaseEntityImpl implements Badge<F, T> {
+public abstract class AbstractBadge<F, T extends Badge> extends BaseEntityImpl implements Badge<F, T> {
     @NotEmpty
     @Property(name = "name")
     @Field(store = org.apache.lucene.document.Field.Store.YES)

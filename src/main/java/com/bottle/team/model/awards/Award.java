@@ -18,6 +18,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ProblemCoverageAward.class),
         @JsonSubTypes.Type(value = StandardAward.class),
+        @JsonSubTypes.Type(value = TextQualityAward.class),
         @JsonSubTypes.Type(value = SnackPeakQualityAward.class)
 })
 public interface Award<T extends Badge> extends BaseEntity {
