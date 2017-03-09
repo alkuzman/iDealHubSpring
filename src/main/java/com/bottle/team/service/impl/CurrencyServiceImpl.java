@@ -43,4 +43,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     public Currency findById(Long id) {
         return null;
     }
+
+    @Override
+    public Iterable<Currency> save(Iterable<Currency> currencies) {
+        return this.currencyRepository.save(currencies);
+    }
 }
