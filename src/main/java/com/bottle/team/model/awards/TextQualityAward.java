@@ -16,7 +16,7 @@ import org.neo4j.ogm.annotation.Relationship;
  */
 @NodeEntity
 public class TextQualityAward<T extends TextQualityBadge, F extends AbstractTextQuality> extends StandardAward<T> {
-    @Relationship(type = "BADGE")
+    @Relationship(type = "QUALITY")
     @IndexedEmbedded
     @Boost(1f)
     private F textQuality;

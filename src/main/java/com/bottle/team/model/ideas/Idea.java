@@ -5,6 +5,7 @@ import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.User;
+import com.bottle.team.model.awards.Award;
 import com.bottle.team.model.interfaces.NamedEntity;
 import com.bottle.team.model.sharing.Sharable;
 import com.sun.istack.internal.NotNull;
@@ -39,8 +40,10 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
     @Boost(0.5f)
     private User owner;
 
-    @Relationship(type = "KEYWORD")
-    private List<Keyword> keywords;
+    @Property(name = "keywords")
+    private List<String> keywords;
+    @Relationship(type = "AWARD")
+    private List<Award> awards;
 
     public String getTitle() {
         return title;
@@ -88,11 +91,19 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
         this.snackPeak = snackPeak;
     }
 
-    public List<Keyword> getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(List<Keyword> keywords) {
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public List<Award> getAwards() {
+        return awards;
+    }
+
+    public void setAwards(List<Award> awards) {
+        this.awards = awards;
     }
 }
