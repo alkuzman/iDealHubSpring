@@ -1,4 +1,4 @@
-package com.bottle.team.model.awards.bedges;
+package com.bottle.team.model.awards.badges;
 
 import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;

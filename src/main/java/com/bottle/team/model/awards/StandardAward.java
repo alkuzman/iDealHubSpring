@@ -4,7 +4,7 @@ import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
-import com.bottle.team.model.awards.bedges.Badge;
+import com.bottle.team.model.awards.badges.Badge;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;

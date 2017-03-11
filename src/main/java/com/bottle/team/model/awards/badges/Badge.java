@@ -1,4 +1,4 @@
-package com.bottle.team.model.awards.bedges;
+package com.bottle.team.model.awards.badges;
 
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

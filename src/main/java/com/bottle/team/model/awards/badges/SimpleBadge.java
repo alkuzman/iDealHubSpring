@@ -1,4 +1,4 @@
-package com.bottle.team.model.awards.bedges;
+package com.bottle.team.model.awards.badges;
 
 /**
  * Created by AKuzmanoski on 08/03/2017.

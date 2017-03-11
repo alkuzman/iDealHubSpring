@@ -1,6 +1,6 @@
 package com.bottle.team.model.awards;
 
-import com.bottle.team.model.awards.bedges.SnackPeakQualityBadge;
+import com.bottle.team.model.awards.badges.SnackPeakQualityBadge;
 import com.bottle.team.model.ideas.quality.SnackPeakQuality;
 import org.neo4j.ogm.annotation.NodeEntity;
 

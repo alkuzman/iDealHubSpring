@@ -1,4 +1,4 @@
-package com.bottle.team.model.awards.bedges;
+package com.bottle.team.model.awards.badges;
 
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;

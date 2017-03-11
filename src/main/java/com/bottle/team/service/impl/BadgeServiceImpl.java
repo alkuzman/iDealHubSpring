@@ -1,9 +1,9 @@
 package com.bottle.team.service.impl;
 
-import com.bottle.team.model.awards.bedges.Badge;
-import com.bottle.team.model.awards.bedges.ProblemCoverageBadge;
-import com.bottle.team.model.awards.bedges.SimpleBadge;
-import com.bottle.team.model.awards.bedges.SnackPeakQualityBadge;
+import com.bottle.team.model.awards.badges.Badge;
+import com.bottle.team.model.awards.badges.ProblemCoverageBadge;
+import com.bottle.team.model.awards.badges.SimpleBadge;
+import com.bottle.team.model.awards.badges.SnackPeakQualityBadge;
 import com.bottle.team.model.ideas.quality.ProblemCoverage;
 import com.bottle.team.model.ideas.quality.SnackPeakQuality;
 import com.bottle.team.repository.BadgeRepository;

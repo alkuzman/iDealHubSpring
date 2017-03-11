@@ -1,9 +1,7 @@
 package com.bottle.team.model.awards;
 
-import com.bottle.team.model.awards.bedges.Badge;
+import com.bottle.team.model.awards.badges.Badge;
 import com.bottle.team.model.interfaces.BaseEntity;
-import com.bottle.team.model.sharing.NewCommentNotice;
-import com.bottle.team.model.sharing.NewPackageNotice;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.neo4j.ogm.annotation.NodeEntity;
 

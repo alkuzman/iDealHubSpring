@@ -1,6 +1,6 @@
 package com.bottle.team.model.awards;
 
-import com.bottle.team.model.awards.bedges.ProblemCoverageBadge;
+import com.bottle.team.model.awards.badges.ProblemCoverageBadge;
 import com.bottle.team.model.ideas.quality.ProblemCoverage;
 import org.neo4j.ogm.annotation.NodeEntity;
 

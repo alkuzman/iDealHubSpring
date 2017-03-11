@@ -1,8 +1,8 @@
 package com.bottle.team.web;
 
-import com.bottle.team.model.awards.bedges.Badge;
-import com.bottle.team.model.awards.bedges.ProblemCoverageBadge;
-import com.bottle.team.model.awards.bedges.SnackPeakQualityBadge;
+import com.bottle.team.model.awards.badges.Badge;
+import com.bottle.team.model.awards.badges.ProblemCoverageBadge;
+import com.bottle.team.model.awards.badges.SnackPeakQualityBadge;
 import com.bottle.team.service.BadgeService;
 import com.bottle.team.web.helper.BaseEntityIterable;
 import org.springframework.beans.factory.annotation.Autowired;
