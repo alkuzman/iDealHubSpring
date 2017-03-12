@@ -2,14 +2,19 @@ package com.bottle.team.service.impl;
 
 import com.bottle.team.auth.jwt.common.UserContext;
 import com.bottle.team.model.relationship.Recipient;
+import com.bottle.team.model.sharing.AbstractNotice;
 import com.bottle.team.model.sharing.Notice;
 import com.bottle.team.repository.NoticeRepository;
 import com.bottle.team.service.NoticeService;
 import com.bottle.team.service.WebSocketService;
+import org.apache.commons.collections4.iterators.IteratorIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Viki on 1/26/2017.
@@ -34,8 +39,6 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice save(Notice object) {
-        for (Recipient recipient: object.getRecipients())
-            recipient.setNotice(object);
         return noticeRepository.save(object);
     }
 
@@ -70,7 +73,21 @@ public class NoticeServiceImpl implements NoticeService {
         if (limit == null) {
             limit = 10;
         }
-        return this.noticeRepository.getNotices(email, limit, offset);
+        Iterable<Notice> notices = this.noticeRepository.getNotices(email, limit, offset);
+        List<Notice> filteredNotices = new ArrayList<Notice>();
+        for (Notice notice : notices) {
+            List<Recipient> recipients = notice.getRecipients();
+            if (recipients == null) {
+                continue;
+            }
+            for (Recipient recipient : recipients) {
+                if (recipient.getAgent().getEmail().equals(email)) {
+                    filteredNotices.add(notice);
+                    break;
+                }
+            }
+        }
+        return filteredNotices;
     }
 
     @Override
