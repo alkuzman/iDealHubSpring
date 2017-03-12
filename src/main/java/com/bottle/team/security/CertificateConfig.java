@@ -25,6 +25,9 @@ public class CertificateConfig {
 
     @Bean
     public KeyGeneration getKeyGenerator() {
-        return new KeyGeneration("RSA");
+        KeyGeneration keyGeneration = new KeyGeneration();
+        keyGeneration.initializeKeyGenerator("AES", 256);
+        keyGeneration.initializePairGenerator("RSA", 2048);
+        return keyGeneration;
     }
 }

@@ -1,8 +1,11 @@
 package com.bottle.team.web;
 
+import com.bottle.team.model.interfaces.BaseEntity;
+import com.bottle.team.model.sharing.AbstractNotice;
 import com.bottle.team.model.sharing.Notice;
 import com.bottle.team.service.NoticeService;
 import com.bottle.team.web.helper.BaseEntityIterable;
+import com.bottle.team.web.helper.BaseEntityList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,11 @@ public class NoticeController {
     @RequestMapping(method = RequestMethod.POST)
     public Notice addNotice(@RequestBody @Valid Notice notice) {
         return noticeService.add(notice);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Notice getNotice(@PathVariable Long id) {
+        return noticeService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -1,5 +1,6 @@
 package com.bottle.team.service;
 
+import com.bottle.team.model.sharing.AbstractNotice;
 import com.bottle.team.model.sharing.Notice;
 
 /**

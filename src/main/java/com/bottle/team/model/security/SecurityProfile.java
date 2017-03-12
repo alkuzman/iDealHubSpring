@@ -21,6 +21,9 @@ public class SecurityProfile extends BaseEntityImpl {
     @Property(name = "encryptedPrivateKey")
     private String encryptedPrivateKey;
 
+    @Property(name = "encryptedSymmetricKey")
+    private String encryptedSymmetricKey;
+
     @Property(name = "certificateType")
     private CertificateType certificateType;
 
@@ -52,6 +55,14 @@ public class SecurityProfile extends BaseEntityImpl {
 
     public void setEncryptedPrivateKey(String encryptedPrivateKey) {
         this.encryptedPrivateKey = encryptedPrivateKey;
+    }
+
+    public String getEncryptedSymmetricKey() {
+        return encryptedSymmetricKey;
+    }
+
+    public void setEncryptedSymmetricKey(String encryptedSymmetricKey) {
+        this.encryptedSymmetricKey = encryptedSymmetricKey;
     }
 
     public CertificateType getCertificateType() {
