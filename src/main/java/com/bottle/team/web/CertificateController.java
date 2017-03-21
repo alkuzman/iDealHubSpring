@@ -44,6 +44,11 @@ public class CertificateController {
         return securityProfile.getCertificatePEM();
     }
 
+    @RequestMapping(value = "/issuer")
+    public String getIssuerCertificate() {
+        return this.certificateService.getCACertificate();
+    }
+
     @RequestMapping(value = "/publickey", method = RequestMethod.GET)
     public String getPublicKey(@RequestParam String email) {
         SecurityProfile securityProfile = securityProfileService

@@ -8,6 +8,8 @@ import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
+import org.bouncycastle.operator.AlgorithmNameFinder;
+import org.bouncycastle.operator.DefaultAlgorithmNameFinder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,6 +37,7 @@ public class CertificateOperations {
     private CertificateAndPrivateKeyWrapper caCertificate;
 
     public X509Certificate generateSignedCertificate(PKCS10CertificationRequest request) {
+
         TBSCertificate tbsCertificate = generateCertificate(request.getSubjectPublicKeyInfo(),
                 request.getSignatureAlgorithm(), request.getSubject());
         return generateSignedCertificate(tbsCertificate);
@@ -54,12 +57,24 @@ public class CertificateOperations {
         certASN.add(tbsCertificate.getSignature());
         certASN.add(new DERBitString(signature));
 
+        AlgorithmNameFinder finder = new DefaultAlgorithmNameFinder();
+
         X509Certificate certificate = null;
         try {
             certificate = new X509CertImpl(new DERSequence(certASN).getEncoded());
+            certificate.verify(caCertificate.getCertificate().getPublicKey());
         } catch (CertificateException | IOException e) {
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (SignatureException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
         }
+
         return certificate;
     }
 
@@ -140,7 +155,6 @@ public class CertificateOperations {
         //Subject public key info
         certGen.setSubjectPublicKeyInfo(subjectPublicKeyInfo);
 
-
         //Validity
         Calendar expiry = Calendar.getInstance();
         expiry.add(Calendar.DAY_OF_YEAR, settings.getValidityDays());
@@ -153,7 +167,7 @@ public class CertificateOperations {
     private byte[] signCertificate(TBSCertificate certificate, PrivateKey caPrivateKey) {
         byte[] signature = null;
         try {
-            Signature signer = Signature.getInstance("SHA1WithRSA");
+            Signature signer = Signature.getInstance((new DefaultAlgorithmNameFinder()).getAlgorithmName(certificate.getSignature()));
             signer.initSign(caPrivateKey);
             signer.update(certificate.getEncoded());
             signature = signer.sign();

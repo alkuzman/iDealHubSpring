@@ -21,4 +21,6 @@ public interface CertificateService {
 
     String convertCertificateToPEM(X509Certificate certificate);
 
+    String getCACertificate();
+
 }

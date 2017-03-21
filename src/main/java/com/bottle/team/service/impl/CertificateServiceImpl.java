@@ -57,4 +57,9 @@ public class CertificateServiceImpl implements CertificateService {
         return certificateOperations.convertCertificateToPEM(certificate);
     }
 
+    @Override
+    public String getCACertificate() {
+        return certificateOperations.convertCertificateToPEM(this.caCertificate.getCertificate());
+    }
+
 }

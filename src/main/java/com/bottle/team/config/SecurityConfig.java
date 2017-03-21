@@ -138,10 +138,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/securityprofiles").authenticated()
 
                 .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/buyingtransaction").authenticated()
-
-                .and()
                 .addFilterBefore(buildJwtLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
 
