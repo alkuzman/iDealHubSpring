@@ -2,12 +2,12 @@ package com.bottle.team.model.security;
 
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.ideas.Idea;
-import com.bottle.team.model.relationship.ProtocolParticipantSessionData;
-import com.bottle.team.model.security.notices.ProtocolTransactionStepOneNotice;
-import org.neo4j.ogm.annotation.EndNode;
+import com.bottle.team.model.relationship.ProtocolParticipantOneSessionData;
+import com.bottle.team.model.relationship.ProtocolParticipantTwoSessionData;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import javax.naming.ldap.PagedResultsControl;
 import java.util.List;
 
 /**
@@ -16,22 +16,14 @@ import java.util.List;
 @NodeEntity
 public class ProtocolSession extends BaseEntityImpl {
 
-    @Relationship(type = "PARTICIPANT")
-    private List<ProtocolParticipantSessionData> participantsSessionData;
+    @Relationship(type = "PARTICIPANT_ONE")
+    private ProtocolParticipantOneSessionData participantOneSessionData;
+
+    @Relationship(type = "PARTICIPANT_TWO")
+    private ProtocolParticipantTwoSessionData participantTwoSessionData;
 
     @Relationship(type = "IDEA")
     private Idea idea;
-
-    public List<ProtocolParticipantSessionData> getParticipantsSessionData() {
-        return participantsSessionData;
-    }
-
-    public void setParticipantsSessionData(List<ProtocolParticipantSessionData> participantsSessionData) {
-        this.participantsSessionData = participantsSessionData;
-        for (ProtocolParticipantSessionData participant : participantsSessionData) {
-            participant.setSession(this);
-        }
-    }
 
     public Idea getIdea() {
         return idea;
@@ -39,5 +31,23 @@ public class ProtocolSession extends BaseEntityImpl {
 
     public void setIdea(Idea idea) {
         this.idea = idea;
+    }
+
+    public ProtocolParticipantOneSessionData getParticipantOneSessionData() {
+        return participantOneSessionData;
+    }
+
+    public void setParticipantOneSessionData(ProtocolParticipantOneSessionData participantOneSessionData) {
+        this.participantOneSessionData = participantOneSessionData;
+        this.participantOneSessionData.setSession(this);
+    }
+
+    public ProtocolParticipantTwoSessionData getParticipantTwoSessionData() {
+        return participantTwoSessionData;
+    }
+
+    public void setParticipantTwoSessionData(ProtocolParticipantTwoSessionData participantTwoSessionData) {
+        this.participantTwoSessionData = participantTwoSessionData;
+        this.participantTwoSessionData.setSession(this);
     }
 }

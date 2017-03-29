@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.*;
 
 /**
- * Created by Viki on 3/9/2017.
+ * Created by Viki on 3/21/2017.
  */
-@RelationshipEntity(type = "PARTICIPANT")
-public class ProtocolParticipantSessionData extends BaseRelationship {
+@RelationshipEntity(type = "PARTICIPANT_TWO")
+public class ProtocolParticipantTwoSessionData extends BaseRelationship {
 
     @StartNode
     @JsonIgnore
