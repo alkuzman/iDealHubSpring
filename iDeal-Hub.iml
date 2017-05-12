@@ -2,7 +2,21 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/config/mail-integration.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/security/CertificateConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/security/CertificateSettings.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/config/CorsConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/IdealApplication.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/auth/jwt/settings/JwtSettings.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/lucene/LuceneConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/config/Neo4jConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/config/SecurityConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/config/ValidationConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/bottle/team/config/WebSocketConfig.java</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
@@ -18,8 +32,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.springframework:spring-websocket:4.3.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-messaging:4.3.6.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.56" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.56" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-websocket:4.3.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-messaging:4.3.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:1.4.1.RELEASE" level="project" />
