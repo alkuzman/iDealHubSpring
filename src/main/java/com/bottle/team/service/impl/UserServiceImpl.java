@@ -121,8 +121,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void resendActivationCode(String email) {
-        User user = userRepository.findByEmail(email);
+    public User resendActivationCode(String email) {
+        User user = this.findByEmailWithNoPassword(email);
         registrationMailService.sendActivationMail(user, true);
+        return user;
     }
 }

@@ -15,5 +15,5 @@ public interface UserService extends Service<User>, UserDetailsService {
 
     User activate(String code);
 
-    void resendActivationCode(String email);
+    User resendActivationCode(String email);
 }
