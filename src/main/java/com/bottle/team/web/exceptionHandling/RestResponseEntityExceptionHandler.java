@@ -2,6 +2,7 @@ package com.bottle.team.web.exceptionHandling;
 
 import com.bottle.team.web.exceptions.RegistrationUnsuccessfulException;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
+import com.bottle.team.web.exceptions.UserNotActivatedException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,13 @@ public class RestResponseEntityExceptionHandler {
         map.put("exception", "ConstraintViolationException");
         map.put("errors", processFieldErrors(fieldErrors));
         return map;
+    }
+
+    @ExceptionHandler(UserNotActivatedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public String userNotActivated(UserNotActivatedException ex) {
+        return ex.getMessage();
     }
 
     private List<FieldError> processFieldErrors(List<org.springframework.validation.FieldError> fieldErrors) {

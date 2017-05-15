@@ -64,4 +64,10 @@ public class UserController {
         User user = userService.activate(code);
         return user;
     }
+
+    @RequestMapping(value = "/activationCode", method = RequestMethod.GET, params = "email")
+    public void resendActivationCode(@RequestParam String email) {
+        userService.resendActivationCode(email);
+        return ;
+    }
 }

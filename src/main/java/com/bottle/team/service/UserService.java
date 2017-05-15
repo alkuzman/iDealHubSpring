@@ -14,4 +14,6 @@ public interface UserService extends Service<User>, UserDetailsService {
     boolean isEmailTaken(String email);
 
     User activate(String code);
+
+    void resendActivationCode(String email);
 }

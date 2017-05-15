@@ -1,9 +1,11 @@
 package com.bottle.team.auth.jwt.providers;
 
 import com.bottle.team.auth.jwt.common.UserContext;
+import com.bottle.team.web.exceptions.UserNotActivatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -29,7 +31,7 @@ public class JwtLoginProvider implements AuthenticationProvider {
     }
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException, UserNotActivatedException {
         Assert.notNull(authentication, "No authentication data provider");
 
         UserContext context = (UserContext) authentication.getPrincipal();
@@ -39,6 +41,8 @@ public class JwtLoginProvider implements AuthenticationProvider {
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Authentication Failed. Username or Password not valid.");
+        } else if (!user.isAccountNonLocked()) {
+            throw new LockedException("Account is not activated");
         }
         UserContext userContext = UserContext.create(user.getUsername(), context.isRememberMe(), user.getAuthorities());
 

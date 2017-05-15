@@ -88,12 +88,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = this.findByEmail(s);
 
+        boolean enabled = true;
+        boolean accountNonExpired = true;
+        boolean accountNonLocked = true;
+        boolean credentialsNonExpired = true;
+
         if (user == null)
             throw new UsernameNotFoundException("User was not found");
 
         SimpleGrantedAuthority role = new SimpleGrantedAuthority(user.getRole().toString());
         List<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
         roles.add(role);
+
+        if (user.getActivationCode() != null) {
+            accountNonLocked = false;
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), enabled,
+                    accountNonExpired, credentialsNonExpired, accountNonLocked, roles);
+        }
+
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
     }
 
@@ -106,5 +118,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User activate(String code) {
         User user = userRepository.findByActivationCode(code);
         return user;
+    }
+
+    @Override
+    public void resendActivationCode(String email) {
+        User user = userRepository.findByEmail(email);
+        registrationMailService.sendActivationMail(user, true);
     }
 }
