@@ -35,7 +35,7 @@ public class RegistrationMailServiceImpl implements RegistrationMailService {
         Locale locale = Locale.getDefault();
         Context context = new Context(locale);
         context.setVariable("user", user);
-        context.setVariable("baseUrl", "http://localhost:4200/auth/verify");
+        context.setVariable("baseUrl", "http://localhost:4200/auth/activate");
         String content = templateEngine.process("mail/activationEmail", context);
 
         if (isAsync) {

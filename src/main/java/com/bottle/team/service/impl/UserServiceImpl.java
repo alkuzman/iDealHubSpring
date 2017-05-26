@@ -117,7 +117,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User activate(String code) {
         User user = userRepository.findByActivationCode(code);
-        return user;
+        user.setActivationCode(null);
+        return this.userRepository.save(user);
     }
 
     @Override
