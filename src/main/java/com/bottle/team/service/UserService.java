@@ -1,6 +1,8 @@
 package com.bottle.team.service;
 
 import com.bottle.team.model.authentication.User;
+import com.bottle.team.web.exceptions.ActivationCodeIsWrongException;
+import com.bottle.team.web.exceptions.UserActivatedException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -13,7 +15,7 @@ public interface UserService extends Service<User>, UserDetailsService {
 
     boolean isEmailTaken(String email);
 
-    User activate(String code);
+    User activate(String code, String email) throws UserActivatedException, ActivationCodeIsWrongException;
 
     User resendActivationCode(String email);
 }

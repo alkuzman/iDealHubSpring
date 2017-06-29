@@ -3,7 +3,9 @@ package com.bottle.team.service.impl;
 import com.bottle.team.auth.jwt.common.UserContext;
 import com.bottle.team.model.security.SecurityProfile;
 import com.bottle.team.repository.SecurityProfileRepository;
+import com.bottle.team.repository.UserRepository;
 import com.bottle.team.service.SecurityProfileService;
+import com.bottle.team.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class SecurityProfileServiceImpl implements SecurityProfileService {
 
     final private SecurityProfileRepository securityProfileRepository;
+    //final private UserRepository userRepository;
 
     @Autowired
     public SecurityProfileServiceImpl(SecurityProfileRepository securityProfileRepository) {
@@ -29,6 +32,7 @@ public class SecurityProfileServiceImpl implements SecurityProfileService {
 
     @Override
     public SecurityProfile save(SecurityProfile object) {
+
         return this.securityProfileRepository.save(object);
     }
 

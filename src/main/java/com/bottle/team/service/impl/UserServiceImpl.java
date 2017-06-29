@@ -6,6 +6,8 @@ import com.bottle.team.model.enumaration.Role;
 import com.bottle.team.repository.UserRepository;
 import com.bottle.team.service.RegistrationMailService;
 import com.bottle.team.service.UserService;
+import com.bottle.team.web.exceptions.ActivationCodeIsWrongException;
+import com.bottle.team.web.exceptions.UserActivatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -115,10 +117,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User activate(String code) {
-        User user = userRepository.findByActivationCode(code);
-        user.setActivationCode(null);
-        return this.userRepository.save(user);
+    public User activate(String code, String email) throws UserActivatedException, ActivationCodeIsWrongException {
+        User user = userRepository.findByEmail(email);
+        if (user.getActivationCode() == null) {
+            throw new UserActivatedException("User is activated");
+        }
+        if (user.getActivationCode().equals(code)) {
+            user.setActivationCode(null);
+            user = this.userRepository.save(user);
+        } else {
+            throw new ActivationCodeIsWrongException("The Activation code is not correct");
+        }
+        return user;
     }
 
     @Override

@@ -38,6 +38,8 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
     private Provider provider;
     @Property(name = "activationCode")
     private String activationCode;
+    @Property(name = "securityProfileInitialized")
+    private boolean securityProfileInitialized;
 
     public String getFirstName() {
         return firstName;
@@ -111,6 +113,14 @@ public class User extends Agent implements Person, NamedEntity, Cloneable {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public boolean isSecurityProfileInitialized() {
+        return securityProfileInitialized;
+    }
+
+    public void setSecurityProfileInitialized(boolean securityProfileInitialized) {
+        this.securityProfileInitialized = securityProfileInitialized;
     }
 
     @Override

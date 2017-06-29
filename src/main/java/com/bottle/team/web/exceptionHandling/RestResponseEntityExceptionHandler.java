@@ -1,8 +1,6 @@
 package com.bottle.team.web.exceptionHandling;
 
-import com.bottle.team.web.exceptions.RegistrationUnsuccessfulException;
-import com.bottle.team.web.exceptions.ResourceNotFoundException;
-import com.bottle.team.web.exceptions.UserNotActivatedException;
+import com.bottle.team.web.exceptions.*;
 import com.fasterxml.jackson.core.ObjectCodec;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

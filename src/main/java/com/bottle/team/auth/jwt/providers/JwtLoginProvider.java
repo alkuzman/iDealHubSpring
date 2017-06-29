@@ -31,7 +31,7 @@ public class JwtLoginProvider implements AuthenticationProvider {
     }
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException, UserNotActivatedException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         Assert.notNull(authentication, "No authentication data provider");
 
         UserContext context = (UserContext) authentication.getPrincipal();
