@@ -3,6 +3,7 @@ package com.bottle.team.model.sharing;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.relationship.Recipient;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.List;

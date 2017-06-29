@@ -10,4 +10,6 @@ public interface NoticeService extends Service<Notice> {
     Iterable<Notice> getNotices(Integer limit, Integer offset);
 
     Integer getCount();
+
+    void markAsSeen();
 }

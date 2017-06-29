@@ -34,4 +34,12 @@ public class WebSocketServiceImpl implements WebSocketService {
         String uri = new UriTemplate(topic).expand((Object[]) topicParams).toString();
         template.convertAndSendToUser(user, uri, data);
     }
+
+    public void updateCount(String user, String topic, Object data, String... topicParams) {
+        if (!topic.startsWith(WebSocketConfig.TOPIC_PREFIX)) {
+            topic = WebSocketConfig.TOPIC_PREFIX + topic;
+        }
+        String uri = new UriTemplate(topic).expand((Object[]) topicParams).toString();
+        template.convertAndSendToUser(user, uri, data);
+    }
 }

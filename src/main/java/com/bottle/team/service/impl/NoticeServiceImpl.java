@@ -13,8 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Viki on 1/26/2017.
@@ -96,5 +99,18 @@ public class NoticeServiceImpl implements NoticeService {
         UserContext userContext = (UserContext) authentication.getPrincipal();
         String email = userContext.getUsername();
         return this.noticeRepository.getCount(email);
+    }
+
+    @Override
+    public void markAsSeen() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserContext userContext = (UserContext) authentication.getPrincipal();
+        String username = userContext.getUsername();
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        this.noticeRepository.markAsSeen(username, sdf.format(now));
+        this.webSocketService.updateCount(username, "/topic/notices/count", 0);
+        return;
     }
 }

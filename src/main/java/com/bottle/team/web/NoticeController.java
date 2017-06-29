@@ -42,4 +42,10 @@ public class NoticeController {
     public Integer getCount() {
         return noticeService.getCount();
     }
+
+    @RequestMapping(value = "/seen", method = RequestMethod.PUT)
+    public Void markAsSeen() {
+        this.noticeService.markAsSeen();
+        return null;
+    }
 }

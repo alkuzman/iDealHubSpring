@@ -6,6 +6,8 @@ import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
+
 /**
  * Created by Viki on 1/26/2017.
  */
@@ -15,4 +17,10 @@ public interface NoticeRepository extends GraphRepository<Notice> {
 
     @Query("MATCH (n:AbstractNotice)-[r:RECIPIENT]->(recipient:Agent) WHERE recipient.email = { recipient_email } AND NOT exists(r.seen) WITH COUNT(n) as count RETURN count")
     Integer getCount(@Param("recipient_email") String email);
+
+    @Query("MATCH (n:AbstractNotice)-[r:RECIPIENT]->(recipient:Agent) WHERE recipient.email = { recipient_email } AND NOT exists(r.seen) SET r.seen = { seen_date } WITH COUNT(n) as count RETURN count ")
+    void markAsSeen(@Param("recipient_email") String email, @Param("seen_date") String now);
+
+    @Query("MATCH (n:AbstractNotice)-[r:RECIPIENT]->(recipient:Agent) WHERE recipient.email = { recipient_email } AND NOT exists(r.seen) RETURN n")
+    Iterable<Notice> getNotSeenNotices(@Param("recipient_email") String email);
 }

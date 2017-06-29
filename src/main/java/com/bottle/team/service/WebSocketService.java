@@ -8,4 +8,6 @@ public interface WebSocketService {
   void send(String topic, Object data, String... topicParams);
 
   void sendToUser(String user, String topic, Object data, String... topicParams);
+
+  void updateCount(String user, String topic, Object data, String... topicParams);
 }
