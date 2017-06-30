@@ -107,9 +107,11 @@ public class NoticeServiceImpl implements NoticeService {
         UserContext userContext = (UserContext) authentication.getPrincipal();
         String username = userContext.getUsername();
         Date now = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat();
+        String format = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        this.noticeRepository.markAsSeen(username, sdf.format(now));
+        String utcDate = sdf.format(now);
+        this.noticeRepository.markAsSeen(username, utcDate);
         this.webSocketService.updateCount(username, "/topic/notices/count", 0);
         return;
     }

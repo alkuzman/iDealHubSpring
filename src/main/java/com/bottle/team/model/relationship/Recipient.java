@@ -23,6 +23,8 @@ public class Recipient extends BaseRelationship {
     Agent agent;
     @Property(name = "seen")
     private Date seen;
+    @Property(name = "opened")
+    private Date opened;
 
     public Notice getNotice() {
         return notice;

@@ -48,4 +48,9 @@ public class NoticeController {
         this.noticeService.markAsSeen();
         return null;
     }
+
+    @RequestMapping(value = "/{id}/opened")
+    public Notice markAsOpened(@PathVariable Long id) {
+        return this.noticeService.findById(id);
+    }
 }
