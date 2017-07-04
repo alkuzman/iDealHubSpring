@@ -1,13 +1,12 @@
 package com.bottle.team.model.sharing;
 
+import com.bottle.team.model.authentication.Agent;
 import com.bottle.team.model.interfaces.BaseEntity;
-import com.bottle.team.model.relationship.Recipient;
-import com.bottle.team.model.security.notices.AbstractProtocolTransactionStepNotice;
 import com.bottle.team.model.security.notices.ProtocolTransactionStepNotice;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.neo4j.ogm.annotation.NodeEntity;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by Viki on 3/9/2017.
@@ -21,7 +20,15 @@ import java.util.List;
 })
 public interface Notice extends BaseEntity {
 
-    List<Recipient> getRecipients();
+    Agent getRecipient();
 
-    void setRecipients(List<Recipient> recipients);
+    void setRecipient(Agent recipient);
+
+    Date getSeen();
+
+    void setSeen(Date date);
+
+    Date getOpened();
+
+    void setOpened(Date date);
 }

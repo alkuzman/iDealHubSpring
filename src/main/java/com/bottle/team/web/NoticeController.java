@@ -1,11 +1,9 @@
 package com.bottle.team.web;
 
-import com.bottle.team.model.interfaces.BaseEntity;
-import com.bottle.team.model.sharing.AbstractNotice;
 import com.bottle.team.model.sharing.Notice;
+import com.bottle.team.model.sharing.NoticeList;
 import com.bottle.team.service.NoticeService;
 import com.bottle.team.web.helper.BaseEntityIterable;
-import com.bottle.team.web.helper.BaseEntityList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +36,11 @@ public class NoticeController {
         return new BaseEntityIterable<Notice>(noticeService.getNotices(limit, offset));
     }
 
+    @RequestMapping(value = "/bulk", method = RequestMethod.POST)
+    public BaseEntityIterable<Notice> addNotices(@RequestBody @Valid NoticeList noticeList) {
+        return new BaseEntityIterable<Notice>(noticeService.saveAll(noticeList.getNotices()));
+    }
+
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     public Integer getCount() {
         return noticeService.getCount();
@@ -51,6 +54,6 @@ public class NoticeController {
 
     @RequestMapping(value = "/{id}/opened")
     public Notice markAsOpened(@PathVariable Long id) {
-        return this.noticeService.findById(id);
+        return this.noticeService.markAsOpen(id);
     }
 }

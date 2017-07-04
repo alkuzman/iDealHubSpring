@@ -6,7 +6,7 @@ import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.Person;
 import com.bottle.team.model.interfaces.NamedEntity;
-import com.bottle.team.model.sharing.Sharable;
+import com.bottle.team.model.sharing.Shareable;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Viki on 10/14/2016.
  */
 @NodeEntity
-public class Problem extends BaseEntityImpl implements NamedEntity, Sharable {
+public class Problem extends BaseEntityImpl implements NamedEntity, Shareable {
     @NotEmpty
     @Property(name = "title")
     @Field(store = org.apache.lucene.document.Field.Store.YES)

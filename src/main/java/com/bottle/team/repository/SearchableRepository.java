@@ -1,8 +1,6 @@
 package com.bottle.team.repository;
 
-import com.bottle.team.model.ideas.Problem;
 import com.bottle.team.model.sharing.Searchable;
-import com.bottle.team.model.sharing.Sharable;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;

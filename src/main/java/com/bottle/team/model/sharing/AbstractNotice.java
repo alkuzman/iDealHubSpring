@@ -1,12 +1,12 @@
 package com.bottle.team.model.sharing;
 
 import com.bottle.team.model.BaseEntityImpl;
-import com.bottle.team.model.relationship.Recipient;
+import com.bottle.team.model.authentication.Agent;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by PC on 23/10/2016.
@@ -14,19 +14,37 @@ import java.util.List;
 @NodeEntity
 public abstract class AbstractNotice extends BaseEntityImpl implements Notice {
     @Relationship(type = "RECIPIENT")
-    private List<Recipient> recipients;
+    private Agent recipient;
+
+    @Property(name = "seen")
+    private Date seen;
+
+    @Property(name = "opened")
+    private Date opened;
 
     @Override
-    public List<Recipient> getRecipients() {
-        return recipients;
+    public Agent getRecipient() {
+        return recipient;
     }
 
     @Override
-    public void setRecipients(List<Recipient> recipients) {
-        this.recipients = recipients;
-        if (this.recipients != null) {
-            for (Recipient recipient : this.recipients)
-                recipient.setNotice(this);
-        }
+    public void setRecipient(Agent recipient) {
+        this.recipient = recipient;
+    }
+
+    public Date getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Date seen) {
+        this.seen = seen;
+    }
+
+    public Date getOpened() {
+        return opened;
+    }
+
+    public void setOpened(Date opened) {
+        this.opened = opened;
     }
 }

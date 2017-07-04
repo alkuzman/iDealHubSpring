@@ -1,6 +1,6 @@
 package com.bottle.team.service.impl;
 
-import com.bottle.team.model.sharing.Sharable;
+import com.bottle.team.model.sharing.Shareable;
 import com.bottle.team.repository.SharableRepository;
 import com.bottle.team.service.SharableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +19,17 @@ public class SharableServiceImpl implements SharableService {
     SharableRepository sharableRepository;
 
     @Override
-    public Iterable<Sharable> findAll() {
+    public Iterable<Shareable> findAll() {
         return sharableRepository.findAll();
     }
 
     @Override
-    public Sharable save(Sharable object) {
+    public Shareable save(Shareable object) {
         return sharableRepository.save(object);
     }
 
     @Override
-    public Sharable add(Sharable object) {
+    public Shareable add(Shareable object) {
         return this.save(object);
     }
 
@@ -39,7 +39,7 @@ public class SharableServiceImpl implements SharableService {
     }
 
     @Override
-    public Sharable findById(Long id) {
+    public Shareable findById(Long id) {
         return sharableRepository.findOne(id);
     }
 }

@@ -18,7 +18,7 @@ public class Package extends BaseEntityImpl implements Commentable {
     @Relationship(type = "SHARABLE")
     @IndexedEmbedded
     @Boost(1f)
-    private Sharable sharable;
+    private Shareable shareable;
 
     @Relationship(type = "CONTRACT")
     @IndexedEmbedded
@@ -33,12 +33,12 @@ public class Package extends BaseEntityImpl implements Commentable {
         this.contracts = contracts;
     }
 
-    public Sharable getSharable() {
+    public Shareable getShareable() {
 
-        return sharable;
+        return shareable;
     }
 
-    public void setSharable(Sharable sharable) {
-        this.sharable = sharable;
+    public void setShareable(Shareable shareable) {
+        this.shareable = shareable;
     }
 }

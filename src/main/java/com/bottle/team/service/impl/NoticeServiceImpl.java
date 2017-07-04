@@ -1,13 +1,10 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.auth.jwt.common.UserContext;
-import com.bottle.team.model.relationship.Recipient;
-import com.bottle.team.model.sharing.AbstractNotice;
 import com.bottle.team.model.sharing.Notice;
 import com.bottle.team.repository.NoticeRepository;
 import com.bottle.team.service.NoticeService;
 import com.bottle.team.service.WebSocketService;
-import org.apache.commons.collections4.iterators.IteratorIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,10 +45,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public Notice add(Notice object) {
         object = save(object);
-        for (Recipient recipient : object.getRecipients()) {
-            String username = recipient.getAgent().getEmail();
-            this.webSocketService.sendToUser(username, "/topic/notices", object);
-        }
+        String username = object.getRecipient().getEmail();
+        this.webSocketService.sendToUser(username, "/topic/notices", object);
+
         return object;
     }
 
@@ -76,21 +72,17 @@ public class NoticeServiceImpl implements NoticeService {
         if (limit == null) {
             limit = 10;
         }
-        Iterable<Notice> notices = this.noticeRepository.getNotices(email, limit, offset);
-        List<Notice> filteredNotices = new ArrayList<Notice>();
+        return this.noticeRepository.getNotices(email, limit, offset);
+        /*List<Notice> filteredNotices = new ArrayList<Notice>();
         for (Notice notice : notices) {
-            List<Recipient> recipients = notice.getRecipients();
-            if (recipients == null) {
-                continue;
+            if (notice.getRecipient().getEmail().equals(email)) {
+                filteredNotices.add(notice);
+                break;
             }
-            for (Recipient recipient : recipients) {
-                if (recipient.getAgent().getEmail().equals(email)) {
-                    filteredNotices.add(notice);
-                    break;
-                }
-            }
+
         }
         return filteredNotices;
+        */
     }
 
     @Override
@@ -114,5 +106,27 @@ public class NoticeServiceImpl implements NoticeService {
         this.noticeRepository.markAsSeen(username, utcDate);
         this.webSocketService.updateCount(username, "/topic/notices/count", 0);
         return;
+    }
+
+    @Override
+    public Notice markAsOpen(Long id) {
+        Notice notice = this.noticeRepository.findOne(id);
+        Date now = new Date();
+        String format = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String utcDate = sdf.format(now);
+        notice.setOpened(now);
+        return this.noticeRepository.save(notice);
+    }
+
+    @Override
+    public Iterable<Notice> saveAll(List<Notice> noticeList) {
+        Iterable<Notice> list = this.noticeRepository.save(noticeList);
+        for (Notice object : noticeList) {
+            String username = object.getRecipient().getEmail();
+            this.webSocketService.sendToUser(username, "/topic/notices", object);
+        }
+        return list;
     }
 }

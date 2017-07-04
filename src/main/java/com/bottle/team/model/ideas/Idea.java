@@ -7,7 +7,7 @@ import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.awards.Award;
 import com.bottle.team.model.interfaces.NamedEntity;
-import com.bottle.team.model.sharing.Sharable;
+import com.bottle.team.model.sharing.Shareable;
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -20,7 +20,7 @@ import java.util.List;
  * Created by PC on 09/10/2016.
  */
 @NodeEntity
-public class Idea extends BaseEntityImpl implements NamedEntity, Sharable {
+public class Idea extends BaseEntityImpl implements NamedEntity, Shareable {
     @NotEmpty
     @Property(name = "title")
     @Field(store = org.apache.lucene.document.Field.Store.YES)

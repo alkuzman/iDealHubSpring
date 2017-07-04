@@ -17,5 +17,5 @@ import org.neo4j.ogm.annotation.NodeEntity;
         @JsonSubTypes.Type(value = Idea.class),
         @JsonSubTypes.Type(value = Problem.class)
 })
-public interface Sharable extends BaseEntity {
+public interface Shareable extends BaseEntity {
 }

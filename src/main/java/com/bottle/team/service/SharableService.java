@@ -1,6 +1,6 @@
 package com.bottle.team.service;
 
-import com.bottle.team.model.sharing.Sharable;
+import com.bottle.team.model.sharing.Shareable;
 
 /**
  * Created by AKuzmanoski on 04/01/2017.
@@ -9,5 +9,5 @@ import com.bottle.team.model.sharing.Sharable;
  * @version 1.0
  * @since 04/01/2017
  */
-public interface SharableService extends Service<Sharable> {
+public interface SharableService extends Service<Shareable> {
 }
