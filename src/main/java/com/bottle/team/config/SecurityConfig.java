@@ -11,7 +11,7 @@ import com.bottle.team.filters.JwtLoginProcessingFilter;
 import com.bottle.team.filters.JwtTokenAuthenticationProcessingFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

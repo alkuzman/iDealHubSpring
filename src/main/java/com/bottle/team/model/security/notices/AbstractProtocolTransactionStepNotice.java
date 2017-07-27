@@ -4,12 +4,14 @@ import com.bottle.team.model.authentication.Agent;
 import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.model.security.ProtocolSession;
 import com.bottle.team.model.sharing.AbstractNotice;
+import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * Created by Viki on 3/9/2017.
  */
+@NodeEntity
 public abstract class AbstractProtocolTransactionStepNotice<T extends ProtocolTransactionStepNotice> extends AbstractNotice
         implements ProtocolTransactionStepNotice<T> {
     @Property(name = "message")
