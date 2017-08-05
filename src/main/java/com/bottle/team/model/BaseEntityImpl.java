@@ -1,18 +1,22 @@
 package com.bottle.team.model;
 
+import com.bottle.team.common.MyIdStrategy;
+import com.bottle.team.events.PreSaveEvent;
 import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.lucene.annotations.SortableField;
 import com.bottle.team.lucene.enumerations.Analyze;
 import com.bottle.team.model.interfaces.BaseEntity;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.awt.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by AKuzmanoski on 09/10/2016.

@@ -2,6 +2,7 @@ package com.bottle.team.service.impl;
 
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.model.sharing.Announcement;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.AnnouncementRepository;
 import com.bottle.team.service.AnnouncementService;
 import com.bottle.team.service.QueryService;
@@ -35,19 +36,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @PostConstruct
     public void init() {
         fields = new String[13];
-        fields[0] = "pckg.sharable.owner.name";
-        fields[1] = "pckg.sharable.owner.firstName";
-        fields[2] = "pckg.sharable.owner.lastName";
-        fields[3] = "pckg.sharable.owner.email";
-        fields[4] = "pckg.sharable.text";
-        fields[5] = "pckg.sharable.title";
-        fields[6] = "pckg.sharable.snackPeak";
-        fields[7] = "pckg.sharable.problem.title";
-        fields[8] = "pckg.sharable.problem.text";
-        fields[9] = "pckg.sharable.questioner.name";
-        fields[10] = "pckg.sharable.questioner.firstName";
-        fields[11] = "pckg.sharable.questioner.lastName";
-        fields[12] = "pckg.sharable.questioner.email";
+        fields[0] = "pckg.shareable.owner.name";
+        fields[1] = "pckg.shareable.owner.firstName";
+        fields[2] = "pckg.shareable.owner.lastName";
+        fields[3] = "pckg.shareable.owner.email";
+        fields[4] = "pckg.shareable.text";
+        fields[5] = "pckg.shareable.title";
+        fields[6] = "pckg.shareable.snackPeak";
+        fields[7] = "pckg.shareable.problem.title";
+        fields[8] = "pckg.shareable.problem.text";
+        fields[9] = "pckg.shareable.questioner.name";
+        fields[10] = "pckg.shareable.questioner.firstName";
+        fields[11] = "pckg.shareable.questioner.lastName";
+        fields[12] = "pckg.shareable.questioner.email";
     }
 
     @Override
@@ -67,12 +68,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public void delete(Long id) {
-        announcementRepository.delete(id);
+        announcementRepository.deleteById(id);
     }
 
     @Override
     public Announcement findById(Long id) {
-        return announcementRepository.findOne(id);
+        return Neo4jUtils.findById(announcementRepository, id);
     }
 
     @Override

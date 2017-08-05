@@ -3,6 +3,7 @@ package com.bottle.team.service.impl;
 import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.enumaration.Provider;
 import com.bottle.team.model.enumaration.Role;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.UserRepository;
 import com.bottle.team.service.RegistrationMailService;
 import com.bottle.team.service.UserService;
@@ -60,12 +61,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void delete(Long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Override
     public User findById(Long id) {
-        return userRepository.findOne(id);
+        return Neo4jUtils.findById(userRepository, id);
     }
 
     @Override

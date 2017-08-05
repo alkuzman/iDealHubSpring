@@ -1,7 +1,7 @@
 package com.bottle.team.web;
 
 import com.bottle.team.model.sharing.Shareable;
-import com.bottle.team.service.SharableService;
+import com.bottle.team.service.ShareableService;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 04/01/2017
  */
 @RestController
-@RequestMapping("/sharables")
-public class SharableController {
+@RequestMapping("/shareables")
+public class ShareableController {
     @Autowired
-    SharableService sharableService;
+    ShareableService shareableService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Shareable findOne(@PathVariable Long id) {
-        Shareable shareable = this.sharableService.findById(id);
+        Shareable shareable = this.shareableService.findById(id);
         if (shareable == null)
             throw new ResourceNotFoundException();
 

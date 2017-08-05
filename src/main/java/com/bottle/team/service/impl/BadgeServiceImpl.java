@@ -6,6 +6,7 @@ import com.bottle.team.model.awards.badges.SimpleBadge;
 import com.bottle.team.model.awards.badges.SnackPeakQualityBadge;
 import com.bottle.team.model.ideas.quality.ProblemCoverage;
 import com.bottle.team.model.ideas.quality.SnackPeakQuality;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.BadgeRepository;
 import com.bottle.team.service.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,17 +56,17 @@ public class BadgeServiceImpl implements BadgeService {
 
     @Override
     public void delete(Long id) {
-        badgeRepository.delete(id);
+        badgeRepository.deleteById(id);
     }
 
     @Override
     public Badge findById(Long id) {
-        return badgeRepository.findOne(id);
+        return Neo4jUtils.findById(badgeRepository, id);
     }
 
     @Override
     public Iterable<Badge> save(Iterable<Badge> badges) {
-        return badgeRepository.save(badges);
+        return badgeRepository.save(badges, 20);
     }
 
     @Override

@@ -9,5 +9,5 @@ import com.bottle.team.model.sharing.Shareable;
  * @version 1.0
  * @since 04/01/2017
  */
-public interface SharableService extends Service<Shareable> {
+public interface ShareableService extends Service<Shareable> {
 }

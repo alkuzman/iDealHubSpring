@@ -1,6 +1,7 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.model.authentication.Member;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.MemberRepository;
 import com.bottle.team.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void delete(Long id) {
-        memberRepository.delete(id);
+        memberRepository.deleteById(id);
     }
 
     @Override
     public Member findById(Long id) {
-        return memberRepository.findOne(id);
+        return Neo4jUtils.findById(memberRepository, id);
     }
 }

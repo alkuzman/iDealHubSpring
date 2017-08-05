@@ -8,6 +8,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.*;
 import org.apache.lucene.util.BytesRef;
+import org.neo4j.ogm.annotation.GraphId;
 import org.springframework.data.annotation.Id;
 
 import java.io.IOException;
@@ -67,6 +68,8 @@ public class LuceneUtils {
 
     public static void setId(Document document, Object object) {
         Field idField = getFields(object.getClass(), Id.class).getFirst();
+        if (idField == null)
+            idField = getFields(object.getClass(), GraphId.class).getFirst();
         idField.setAccessible(true);
         Long id = -1L;
         try {

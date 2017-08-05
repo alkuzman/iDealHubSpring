@@ -36,14 +36,15 @@ public class AnnouncementController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Iterable<? extends BaseEntity> findAll(
-            @RequestParam(required = false) Long sharableId,
+            @RequestParam(required = false) Long shareableId,
             @RequestParam(required = false) Long ownerId,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) Integer offset,
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) String query
     ) {
-        AnnouncementFilter announcementFilter = new AnnouncementFilter(null, ownerId, sharableId,type);
+        System.out.println(ownerId);
+        AnnouncementFilter announcementFilter = new AnnouncementFilter(null, ownerId, shareableId,type);
         return announcementService.findAll(query, offset, limit, announcementFilter);
     }
 

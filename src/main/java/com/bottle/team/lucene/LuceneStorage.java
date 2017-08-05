@@ -1,5 +1,6 @@
 package com.bottle.team.lucene;
 
+import com.bottle.team.neo4j.Neo4jUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
@@ -34,8 +35,8 @@ public class LuceneStorage {
     }
 
     public void store(Object object) {
-        List<Document> documents = LuceneUtils.getDocuments(object, false);
-        saveDocuments(documents);
+        Document document = LuceneUtils.getDocument(object);
+        saveDocument(document);
     }
 
     public void remove(Object object) {
@@ -52,10 +53,9 @@ public class LuceneStorage {
         try {
             IndexWriter writer = new IndexWriter(directory, indexWriterConfig);
             for (Object object : objects) {
-                List<Document> documents = LuceneUtils.getDocuments(object, true);
-                for (Document document : documents) {
-                    writer.updateDocument(new Term("{{id}}", document.get("{{id}}")), document);
-                }
+                Document document = LuceneUtils.getDocument(object);
+                System.out.println(document.toString());
+                writer.updateDocument(new Term("{{id}}", document.get("{{id}}")), document);
             }
             writer.flush();
             writer.close();
@@ -72,6 +72,19 @@ public class LuceneStorage {
                 //writer.addDocument(document);
                 writer.updateDocument(new Term("{{id}}", document.get("{{id}}")), document);
             }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveDocument(Document document) {
+        IndexWriterConfig indexWriterConfig = new IndexWriterConfig(luceneAnalyzer);
+        try {
+            IndexWriter writer = new IndexWriter(directory, indexWriterConfig);
+                //writer.addDocument(document);
+                writer.updateDocument(new Term("{{id}}", document.get("{{id}}")), document);
             writer.flush();
             writer.close();
         } catch (IOException e) {

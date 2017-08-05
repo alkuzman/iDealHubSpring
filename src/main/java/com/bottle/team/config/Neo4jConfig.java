@@ -3,6 +3,8 @@ package com.bottle.team.config;
 import com.bottle.team.events.EventPublisher;
 import com.bottle.team.lucene.LuceneStorage;
 import com.bottle.team.neo4j.Neo4jUtils;
+import org.neo4j.ogm.config.ClasspathConfigurationSource;
+import org.neo4j.ogm.config.ConfigurationSource;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,10 @@ import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.Priority;
+
 @Configuration
-@ComponentScan({"com.bottle.team.events"})
+@ComponentScan(basePackages = "com.bottle.team.events")
 @EnableNeo4jRepositories(basePackages = "com.bottle.team.repository")
 @EnableTransactionManagement
 public class Neo4jConfig {
@@ -36,7 +40,7 @@ public class Neo4jConfig {
     @Bean
     public SessionFactory sessionFactory() {
         // with domain entity base package(s)
-        return new SessionFactory("com.bottle.team.model") {
+        return new SessionFactory(configuration(), "com.bottle.team.model") {
             @Override
             public Session openSession() {
                 Session session = super.openSession();
@@ -46,34 +50,9 @@ public class Neo4jConfig {
         };
     }
 
-    // needed for session in view in web-applications
-    /*
-    @Bean
-    @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public Session getSession() throws Exception {
-        return super.getSession();
+    public org.neo4j.ogm.config.Configuration configuration() {
+        ConfigurationSource properties = new ClasspathConfigurationSource("ogm.properties");
+        org.neo4j.ogm.config.Configuration configuration = new org.neo4j.ogm.config.Configuration.Builder(properties).build();
+        return configuration;
     }
-
-
-    @Bean
-    public ApplicationListener<BeforeSaveEvent> beforeSaveEventApplicationListener() {
-        return beforeSaveEvent -> {
-            Object o = beforeSaveEvent.getEntity();
-            Neo4jUtils.updateObject(o);
-        };
-    }
-
-    @Bean
-    ApplicationListener<AfterSaveEvent> afterSaveEventApplicationListener() {
-
-        return event -> {
-            luceneStorage.store(event.getEntity());
-        };
-    }
-
-    @Bean
-    ApplicationListener<AfterDeleteEvent> afterDeleteEventApplicationListener() {
-        return event -> luceneStorage.remove(event.getEntity());
-    }
-    */
 }

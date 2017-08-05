@@ -2,6 +2,7 @@ package com.bottle.team.service.impl;
 
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.model.sharing.Searchable;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.SearchableRepository;
 import com.bottle.team.service.QueryService;
 import com.bottle.team.service.SearchableService;
@@ -35,19 +36,19 @@ public class SearchableServiceImpl implements SearchableService {
     @PostConstruct
     public void init() {
         fields = new String[17];
-        fields[0] = "pckg.sharable.owner.name";
-        fields[1] = "pckg.sharable.owner.firstName";
-        fields[2] = "pckg.sharable.owner.lastName";
-        fields[3] = "pckg.sharable.owner.email";
-        fields[4] = "pckg.sharable.text";
-        fields[5] = "pckg.sharable.title";
-        fields[6] = "pckg.sharable.snackPeak";
-        fields[7] = "pckg.sharable.problem.title";
-        fields[8] = "pckg.sharable.problem.text";
-        fields[9] = "pckg.sharable.questioner.name";
-        fields[10] = "pckg.sharable.questioner.firstName";
-        fields[11] = "pckg.sharable.questioner.lastName";
-        fields[12] = "pckg.sharable.questioner.email";
+        fields[0] = "pckg.shareable.owner.name";
+        fields[1] = "pckg.shareable.owner.firstName";
+        fields[2] = "pckg.shareable.owner.lastName";
+        fields[3] = "pckg.shareable.owner.email";
+        fields[4] = "pckg.shareable.text";
+        fields[5] = "pckg.shareable.title";
+        fields[6] = "pckg.shareable.snackPeak";
+        fields[7] = "pckg.shareable.problem.title";
+        fields[8] = "pckg.shareable.problem.text";
+        fields[9] = "pckg.shareable.questioner.name";
+        fields[10] = "pckg.shareable.questioner.firstName";
+        fields[11] = "pckg.shareable.questioner.lastName";
+        fields[12] = "pckg.shareable.questioner.email";
         fields[13] = "firstName";
         fields[14] = "lastName";
         fields[15] = "email";
@@ -71,12 +72,12 @@ public class SearchableServiceImpl implements SearchableService {
 
     @Override
     public void delete(Long id) {
-        searchableRepository.delete(id);
+        searchableRepository.deleteById(id);
     }
 
     @Override
     public Searchable findById(Long id) {
-        return searchableRepository.findOne(id);
+        return Neo4jUtils.findById(searchableRepository, id);
     }
 
     @Override

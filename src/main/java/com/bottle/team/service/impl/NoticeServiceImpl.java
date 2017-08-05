@@ -2,6 +2,7 @@ package com.bottle.team.service.impl;
 
 import com.bottle.team.auth.jwt.common.UserContext;
 import com.bottle.team.model.sharing.Notice;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.NoticeRepository;
 import com.bottle.team.service.NoticeService;
 import com.bottle.team.service.WebSocketService;
@@ -53,12 +54,12 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public void delete(Long id) {
-        noticeRepository.delete(id);
+        noticeRepository.deleteById(id);
     }
 
     @Override
     public Notice findById(Long id) {
-        return noticeRepository.findOne(id);
+        return Neo4jUtils.findById(noticeRepository, id);
     }
 
     @Override
@@ -110,7 +111,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice markAsOpen(Long id) {
-        Notice notice = this.noticeRepository.findOne(id);
+        Notice notice = Neo4jUtils.findById(noticeRepository, id);
         Date now = new Date();
         String format = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
         SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -122,7 +123,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Iterable<Notice> saveAll(List<Notice> noticeList) {
-        Iterable<Notice> list = this.noticeRepository.save(noticeList);
+        Iterable<Notice> list = this.noticeRepository.save(noticeList, 20);
         for (Notice object : noticeList) {
             String username = object.getRecipient().getEmail();
             this.webSocketService.sendToUser(username, "/topic/notices", object);

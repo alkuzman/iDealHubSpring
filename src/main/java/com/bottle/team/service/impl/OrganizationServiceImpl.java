@@ -1,6 +1,7 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.model.authentication.Organization;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.OrganizationRepository;
 import com.bottle.team.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public void delete(Long id) {
-        organizationRepository.delete(id);
+        organizationRepository.deleteById(id);
     }
 
     @Override
     public Organization findById(Long id) {
-        return organizationRepository.findOne(id);
+        return Neo4jUtils.findById(organizationRepository, id);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.bottle.team.service.impl;
 
 import com.bottle.team.lucene.LuceneStorage;
 import com.bottle.team.model.interfaces.BaseEntity;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.BaseEntityRepository;
 import com.bottle.team.service.IndexingService;
 import org.springframework.beans.factory.annotation.Autowired;

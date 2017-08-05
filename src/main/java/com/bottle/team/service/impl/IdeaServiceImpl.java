@@ -2,6 +2,7 @@ package com.bottle.team.service.impl;
 
 import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.model.interfaces.BaseEntity;
+import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.IdeaRepository;
 import com.bottle.team.service.IdeaService;
 import com.bottle.team.service.QueryService;
@@ -55,12 +56,12 @@ public class IdeaServiceImpl implements IdeaService {
 
     @Override
     public void delete(Long id) {
-        ideaRepository.delete(id);
+        ideaRepository.deleteById(id);
     }
 
     @Override
     public Idea findById(Long id) {
-        return ideaRepository.findOne(id);
+        return Neo4jUtils.findById(ideaRepository, id);
     }
 
     @Override

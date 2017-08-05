@@ -1,10 +1,14 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.model.sharing.Shareable;
-import com.bottle.team.repository.SharableRepository;
-import com.bottle.team.service.SharableService;
+import com.bottle.team.neo4j.Neo4jUtils;
+import com.bottle.team.repository.ShareableRepository;
+import com.bottle.team.service.ShareableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by AKuzmanoski on 04/01/2017.
@@ -14,18 +18,18 @@ import org.springframework.stereotype.Service;
  * @since 04/01/2017
  */
 @Service
-public class SharableServiceImpl implements SharableService {
+public class ShareableServiceImpl implements ShareableService {
     @Autowired
-    SharableRepository sharableRepository;
+    ShareableRepository shareableRepository;
 
     @Override
     public Iterable<Shareable> findAll() {
-        return sharableRepository.findAll();
+        return shareableRepository.findAll();
     }
 
     @Override
     public Shareable save(Shareable object) {
-        return sharableRepository.save(object);
+        return shareableRepository.save(object);
     }
 
     @Override
@@ -35,11 +39,11 @@ public class SharableServiceImpl implements SharableService {
 
     @Override
     public void delete(Long id) {
-        sharableRepository.delete(id);
+        shareableRepository.deleteById(id);
     }
 
     @Override
     public Shareable findById(Long id) {
-        return sharableRepository.findOne(id);
+        return Neo4jUtils.findById(shareableRepository, id);
     }
 }

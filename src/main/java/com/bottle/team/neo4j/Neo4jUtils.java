@@ -1,17 +1,17 @@
 package com.bottle.team.neo4j;
 
+import com.bottle.team.model.interfaces.BaseEntity;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by AKuzmanoski on 26/01/2017.
@@ -26,9 +26,6 @@ public class Neo4jUtils {
             return;
         if (isNodeEntity(object.getClass())) {
             setDates(object);
-            List<Object> objects = getRelationships(object, object.getClass());
-            for (Object o: objects)
-                updateObject(o);
         } else if (object instanceof Collection) {
             List list = (List) object;
             for (Object o: list)
@@ -79,7 +76,14 @@ public class Neo4jUtils {
             e.printStackTrace();
         }
         Field creationDate = getAnnotatedFiled(object.getClass(), CreatedDate.class);
-        if (id == null) {
+        creationDate.setAccessible(true);
+        Date date = null;
+        try {
+            date = (Date)creationDate.get(object);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        if (date == null) {
             try {
                 creationDate.set(object, new Date());
             } catch (IllegalAccessException e) {
@@ -117,5 +121,34 @@ public class Neo4jUtils {
         if (type.isAnnotationPresent(NodeEntity.class))
             return true;
         return isNodeEntity(type.getSuperclass());
+    }
+
+    public static <T extends BaseEntity> T findById(@NotNull Neo4jRepository<T, Long> repository, @NotNull Long id) {
+        List<Long> ids = new LinkedList<>();
+        ids.add(id);
+        Iterable<T> entities = repository.findAllById(ids);
+        for (T entity : entities) {
+            if (id.equals(entity.getId()))
+                return entity;
+        }
+        return null;
+    }
+
+    public static <T extends BaseEntity> Iterable<T> findAllById(@NotNull Neo4jRepository<T, Long> repository, @NotNull Iterable<Long> ids) {
+        Set<Long> idSet = toSet(ids);
+        Iterable<T> entities = repository.findAllById(ids);
+        List<T> results = new LinkedList<>();
+        for (T entity : entities) {
+            if (idSet.contains(entity.getId()))
+                results.add(entity);
+        }
+        return results;
+    }
+
+    private static Set<Long> toSet(Iterable<Long> ids) {
+        Set<Long> idSet = new HashSet<>();
+        for (Long id : ids)
+            idSet.add(id);
+        return idSet;
     }
 }
