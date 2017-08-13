@@ -16,6 +16,8 @@ import java.util.List;
 @NodeEntity
 public class ProtocolSession extends BaseEntityImpl {
 
+    // Todo: Rename Protocol Participant One and Two session data into customer and merchant or other more suitable names
+
     @Relationship(type = "PARTICIPANT_ONE")
     private ProtocolParticipantOneSessionData participantOneSessionData;
 
