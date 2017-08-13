@@ -18,8 +18,12 @@ public class ProtocolParticipantTwoSessionData extends BaseRelationship {
     @EndNode
     private Agent participant;
 
+    //Todo: Change property name into camelCase
     @Property(name = "session_key")
     private String sessionKeyEncrypted;
+
+    @Property(name = "dataEncryptionKey")
+    private String dataEncryptionKeyEncrypted;
 
     public ProtocolSession getSession() {
         return session;
@@ -43,5 +47,13 @@ public class ProtocolParticipantTwoSessionData extends BaseRelationship {
 
     public void setSessionKeyEncrypted(String sessionKeyEncrypted) {
         this.sessionKeyEncrypted = sessionKeyEncrypted;
+    }
+
+    public String getDataEncryptionKeyEncrypted() {
+        return dataEncryptionKeyEncrypted;
+    }
+
+    public void setDataEncryptionKeyEncrypted(String dataEncryptionKeyEncrypted) {
+        this.dataEncryptionKeyEncrypted = dataEncryptionKeyEncrypted;
     }
 }
