@@ -1,9 +1,12 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.lucene.LuceneUtils;
+import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.repository.BaseEntityRepository;
 import com.bottle.team.service.QueryService;
+import com.google.common.collect.Lists;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -131,6 +134,7 @@ public class QueryServiceImpl implements QueryService {
 
         Map<Long, Float> scoreMap = new HashMap<>();
         List<Long> ids = new LinkedList<>();
+        System.out.println(query);
         try {
             IndexReader reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
@@ -161,6 +165,7 @@ public class QueryServiceImpl implements QueryService {
         for (BaseEntity baseEntity : foundEntities) {
             if (baseEntity != null) {
                 Long id = baseEntity.getId();
+                System.out.println(baseEntity.getId());
                 if (scoreMap.containsKey(id)) {
                     entities.add(baseEntity);
                 }
@@ -169,6 +174,13 @@ public class QueryServiceImpl implements QueryService {
         entities.sort((o1, o2) -> {
             return Float.compare(scoreMap.get(o2.getId()), scoreMap.get(o1.getId()));
         });
+        return entities;
+    }
+
+    public <T extends BaseEntity> Iterable<? extends BaseEntity> search(Query query, Integer offset, Integer limit,
+                                                                        Class<T> type, Comparator<? super BaseEntity> comparator) {
+        List<BaseEntity> entities = Lists.newArrayList(search(query, offset, limit, type));
+        entities.sort(comparator);
         return entities;
     }
 }

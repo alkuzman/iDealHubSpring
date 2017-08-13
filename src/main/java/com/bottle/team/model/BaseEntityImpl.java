@@ -1,8 +1,5 @@
 package com.bottle.team.model;
 
-import com.bottle.team.common.MyIdStrategy;
-import com.bottle.team.events.PreSaveEvent;
-import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.lucene.annotations.SortableField;
 import com.bottle.team.lucene.enumerations.Analyze;

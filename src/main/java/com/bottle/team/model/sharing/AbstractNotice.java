@@ -1,5 +1,8 @@
 package com.bottle.team.model.sharing;
 
+import com.bottle.team.lucene.annotations.Boost;
+import com.bottle.team.lucene.annotations.Indexed;
+import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.Agent;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -14,6 +17,8 @@ import java.util.Date;
 @NodeEntity
 public abstract class AbstractNotice extends BaseEntityImpl implements Notice {
     @Relationship(type = "RECIPIENT")
+    @IndexedEmbedded
+    @Boost(1f)
     private Agent recipient;
 
     @Property(name = "seen")

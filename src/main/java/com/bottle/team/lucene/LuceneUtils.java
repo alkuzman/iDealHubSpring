@@ -2,6 +2,7 @@ package com.bottle.team.lucene;
 
 import com.bottle.team.lucene.annotations.Indexed;
 import com.bottle.team.lucene.annotations.IndexedEmbedded;
+import com.bottle.team.lucene.exceptions.ObjectMustHaveIdException;
 import com.bottle.team.lucene.helper.FieldDescriptor;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -67,9 +68,12 @@ public class LuceneUtils {
     }
 
     public static void setId(Document document, Object object) {
-        Field idField = getFields(object.getClass(), Id.class).getFirst();
-        if (idField == null)
-            idField = getFields(object.getClass(), GraphId.class).getFirst();
+        Field idField = null;
+        try {
+            idField = getIdField(object.getClass());
+        } catch (ObjectMustHaveIdException e) {
+            e.printStackTrace();
+        }
         idField.setAccessible(true);
         Long id = -1L;
         try {
@@ -78,6 +82,18 @@ public class LuceneUtils {
             e.printStackTrace();
         }
         document.add(new StringField("{{id}}", id.toString(), org.apache.lucene.document.Field.Store.YES));
+    }
+
+    public static Field getIdField(Class objectClass) throws ObjectMustHaveIdException {
+        LinkedList<Field> fields = getFields(objectClass, Id.class);
+        if (fields.size() == 0) {
+            throw new ObjectMustHaveIdException(String.format("Object from class: %s doesn't have id", objectClass));
+        }
+        Field idField = fields.getFirst();
+        if (idField == null)
+            idField = getFields(objectClass, GraphId.class).getFirst();
+
+        return idField;
     }
 
     public static Document getDocument(Object object) {
@@ -179,8 +195,14 @@ public class LuceneUtils {
                     document.add(new StringField(fieldDescriptor.getName(), data, fieldDescriptor.getStore()));
             } else if (fieldDescriptor.getFieldClass().equals(String.class)) {
                 String data = (String) value;
-                org.apache.lucene.document.Field newField = new TextField(fieldDescriptor.getName(), data, fieldDescriptor.getStore());
-                newField.setBoost(fieldDescriptor.getBoost());
+                org.apache.lucene.document.Field newField = null;
+                if (fieldDescriptor.isAnalyzed()) {
+                    newField = new TextField(fieldDescriptor.getName(), data, fieldDescriptor.getStore());
+                    newField.setBoost(fieldDescriptor.getBoost());
+                }
+                else  {
+                    newField = new StringField(fieldDescriptor.getName(), data, fieldDescriptor.getStore());
+                }
                 if (fieldDescriptor.isIndexed())
                     document.add(newField);
                 /*else if (fieldDescriptor.isStored())

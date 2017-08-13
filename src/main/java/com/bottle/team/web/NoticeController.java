@@ -1,10 +1,14 @@
 package com.bottle.team.web;
 
+import com.bottle.team.auth.jwt.common.UserContext;
 import com.bottle.team.model.sharing.Notice;
 import com.bottle.team.model.sharing.NoticeList;
 import com.bottle.team.service.NoticeService;
+import com.bottle.team.service.helper.NoticeFilter;
 import com.bottle.team.web.helper.BaseEntityIterable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,7 +37,11 @@ public class NoticeController {
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) Integer offset
     ) {
-        return new BaseEntityIterable<Notice>(noticeService.getNotices(limit, offset));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserContext userContext = (UserContext) authentication.getPrincipal();
+        String email = userContext.getUsername();
+        NoticeFilter filter = new NoticeFilter(email);
+        return new BaseEntityIterable(noticeService.getNotices(limit, offset, filter));
     }
 
     @RequestMapping(value = "/bulk", method = RequestMethod.POST)

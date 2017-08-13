@@ -1,21 +1,24 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.auth.jwt.common.UserContext;
+import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.model.sharing.Notice;
 import com.bottle.team.neo4j.Neo4jUtils;
 import com.bottle.team.repository.NoticeRepository;
 import com.bottle.team.service.NoticeService;
+import com.bottle.team.service.QueryService;
 import com.bottle.team.service.WebSocketService;
+import com.bottle.team.service.helper.NoticeFilter;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.util.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Created by Viki on 1/26/2017.
@@ -26,11 +29,20 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeRepository noticeRepository;
     private final
     WebSocketService webSocketService;
+    private final QueryService queryService;
+    private String[] fields;
 
     @Autowired
-    public NoticeServiceImpl(NoticeRepository noticeRepository, WebSocketService webSocketService) {
+    public NoticeServiceImpl(NoticeRepository noticeRepository, WebSocketService webSocketService,
+                             QueryService queryService) {
         this.noticeRepository = noticeRepository;
         this.webSocketService = webSocketService;
+        this.queryService = queryService;
+    }
+
+    @PostConstruct
+    public void init() {
+        this.fields = new String[1];
     }
 
     @Override
@@ -63,18 +75,22 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public Iterable<Notice> getNotices(Integer limit, Integer offset) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserContext userContext = (UserContext) authentication.getPrincipal();
-        String email = userContext.getUsername();
+    public Iterable<? extends BaseEntity> getNotices(Integer limit, Integer offset, NoticeFilter filter) {
         if (offset == null) {
             offset = 0;
         }
         if (limit == null) {
             limit = 10;
         }
+        return queryService.search(filter.getQuery(), offset, limit, Notice.class, new Comparator<BaseEntity>() {
+            @Override
+            public int compare(BaseEntity o1, BaseEntity o2) {
+                return o1.getCreationDate().compareTo(o2.getCreationDate());
+            }
+        });
+        /*
         return this.noticeRepository.getNotices(email, limit, offset);
-        /*List<Notice> filteredNotices = new ArrayList<Notice>();
+        List<Notice> filteredNotices = new ArrayList<Notice>();
         for (Notice notice : notices) {
             if (notice.getRecipient().getEmail().equals(email)) {
                 filteredNotices.add(notice);
