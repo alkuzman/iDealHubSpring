@@ -1,9 +1,8 @@
-package com.bottle.team.model.ideas;
+package com.bottle.team.model.payment;
 
 import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.model.BaseEntityImpl;
-import com.bottle.team.model.comments.Comment;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;

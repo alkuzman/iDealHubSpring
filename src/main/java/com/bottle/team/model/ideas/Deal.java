@@ -2,6 +2,7 @@ package com.bottle.team.model.ideas;
 
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.Person;
+import com.bottle.team.model.payment.Contract;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 

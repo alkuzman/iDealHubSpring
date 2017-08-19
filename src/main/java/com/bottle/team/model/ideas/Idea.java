@@ -20,7 +20,7 @@ import java.util.List;
  * Created by PC on 09/10/2016.
  */
 @NodeEntity
-public class Idea extends BaseEntityImpl implements NamedEntity, Shareable {
+public class Idea extends BaseEntityImpl implements NamedEntity, Shareable, DigitalGoods {
     @NotEmpty
     @Property(name = "title")
     @Field(store = org.apache.lucene.document.Field.Store.YES)

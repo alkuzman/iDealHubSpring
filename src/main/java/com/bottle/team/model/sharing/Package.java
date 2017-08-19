@@ -4,7 +4,7 @@ import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.comments.Commentable;
-import com.bottle.team.model.ideas.Contract;
+import com.bottle.team.model.payment.Contract;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 

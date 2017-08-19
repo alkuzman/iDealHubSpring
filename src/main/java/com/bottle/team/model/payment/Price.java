@@ -1,6 +1,7 @@
-package com.bottle.team.model.helpers;
+package com.bottle.team.model.payment;
 
 import com.bottle.team.model.BaseEntityImpl;
+import com.bottle.team.model.helpers.Currency;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
