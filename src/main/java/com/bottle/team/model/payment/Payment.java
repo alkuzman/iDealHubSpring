@@ -1,4 +1,6 @@
 package com.bottle.team.model.payment;
 
-public interface Payment {
+import com.bottle.team.model.interfaces.BaseEntity;
+
+public interface Payment extends BaseEntity {
 }

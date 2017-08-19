@@ -1,4 +1,6 @@
 package com.bottle.team.model.ideas;
 
-public interface DigitalGoods {
+import com.bottle.team.model.interfaces.BaseEntity;
+
+public interface DigitalGoods extends BaseEntity {
 }
