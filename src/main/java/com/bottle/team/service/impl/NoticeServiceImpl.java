@@ -52,7 +52,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Notice save(Notice object) {
-        return noticeRepository.save(object);
+        return noticeRepository.save(object, 20);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class NoticeServiceImpl implements NoticeService {
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         String utcDate = sdf.format(now);
         notice.setOpened(now);
-        return this.noticeRepository.save(notice);
+        return this.noticeRepository.save(notice, 20);
     }
 
     @Override

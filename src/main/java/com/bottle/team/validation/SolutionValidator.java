@@ -24,7 +24,7 @@ public class SolutionValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return Problem.class.equals(aClass);
+        return Solution.class.equals(aClass);
     }
 
     @Override

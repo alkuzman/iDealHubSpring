@@ -10,4 +10,6 @@ import com.bottle.team.service.helper.SolutionFilter;
  */
 public interface SolutionService extends Service<Solution> {
     Iterable<? extends BaseEntity> findAll(String query, Integer offset, Integer limit, SolutionFilter filter);
+
+    Solution findByIdeaId(Long ideaId);
 }

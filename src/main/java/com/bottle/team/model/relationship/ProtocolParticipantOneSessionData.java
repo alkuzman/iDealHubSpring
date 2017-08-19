@@ -21,9 +21,6 @@ public class ProtocolParticipantOneSessionData extends BaseRelationship {
     @Property(name = "session_key")
     private String sessionKeyEncrypted;
 
-    @Property(name = "data_encryption_key")
-    private String dataEncryptionKey;
-
     public ProtocolSession getSession() {
         return session;
     }
@@ -48,11 +45,4 @@ public class ProtocolParticipantOneSessionData extends BaseRelationship {
         this.sessionKeyEncrypted = sessionKeyEncrypted;
     }
 
-    public String getDataEncryptionKey() {
-        return dataEncryptionKey;
-    }
-
-    public void setDataEncryptionKey(String dataEncryptionKey) {
-        this.dataEncryptionKey = dataEncryptionKey;
-    }
 }

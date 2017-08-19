@@ -17,4 +17,7 @@ public interface SolutionRepository extends Neo4jRepository<Solution, Long> {
 
     @Query("MATCH (n:Solution) WHERE id(n) in {0} WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
     Iterable<Solution> findAllById(Iterable<Long> ids);
+
+    @Query("MATCH (n:Solution)-[:IDEA]-(i:Idea) WHERE id(i) = {0} WITH n MATCH p=(n)-[*0..]->(m) RETURN p")
+    Solution findByIdeaId(Long id);
 }

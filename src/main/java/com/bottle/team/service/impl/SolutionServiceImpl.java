@@ -1,5 +1,8 @@
 package com.bottle.team.service.impl;
 
+import com.bottle.team.auth.jwt.common.UserContext;
+import com.bottle.team.model.authentication.Agent;
+import com.bottle.team.model.ideas.Idea;
 import com.bottle.team.model.ideas.Solution;
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.neo4j.Neo4jUtils;
@@ -8,8 +11,11 @@ import com.bottle.team.service.QueryService;
 import com.bottle.team.service.SolutionService;
 import com.bottle.team.service.helper.IdeaFilter;
 import com.bottle.team.service.helper.SolutionFilter;
+import com.bottle.team.validation.AuthenticatedUserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
@@ -72,5 +78,11 @@ public class SolutionServiceImpl implements SolutionService {
     @Override
     public Iterable<? extends BaseEntity> findAll(String query, Integer offset, Integer limit, SolutionFilter filter) {
         return queryService.search(query, filter.getQuery(), offset, limit, Solution.class, fields);
+    }
+
+    @Override
+    public Solution findByIdeaId(Long ideaId) {
+        Solution solution = solutionRepository.findByIdeaId(ideaId);
+        return solution;
     }
 }

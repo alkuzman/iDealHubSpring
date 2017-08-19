@@ -4,9 +4,11 @@ import com.bottle.team.model.ideas.Solution;
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.service.SolutionService;
 import com.bottle.team.service.helper.SolutionFilter;
+import com.bottle.team.validation.AuthenticatedUserValidation;
 import com.bottle.team.validation.SolutionValidator;
 import com.bottle.team.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +55,12 @@ public class SolutionController {
         Solution solution = solutionService.findById(id);
         if (solution == null)
             throw new ResourceNotFoundException();
+        return solution;
+    }
+
+    @RequestMapping(value = "/idea", method = RequestMethod.GET)
+    public @Valid Solution findByIdeaId(@RequestParam Long ideaId) {
+        Solution solution = solutionService.findByIdeaId(ideaId);
         return solution;
     }
 
