@@ -1,7 +1,4 @@
-.idea/workspace.xml
-.idea/libraries/*
-src/main/resources/development.properties
 target/
+.idea/
 src/main/resources/application-dev.properties
-.idea/inspectionProfiles/
-.idea/libraries/
+*.iml
