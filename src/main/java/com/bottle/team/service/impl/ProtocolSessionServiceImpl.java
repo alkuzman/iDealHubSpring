@@ -40,4 +40,9 @@ public class ProtocolSessionServiceImpl implements ProtocolSessionService {
     public ProtocolSession findById(Long id) {
         return null;
     }
+
+    @Override
+    public ProtocolSession findByEpoId(String epoId) {
+        return this.protocolSessionRepository.findByEpoId(epoId);
+    }
 }

@@ -6,7 +6,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Price.class),
+        @JsonSubTypes.Type(value = Money.class),
         @JsonSubTypes.Type(value = Contract.class)
 })
 public interface Payment extends BaseEntity {

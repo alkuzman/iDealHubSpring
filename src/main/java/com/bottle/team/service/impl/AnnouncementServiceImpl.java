@@ -7,7 +7,6 @@ import com.bottle.team.repository.AnnouncementRepository;
 import com.bottle.team.service.AnnouncementService;
 import com.bottle.team.service.QueryService;
 import com.bottle.team.service.helper.AnnouncementFilter;
-import com.bottle.team.service.helper.IdeaFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +77,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public Iterable<? extends BaseEntity> findAll(String query, Integer offset, Integer limit, AnnouncementFilter filter) {
-        return queryService.search(query, filter.getQuery(), offset, limit, Announcement.class, this.fields);
+        Iterable<? extends BaseEntity> iterable = queryService.search(query, filter.getQuery(), offset, limit, Announcement.class, this.fields);
+        System.out.println("In Announcement Service");
+        for (BaseEntity be : iterable) {
+            System.out.println(be.getId());
+        }
+        return iterable;
     }
 }

@@ -18,8 +18,7 @@ public class ProtocolParticipantTwoSessionData extends BaseRelationship {
     @EndNode
     private Agent participant;
 
-    //Todo: Change property name into camelCase
-    @Property(name = "session_key")
+    @Property(name = "sessionKey")
     private String sessionKeyEncrypted;
 
     @Property(name = "dataEncryptionKey")

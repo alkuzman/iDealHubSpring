@@ -12,6 +12,8 @@ import com.bottle.team.service.helper.NoticeFilter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,21 +26,15 @@ import java.util.*;
  * Created by Viki on 1/26/2017.
  */
 @Service
+@Primary
 public class NoticeServiceImpl implements NoticeService {
-    private final
-    NoticeRepository noticeRepository;
-    private final
-    WebSocketService webSocketService;
-    private final QueryService queryService;
-    private String[] fields;
-
     @Autowired
-    public NoticeServiceImpl(NoticeRepository noticeRepository, WebSocketService webSocketService,
-                             QueryService queryService) {
-        this.noticeRepository = noticeRepository;
-        this.webSocketService = webSocketService;
-        this.queryService = queryService;
-    }
+    NoticeRepository noticeRepository;
+    @Autowired
+    WebSocketService webSocketService;
+    @Autowired
+    QueryService queryService;
+    private String[] fields;
 
     @PostConstruct
     public void init() {
@@ -80,7 +76,7 @@ public class NoticeServiceImpl implements NoticeService {
             offset = 0;
         }
         if (limit == null) {
-            limit = 10;
+            limit = 20;
         }
         return queryService.search(filter.getQuery(), offset, limit, Notice.class, new Comparator<BaseEntity>() {
             @Override

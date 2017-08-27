@@ -28,6 +28,9 @@ public class ProtocolSession extends BaseEntityImpl {
     @Property(name = "protocolAborted")
     private boolean aborted;
 
+    @Property(name = "epoId")
+    private String epoId;
+
     public DigitalGoods getDigitalGoods() {
         return digitalGoods;
     }
@@ -60,5 +63,13 @@ public class ProtocolSession extends BaseEntityImpl {
 
     public void setAborted(boolean aborted) {
         this.aborted = aborted;
+    }
+
+    public String getEpoId() {
+        return epoId;
+    }
+
+    public void setEpoId(String epoId) {
+        this.epoId = epoId;
     }
 }
