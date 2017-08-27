@@ -134,7 +134,6 @@ public class QueryServiceImpl implements QueryService {
 
         Map<Long, Float> scoreMap = new HashMap<>();
         List<Long> ids = new LinkedList<>();
-        System.out.println(query);
         try {
             IndexReader reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
@@ -165,7 +164,6 @@ public class QueryServiceImpl implements QueryService {
         for (BaseEntity baseEntity : foundEntities) {
             if (baseEntity != null) {
                 Long id = baseEntity.getId();
-                System.out.println(baseEntity.getId());
                 if (scoreMap.containsKey(id)) {
                     entities.add(baseEntity);
                 }

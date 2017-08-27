@@ -53,10 +53,8 @@ public class LuceneStorage {
         try {
             IndexWriter writer = new IndexWriter(directory, indexWriterConfig);
             writer.deleteAll();
-            // @TODO Viki writer
             for (Object object : objects) {
                 Document document = LuceneUtils.getDocument(object);
-                System.out.println(document.toString());
                 writer.updateDocument(new Term("{{id}}", document.get("{{id}}")), document);
             }
             writer.flush();

@@ -43,7 +43,6 @@ public class AnnouncementController {
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) String query
     ) {
-        System.out.println(ownerId);
         AnnouncementFilter announcementFilter = new AnnouncementFilter(null, ownerId, shareableId,type);
         return announcementService.findAll(query, offset, limit, announcementFilter);
     }

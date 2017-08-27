@@ -36,7 +36,6 @@ public class Neo4jUtils {
     }
 
     private static Object getEndNode(Object object) {
-        System.out.println(object.getClass().getName());
         Field field = getAnnotatedFiled(object.getClass(), EndNode.class);
         return getObjectFromField(object, field);
     }
