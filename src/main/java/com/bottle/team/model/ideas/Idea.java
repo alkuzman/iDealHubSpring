@@ -3,8 +3,6 @@ package com.bottle.team.model.ideas;
 import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.lucene.annotations.IndexedEmbedded;
-import com.bottle.team.model.BaseEntityImpl;
-import com.bottle.team.model.authentication.User;
 import com.bottle.team.model.awards.Award;
 import com.bottle.team.model.interfaces.NamedEntity;
 import com.bottle.team.model.sharing.Shareable;
@@ -20,7 +18,7 @@ import java.util.List;
  * Created by PC on 09/10/2016.
  */
 @NodeEntity
-public class Idea extends BaseEntityImpl implements NamedEntity, Shareable, DigitalGood {
+public class Idea extends AbstractDigitalGoods implements NamedEntity, Shareable {
     @NotEmpty
     @Property(name = "title")
     @Field(store = org.apache.lucene.document.Field.Store.YES)
@@ -35,11 +33,6 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Shareable, Digi
     @IndexedEmbedded
     @Boost(1f)
     private Problem problem;
-    @Relationship(type = "OWNER")
-    @IndexedEmbedded
-    @Boost(0.5f)
-    private User owner;
-
     @Property(name = "keywords")
     private List<String> keywords;
     @Relationship(type = "AWARD")
@@ -61,14 +54,6 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Shareable, Digi
         this.problem = problem;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     @Override
     public String constructName() {
         return title;
@@ -79,7 +64,6 @@ public class Idea extends BaseEntityImpl implements NamedEntity, Shareable, Digi
         return super.toString() + "Idea{" +
                 "title='" + title + '\'' +
                 ", problem=" + problem +
-                ", owner=" + owner +
                 '}';
     }
 

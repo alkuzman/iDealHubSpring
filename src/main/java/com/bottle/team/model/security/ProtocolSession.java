@@ -1,14 +1,12 @@
 package com.bottle.team.model.security;
 
 import com.bottle.team.model.BaseEntityImpl;
-import com.bottle.team.model.ideas.Idea;
+import com.bottle.team.model.ideas.DigitalGoods;
 import com.bottle.team.model.relationship.ProtocolParticipantOneSessionData;
 import com.bottle.team.model.relationship.ProtocolParticipantTwoSessionData;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
-
-import javax.naming.ldap.PagedResultsControl;
-import java.util.List;
 
 /**
  * Created by Viki on 3/2/2017.
@@ -24,15 +22,18 @@ public class ProtocolSession extends BaseEntityImpl {
     @Relationship(type = "PARTICIPANT_TWO")
     private ProtocolParticipantTwoSessionData participantTwoSessionData;
 
-    @Relationship(type = "IDEA")
-    private Idea idea;
+    @Relationship(type = "DIGITAL_GOODS")
+    private DigitalGoods digitalGoods;
 
-    public Idea getIdea() {
-        return idea;
+    @Property(name = "protocolAborted")
+    private boolean aborted;
+
+    public DigitalGoods getDigitalGoods() {
+        return digitalGoods;
     }
 
-    public void setIdea(Idea idea) {
-        this.idea = idea;
+    public void setDigitalGoods(DigitalGoods digitalGoods) {
+        this.digitalGoods = digitalGoods;
     }
 
     public ProtocolParticipantOneSessionData getParticipantOneSessionData() {
@@ -51,5 +52,13 @@ public class ProtocolSession extends BaseEntityImpl {
     public void setParticipantTwoSessionData(ProtocolParticipantTwoSessionData participantTwoSessionData) {
         this.participantTwoSessionData = participantTwoSessionData;
         this.participantTwoSessionData.setSession(this);
+    }
+
+    public boolean isAborted() {
+        return aborted;
+    }
+
+    public void setAborted(boolean aborted) {
+        this.aborted = aborted;
     }
 }
