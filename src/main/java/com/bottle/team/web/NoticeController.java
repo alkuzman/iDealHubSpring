@@ -19,8 +19,13 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/notices")
 public class NoticeController {
-    @Autowired
+    final
     NoticeService noticeService;
+
+    @Autowired
+    public NoticeController(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public Notice addNotice(@RequestBody @Valid Notice notice) {
@@ -46,7 +51,7 @@ public class NoticeController {
 
     @RequestMapping(value = "/bulk", method = RequestMethod.POST)
     public BaseEntityIterable<Notice> addNotices(@RequestBody @Valid NoticeList noticeList) {
-        return new BaseEntityIterable<Notice>(noticeService.saveAll(noticeList.getNotices()));
+        return new BaseEntityIterable<>(noticeService.saveAll(noticeList.getNotices()));
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)

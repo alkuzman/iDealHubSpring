@@ -21,11 +21,14 @@ public class ProtocolParticipantOneSessionData extends BaseRelationship {
     @EndNode
     private Agent participant;
 
-    @Property(name = "session_key")
+    @Property(name = "sessionKey")
     private String sessionKeyEncrypted;
 
     @Property(name = "encryptedGoods")
     private String encryptedGoods;
+
+    @Property(name = "nonce")
+    private String nonce;
 
     public ProtocolSession getSession() {
         return session;
@@ -57,5 +60,13 @@ public class ProtocolParticipantOneSessionData extends BaseRelationship {
 
     public void setEncryptedGoods(String encryptedGoods) {
         this.encryptedGoods = encryptedGoods;
+    }
+
+    public String getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(String nonce) {
+        this.nonce = nonce;
     }
 }

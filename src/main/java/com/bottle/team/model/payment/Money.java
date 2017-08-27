@@ -10,7 +10,7 @@ import org.neo4j.ogm.annotation.Relationship;
  * Created by Viki on 2/21/2017.
  */
 @NodeEntity
-public class Price extends BaseEntityImpl {
+public class Money extends BaseEntityImpl {
     @Property(name = "value")
     private Double value;
     @Relationship

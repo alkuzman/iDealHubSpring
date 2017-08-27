@@ -3,7 +3,9 @@ package com.bottle.team.model.ideas;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.Person;
 import com.bottle.team.model.payment.Contract;
+import com.bottle.team.model.payment.Payment;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
@@ -11,21 +13,32 @@ import org.neo4j.ogm.annotation.Relationship;
  */
 @NodeEntity
 public class Deal extends BaseEntityImpl {
-    @Relationship(type = "CONTRACT")
-    private Contract contract;
+    @Relationship(type = "PAYMENT")
+    private Payment payments;
 
-    @Relationship(type = "IDEA")
-    private Idea idea;
+    @Relationship(type = "GOODS")
+    private DigitalGoods goods;
 
     @Relationship(type = "BUYER")
     private Person buyer;
 
-    public Idea getIdea() {
-        return idea;
+    @Property(name = "epoId")
+    private String epoId;
+
+    public Payment getPayments() {
+        return payments;
     }
 
-    public void setIdea(Idea idea) {
-        this.idea = idea;
+    public void setPayments(Payment payments) {
+        this.payments = payments;
+    }
+
+    public DigitalGoods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(DigitalGoods goods) {
+        this.goods = goods;
     }
 
     public Person getBuyer() {
@@ -36,11 +49,11 @@ public class Deal extends BaseEntityImpl {
         this.buyer = buyer;
     }
 
-    public Contract getContract() {
-        return contract;
+    public String getEpoId() {
+        return epoId;
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setEpoId(String epoId) {
+        this.epoId = epoId;
     }
 }
