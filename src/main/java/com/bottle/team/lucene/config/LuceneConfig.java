@@ -1,4 +1,4 @@
-package com.bottle.team.lucene;
+package com.bottle.team.lucene.config;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -30,9 +30,9 @@ public class LuceneConfig {
     @Bean
     public Directory getLuceneDirectory() {
         Directory directory;
-        if ("filesystem".equals(this.directory_provider)) {
+        if ("filesystem".equals(directory_provider)) {
             try {
-                directory = FSDirectory.open(Paths.get(this.indexBase));
+                directory = FSDirectory.open(Paths.get(indexBase));
             } catch (IOException e) {
                 e.printStackTrace();
                 directory = new RAMDirectory();
