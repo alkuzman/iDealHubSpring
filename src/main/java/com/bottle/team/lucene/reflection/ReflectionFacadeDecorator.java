@@ -1,4 +1,4 @@
-package com.bottle.team.common.reflection;
+package com.bottle.team.lucene.reflection;
 
 /**
  * Created by AKuzmanoski on 10/09/2017.

@@ -1,6 +1,6 @@
 package com.bottle.team.lucene.document;
 
-import com.bottle.team.lucene.config.model.ModelConfig;
+import com.bottle.team.lucene.config.model.ModelConfigFactory;
 import com.bottle.team.lucene.document.field.FieldFactory;
 import com.bottle.team.lucene.document.visitor.DocumentFactoryVisitor;
 import org.apache.lucene.document.Document;
@@ -26,12 +26,12 @@ import java.util.List;
 @Primary
 public class DocumentFactoryImpl implements DocumentFactory {
     private final FieldFactory fieldFactory;
-    private final ModelConfig modelConfig;
+    private final ModelConfigFactory modelConfigFactory;
 
     @Autowired
-    public DocumentFactoryImpl(FieldFactory fieldFactory, ModelConfig modelConfig) {
+    public DocumentFactoryImpl(FieldFactory fieldFactory, ModelConfigFactory modelConfigFactory) {
         this.fieldFactory = fieldFactory;
-        this.modelConfig = modelConfig;
+        this.modelConfigFactory = modelConfigFactory;
     }
 
     /**
@@ -42,7 +42,7 @@ public class DocumentFactoryImpl implements DocumentFactory {
      */
     @Override
     public List<Document> create(Object object) {
-        if (!modelConfig.isIndexed(object.getClass())) {
+        if (!modelConfigFactory.isIndexed(object.getClass())) {
             return Collections.emptyList();
         }
         Document document = new Document();
