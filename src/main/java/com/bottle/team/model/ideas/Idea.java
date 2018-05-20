@@ -6,12 +6,12 @@ import com.bottle.team.lucene.annotations.IndexedEmbedded;
 import com.bottle.team.model.awards.Award;
 import com.bottle.team.model.interfaces.NamedEntity;
 import com.bottle.team.model.sharing.Shareable;
-import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
