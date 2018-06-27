@@ -38,7 +38,7 @@ public class SecurityProfileController {
         info.put("certificate", profile.getCertificatePEM());
         info.put("publicKey", profile.getEncryptionPair().getPublicPem());
         HttpEntity<Map<String, String>> httpEntity = new HttpEntity<Map<String,String>>(info, headers);
-        template.postForObject("http://localhost:8090/protocol/profile", httpEntity, String.class);
+        template.postForObject("https://ideal.com:8090/protocol/profile", httpEntity, String.class);
 
         return securityProfileService.save(profile);
     }
