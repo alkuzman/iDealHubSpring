@@ -7,11 +7,11 @@ import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.authentication.Person;
 import com.bottle.team.model.interfaces.NamedEntity;
 import com.bottle.team.model.sharing.Shareable;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 

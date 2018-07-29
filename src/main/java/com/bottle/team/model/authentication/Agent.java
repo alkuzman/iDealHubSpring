@@ -6,9 +6,10 @@ import com.bottle.team.lucene.enumerations.Analyze;
 import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.sharing.Searchable;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import org.hibernate.validator.constraints.Email;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
+
+import javax.validation.constraints.Email;
 
 /**
  * Created by PC on 09/10/2016.

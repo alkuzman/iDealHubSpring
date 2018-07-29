@@ -1,7 +1,6 @@
 package com.bottle.team.model.ideas.quality;
 
 import com.bottle.team.model.ideas.Keyword;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;

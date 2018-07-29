@@ -9,8 +9,8 @@ import org.bouncycastle.asn1.pkcs.RSASSAPSSparams;
 import org.bouncycastle.asn1.teletrust.TeleTrusTObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
-import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.util.Strings;
+import sun.security.x509.X500Name;
 
 import javax.security.auth.x500.X500Principal;
 import java.io.IOException;
@@ -222,10 +222,10 @@ public class X509Util {
         return sig.sign();
     }
 
-    static X509Principal convertPrincipal(
+    static X500Name convertPrincipal(
             X500Principal principal) {
         try {
-            return new X509Principal(principal.getEncoded());
+            return new X500Name(principal.getEncoded());
         } catch (IOException e) {
             throw new IllegalArgumentException("cannot convert principal");
         }

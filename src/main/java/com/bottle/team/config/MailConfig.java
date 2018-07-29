@@ -3,15 +3,17 @@ package com.bottle.team.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 //import org.springframework.boot.bind.RelaxedPropertyResolver;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 @ConfigurationProperties(prefix = "spring.mail")
 public class MailConfig {
-    String from;
+    private String from;
     private String host;
     private int port;
     private String username;

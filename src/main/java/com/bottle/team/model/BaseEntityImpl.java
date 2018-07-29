@@ -4,16 +4,14 @@ import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.lucene.annotations.SortableField;
 import com.bottle.team.lucene.enumerations.Analyze;
 import com.bottle.team.model.interfaces.BaseEntity;
-import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Property;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.awt.*;
-import java.util.Collection;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by AKuzmanoski on 09/10/2016.
@@ -23,15 +21,18 @@ import java.util.List;
  */
 @NodeEntity
 public abstract class BaseEntityImpl implements BaseEntity, Cloneable {
-    @GraphId
+    @org.neo4j.ogm.annotation.Id
+    @GeneratedValue
     @Field(analyze = Analyze.NO)
     @Id
     private Long id;
+
     @CreatedDate
     @Property(name = "creationDate")
     @Field(analyze = Analyze.NO)
     @SortableField
     private Date creationDate;
+
     @LastModifiedDate
     @Property(name = "lastModified")
     @Field(analyze = Analyze.NO)

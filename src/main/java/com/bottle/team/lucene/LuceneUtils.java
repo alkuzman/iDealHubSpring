@@ -9,7 +9,6 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.*;
 import org.apache.lucene.util.BytesRef;
-import org.neo4j.ogm.annotation.GraphId;
 import org.springframework.data.annotation.Id;
 
 import java.io.IOException;
@@ -91,7 +90,7 @@ public class LuceneUtils {
         }
         Field idField = fields.getFirst();
         if (idField == null)
-            idField = getFields(objectClass, GraphId.class).getFirst();
+            idField = getFields(objectClass, org.neo4j.ogm.annotation.Id.class).getFirst();
 
         return idField;
     }

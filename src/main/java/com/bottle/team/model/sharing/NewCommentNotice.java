@@ -1,9 +1,10 @@
 package com.bottle.team.model.sharing;
 
 import com.bottle.team.model.comments.Comment;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.Relationship;
+
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Created by AKuzmanoski on 23/10/2016.
@@ -15,7 +16,7 @@ import org.neo4j.ogm.annotation.Property;
 @NodeEntity
 public class NewCommentNotice extends AbstractNotice {
     @NotEmpty
-    @Property(name = "comment")
+    @Relationship(type = "COMMENT")
     private Comment comment;
 
     public Comment getComment() {

@@ -1,12 +1,10 @@
 package com.bottle.team.service.impl;
 
 import com.bottle.team.lucene.LuceneUtils;
-import com.bottle.team.model.BaseEntityImpl;
 import com.bottle.team.model.interfaces.BaseEntity;
 import com.bottle.team.repository.BaseEntityRepository;
 import com.bottle.team.service.QueryService;
 import com.google.common.collect.Lists;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -71,7 +69,7 @@ public class QueryServiceImpl implements QueryService {
 
     @Override
     public Iterable<? extends BaseEntity> search(String query, Integer offset, Integer limit) {
-        return search(query, null, offset, limit, BaseEntity.class, null);
+        return search(query, null, offset, limit, BaseEntity.class);
     }
 
     private String[] getFields(String... fields) {
