@@ -9,10 +9,7 @@ import com.bottle.team.service.NoticeService;
 import com.bottle.team.service.QueryService;
 import com.bottle.team.service.WebSocketService;
 import com.bottle.team.service.helper.NoticeFilter;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.util.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +17,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Viki on 1/26/2017.

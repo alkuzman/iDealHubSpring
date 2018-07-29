@@ -3,9 +3,10 @@ package com.bottle.team.model.payment;
 import com.bottle.team.lucene.annotations.Boost;
 import com.bottle.team.lucene.annotations.Field;
 import com.bottle.team.model.BaseEntityImpl;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
+
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Created by Viki on 10/14/2016.

@@ -8,6 +8,7 @@ import org.apache.lucene.store.RAMDirectory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
  * @since 11/01/2017
  */
 @Configuration
+@PropertySource("classpath:application.properties")
 public class LuceneConfig {
     @Value("${app.lucene.default.directoryProvider}")
     private String directory_provider;

@@ -7,9 +7,10 @@ import com.bottle.team.model.enumaration.Provider;
 import com.bottle.team.model.enumaration.Role;
 import com.bottle.team.model.interfaces.NamedEntity;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
+
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Created by PC on 09/10/2016.

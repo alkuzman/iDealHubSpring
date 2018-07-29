@@ -1,11 +1,7 @@
 package com.bottle.team.model.ideas.quality;
 
-import com.bottle.team.lucene.annotations.Boost;
-import com.bottle.team.lucene.annotations.IndexedEmbedded;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * Created by AKuzmanoski on 05/03/2017.
